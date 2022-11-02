@@ -1,0 +1,20 @@
+@import '../Global/foundation/mixin';
+.featured__wrapper {
+  width: 100%;
+  padding: 20px;
+}
+.featured-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  @include responsive_max425 {
+    font-size: 18px;
+  }
+}
+.product-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}

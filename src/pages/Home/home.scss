@@ -1,8 +1,21 @@
+@import '../../components/Global/foundation/variable';
+@import '../../components/Global/foundation/mixin';
 .banner {
   margin-top: 100px;
+  height: 300px;
 }
 .banner .img-banner {
   width: 100%;
   height: 300px;
   object-fit: cover;
+}
+.search__wrapper {
+  width: 100%;
+  padding: 20px;
+}
+.category__box {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

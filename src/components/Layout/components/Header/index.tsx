@@ -10,6 +10,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import './header.scss';
 import { getAccessToken } from '../../../../untils/localStorage';
 const items = ['Đồng hồ', 'Best selling', 'Nam', 'Nữ', 'Smartwatch', 'Cặp đôi', 'Tin tức'];
@@ -17,6 +18,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const token = getAccessToken();
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -24,7 +26,12 @@ function Header() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <div className='header__layout'>
       <AppBar position="static" className='header__wrapper'>
@@ -81,10 +88,43 @@ function Header() {
                 ))}
               </Menu>
             </Box>
-            : <div className='btn__wrapper'>
-              <Button variant="contained" className='header-btn'>Đăng nhập</Button>
-              <Button variant="contained" className='header-btn'>Đăng ký</Button>
-            </div>
+            : <>
+              <div className='btn__wrapper'>
+                <Button variant="contained" className='header-btn'>Đăng nhập</Button>
+                <Button variant="contained" className='header-btn'>Đăng ký</Button>
+              </div>
+              <div className='btn-avt'>
+                <IconButton
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  className='btn-icon'
+                >
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>Đăng nhập</MenuItem>
+                  <MenuItem onClick={handleClose}>Đăng ký</MenuItem>
+                </Menu>
+              </div>
+            </>
+            
+            
           }
           </Toolbar>
         </Container>
