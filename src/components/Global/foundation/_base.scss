@@ -1,0 +1,29 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+ul, ol {
+  padding: 0;
+  list-style: none;
+  margin-bottom: 20px;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+}
+button,
+input,
+[tabindex] {
+  outline: none;
+  border: none;
+}
+a[href] {
+  color: #333;
+  text-decoration: none;
+}

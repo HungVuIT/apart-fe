@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Caramel&display=swap');
+.header__layout {
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+.header__layout .header__wrapper {
+  background-color: var(--default-bg-color);
+  color: var(--text-color);
+  height: 75px;
+}
+.header__layout .header__logo {
+  max-width: 20%;
+  width: 142px;
+  font-family: 'Caramel', cursive;
+  color: var(--text-color);
+  font-size: 40px;
+}
+.header__layout .menu-item {
+  font-size: 15px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.nav-btn-item .menu-item:hover {
+  border-radius: 0;
+  padding-bottom: 4px;
+  border-bottom: 2px solid white;
+}
+.nav-menu .menu-item {
+  font-size: 14px;
+}
+.header-avt {
+  position: absolute;
+  right: 0;
+}
+.btn__wrapper .header-btn {
+  width: 120px;
+  height: 40px;
+  font-size: 14px;
+  background-color: var(--default-btn-color);
+  border-radius: 0;
+  color: #000000;
+  margin: 0 10px;
+}
+.btn__wrapper .header-btn:hover {
+  color: var(--text-color);
+  background-color: #000000;
+  border: 1px solid #FFFFFF;
+}
+.btn__wrapper {
+  position: absolute;
+  right: 0;
+}
