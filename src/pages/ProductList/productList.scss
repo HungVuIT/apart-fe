@@ -1,0 +1,9 @@
+.product-list__wrapper {
+  margin-top: 100px;
+  & .banner {
+    margin-top: 20px;
+  }
+  & .banner img {
+    object-fit: cover;
+  }
+}

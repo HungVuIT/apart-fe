@@ -1,12 +1,10 @@
 import { BrowserRouter as Router } from "react-router-dom";
-import PrivateRoutes from "./router/PrivateRoutes";
-import PublishRoutes from "./router/PublishRoutes";
+import MainRouter from "./router/MainRouter";
 function App() {
   return (
     <Router>
       <div className="App">
-        <PublishRoutes />
-        <PrivateRoutes />
+        <MainRouter />
       </div>
     </Router>
   );
