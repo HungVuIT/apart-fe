@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import './header.scss';
 import { getAccessToken } from '../../../../untils/localStorage';
+import { useNavigate } from 'react-router-dom';
 const items = ['Đồng hồ', 'Best selling', 'Nam', 'Nữ', 'Smartwatch', 'Cặp đôi', 'Tin tức'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -20,6 +21,7 @@ function Header() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const token = getAccessToken();
+  const navigate = useNavigate();
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -90,7 +92,7 @@ function Header() {
             </Box>
             : <>
               <div className='btn__wrapper'>
-                <Button variant="contained" className='header-btn'>Đăng nhập</Button>
+                <Button variant="contained" className='header-btn' onClick={() => navigate('/auth/login')}>Đăng nhập</Button>
                 <Button variant="contained" className='header-btn'>Đăng ký</Button>
               </div>
               <div className='btn-avt'>
