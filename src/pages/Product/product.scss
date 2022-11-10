@@ -11,7 +11,7 @@
     }
     & .product-img {
       width: 100%;
-      height: 300px;
+      height: 400px;
       object-fit: cover;
       @include responsive_max768 {
       }
@@ -31,8 +31,8 @@
           margin: 0 8px;
         }
         & .product-img-sub {
-          width: 40px;
-          height: 40px;
+          width: 45px;
+          height: 45px;
           border-radius: 10px;
           object-fit: cover;
           @include responsive_992 {
@@ -73,7 +73,7 @@
       font-size: 16px;
       padding-top: 10px;
       padding-left: 10px;
-      min-height: 250px;
+      min-height: 300px;
     }
   }
   & .product-btns {
@@ -102,5 +102,84 @@
       }
     }
     
+  }
+}
+
+// Subcontent
+.sub-content__wrapper {
+  padding: 10px;
+  display: flex;
+  & .sub-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-left: 20px;
+  }
+  & .line {
+    width: 1px;
+    height: inherit;
+    margin: 0 20px;
+    background-color: black;
+  }
+  & .sub-info {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & .info {
+      text-align: center;
+      & .item {
+        padding: 5px 0;
+        
+        & span {
+          font-size: 14px;
+          @include responsive_max992 {
+            font-size: 10px;
+          }
+        }
+        & .title {
+          font-weight: 700;
+          margin-right: 10px;
+          color: #868e96;
+          @include responsive_max992 {
+            margin-right: 5px;
+          }
+        }
+        & .value {
+          color: #fa5252;
+        }
+      }
+    }
+  }
+  & .sub-address {
+    width: 150px;
+    font-size: 13px;
+    @include responsive_max992 {
+      width: 120px;
+      font-size: 11px;
+    }
+  }
+}
+
+.describe__wrapper {
+  &  .css-ahj2mt-MuiTypography-root {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  & .css-i4bv87-MuiSvgIcon-root {
+    font-size: 30px;
+    font-weight: 700;
+  }
+  & .table-info {
+    padding: 0 10%;
+    & .css-1wvnaxz-MuiTableCell-root.MuiTableCell-head,
+    .css-1nslmh4-MuiTableCell-root.MuiTableCell-head {
+      font-size: 18px;
+      text-align: center;
+    }
+    & .css-132a6sb-MuiTableCell-root.MuiTableCell-body,
+    .css-1bhpkcd-MuiTableCell-root.MuiTableCell-body {
+      text-align: center;
+    }
   }
 }
