@@ -4,17 +4,17 @@ import { faFacebookF, faGooglePlusG, faLinkedinIn } from "@fortawesome/free-bran
 import Input from "../../../components/Input";
 export default function Register() {
   return (
-    <div className="form-container sign-up-container">
-      <form action="javascript:void(0)">
+    <div className="form-container sign-up-container have-input">
+      <form action="#">
         <h1>Đăng Ký</h1>
         <div className="social-container">
-          <a href="javascript:void(0)" className="social">
+          <a href="#" className="social">
             <FontAwesomeIcon icon={faFacebookF} />
           </a>
-          <a href="javascript:void(0)" className="social">
+          <a href="#" className="social">
             <FontAwesomeIcon icon={faGooglePlusG} />
           </a>
-          <a href="javascript:void(0)" className="social">
+          <a href="#" className="social">
             <FontAwesomeIcon icon={faLinkedinIn} />
           </a>
         </div>

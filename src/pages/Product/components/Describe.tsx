@@ -1,9 +1,6 @@
 import React from 'react';
 import Container from '../../../components/Container';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TableDescribe from './TableDescribe';
 
@@ -20,7 +17,7 @@ function Describe() {
             <Typography>Thông tin chi tiết</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
+            <Typography component={'span'} variant={'body2'}>
               <div className="table-info">
                 <TableDescribe  />
               </div>

@@ -1,10 +1,9 @@
 import React from 'react';
 import BreadCrumbComponent from '../../components/BreadCrumb';
-import Describe from './componet/Describe';
-import MainContent from './componet/MainContent';
-import SubContent from './componet/SubContent';
-
-
+import Comment from './components/Comment';
+import Describe from './components/Describe';
+import MainContent from './components/MainContent';
+import SubContent from './components/SubContent';
 import './product.scss';
 
 function Product(): JSX.Element {
@@ -14,6 +13,7 @@ function Product(): JSX.Element {
       <MainContent />
       <SubContent />
       <Describe />
+      <Comment />
     </div>
   );
 }

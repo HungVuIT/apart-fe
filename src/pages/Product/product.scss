@@ -183,3 +183,108 @@
     }
   }
 }
+
+//--------------COMMENT-----------------------------
+.describe__wrapper {
+  .comments {
+    transition: all 2s ease-in-out;
+    & .comments-header{
+      position: relative;
+      & .rate-star {
+        margin-left: 40px;
+        & span {
+          font-size: 30px;
+        }
+      }
+      & .rate-tite {
+        position: absolute;
+        top: 2px;
+        margin-left: 10px;
+        font-size: 20px;
+        color: #495057;
+      }
+      & .rate-btn {
+        position: absolute;
+        height: 50px;
+        right: 10%;
+        font-size: 16px;
+        background-color: var(--default-btn-text);
+        color: var(--default-btn-color);
+      }
+    }
+    & .form-comment {
+      overflow: hidden;  /* Hide the element content, while height = 0 */
+      height: 0;
+      opacity: 0;
+      transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      &.active {
+        height: auto;
+        opacity: 1;
+        transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      }
+      & .form-title {
+        font-size: 16px;
+        margin-top: 20px;
+        font-weight: 700;
+      }
+      & .form-input {
+        margin: 10px 0;
+      }
+      & .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
+        width: 400px;
+      }
+      & .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input,
+      .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root,
+      .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+        font-size: 16px;
+      }
+      & .form-rate {
+       & .rate-title {
+        font-size: 16px;
+        font-weight: 700;
+       }
+       & .css-7qmtgc-MuiRating-icon, & .css-1c99szj-MuiRating-icon {
+        font-size: 16px;
+       }
+      }
+      & .rate-submit {
+        height: 50px;
+        font-size: 16px;
+        background-color: var(--default-btn-text);
+        color: var(--default-btn-color);
+      }
+    }
+    & .line {
+      width: inherit;
+      height: 1px;
+      margin-top: 50px;
+      background-color: #495057;
+    }
+    & .comment-item {
+      padding: 20px;
+      & .item-star {
+        margin-top: 10px;
+        & span {
+          font-size: 16px;
+        }
+      }
+      & .item-date {
+        margin: 5px 0;
+        font-size: 12px;
+        color: #868e96;
+      }
+      & .item-content {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      & .item-btn {
+        color: #fa5252;
+        padding-left: 0;
+        font-size: 12px;
+        &:hover {
+          background-color: inherit;
+        }
+      }
+    }
+  } 
+}

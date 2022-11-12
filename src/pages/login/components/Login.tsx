@@ -4,7 +4,7 @@ import { faFacebookF, faGooglePlusG, faLinkedinIn } from "@fortawesome/free-bran
 import Input from "../../../components/Input";
 export default function Login() {
   return (
-    <div className="form-container sign-in-container">
+    <div className="form-container sign-in-container have-input">
       <form action="#">
         <h1>Đăng nhập</h1>
         <div className="social-container">
