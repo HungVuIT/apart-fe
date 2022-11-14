@@ -1,8 +1,8 @@
 import React from 'react';
 import './item.scss';
 import Rating from '@mui/material/Rating';
-import { formatMoney } from '../../../untils/formartMoney';
 import { useNavigate } from 'react-router-dom';
+import { formatMoney } from '../../untils/formartMoney';
 interface IProps {
   linkImg: string
   tradeMark: string

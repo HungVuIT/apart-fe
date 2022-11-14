@@ -1,8 +1,8 @@
 import React from 'react';
 import Container from '../Container';
-import Item from './component/Item';
 import item from '../../assets/img/item.png';
 import './featured.scss';
+import Item from '../Item';
 interface IProps {
   title: string
 }

@@ -288,3 +288,16 @@
     }
   } 
 }
+.Same-product__wrapper {
+  padding: 20px 0;
+  & .title {
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+  }
+  & .css-ohwg9z {
+    min-height: 350px;
+  }
+}
