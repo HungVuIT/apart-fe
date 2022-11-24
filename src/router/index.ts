@@ -2,6 +2,7 @@ import Home from "../pages/Home";
 import LoginPage from "../pages/login";
 import Product from "../pages/Product";
 import ProductList from "../pages/ProductList";
+import UserOrder from "../pages/UserOrder";
 
 const mainRouter = [
   {
@@ -15,6 +16,10 @@ const mainRouter = [
   {
     path: '/product',
     component: Product,
+  },
+  {
+    path: '/user/order',
+    component: UserOrder,
   }
 ];
 const authRouter = [

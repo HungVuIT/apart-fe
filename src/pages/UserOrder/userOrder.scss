@@ -1,0 +1,106 @@
+.user-order__wrapper {
+  .item-header {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    background-color: #495057;
+    & .item-title {
+      width: 20%;
+      margin: auto 0;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+  }
+  & .item-order__wrapper {
+    width: 100%;
+    margin: 10px 0;
+    & .OI__wrapper {
+      margin: 10px 0;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    }
+    & .OI-header {
+      width: 100%;
+      height: 40px;
+      background-color: #dee2e6;
+      display: flex;
+      position: relative;
+      & .OI-shop {
+        display: flex;
+        & .OI-shop-img {
+          width: 20px;
+          height: 20px;
+          margin: auto 10px;
+          border-radius: 50%;
+        }
+        & .OI-shop-name {
+          font-size: 12px;
+          margin: auto 0;
+        }
+        & .OI-shop-chat {
+          margin: auto 5px;
+          color: #4263eb;
+        }
+      }
+      & .OI-code {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+    }
+    & .OI-body {
+      width: 100%;
+      display: flex;
+      & .OI-item {
+        width: 20%;
+      }
+      & .OI-name {
+        text-align: center;
+        & .OI-name-avt {
+          width: 80px;
+          height: 80px;
+          margin-top: 10px;
+          margin-bottom: 5px;
+        }
+        & .OI-name-text {
+          font-size: 16px;
+          word-break: break-word;
+        }
+      }
+      & .OI-total {
+        text-align: center;
+        & .OI-amount {
+          margin-top: 40px;
+          font-size: 18px;
+        }
+        & .OI-note {
+          font-size: 14px;
+        }
+
+      }
+      & .OI-status, & .OI-ship {
+        padding-top: 40px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 600;
+      }
+      & .OI-manipulation {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        & .OI-btn__wrapper {
+          & .OI-btn {
+            width: 100%;
+            text-align: center;
+          }
+          & .cl-red {
+            color: red;
+          }
+        }
+      }
+    }
+  }
+}
