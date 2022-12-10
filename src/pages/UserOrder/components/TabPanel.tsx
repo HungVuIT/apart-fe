@@ -1,9 +1,9 @@
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
+  children?: React.ReactNode
+  index: number
+  value: number
 }
 
 function TabPanel(props: TabPanelProps) {

@@ -59,7 +59,7 @@ function Comment(): JSX.Element {
                 </div>
                 <div className="line"></div>
                 <div className="comment-item">
-                  <Rating name="half-rating-read" value={4.5}  precision={0.5} readOnly className='item-star' />
+                  <Rating name="half-rating-read" value={4.5} precision={0.5} readOnly className='item-star' />
                   <div className="item-title">Đồng hồ đẹp</div>
                   <div className="item-date"><i>Dũng Lê ngày 18 tháng 5 năm 2022</i></div>
                   <div className="item-content">Đồng hồ rất đẹp, đóng gói và vận chuyển rất cẩn thận</div>
@@ -71,7 +71,6 @@ function Comment(): JSX.Element {
           </AccordionDetails>
         </Accordion>
       </div>
-      
     </Container>
   );
 }

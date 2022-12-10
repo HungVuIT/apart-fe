@@ -34,7 +34,7 @@ export default function BreadCrumbComponent() {
       fontSize: '14px'
     }}>
       Sản phẩm
-    </Typography>,
+    </Typography>
   ];
 
   return (

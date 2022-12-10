@@ -19,7 +19,7 @@ function Describe() {
           <AccordionDetails>
             <Typography component={'span'} variant={'body2'}>
               <div className="table-info">
-                <TableDescribe  />
+                <TableDescribe />
               </div>
             </Typography>
           </AccordionDetails>

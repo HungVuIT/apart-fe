@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from '../../../components/Container';
-import Carousel from "react-material-ui-carousel";
+import Carousel from 'react-material-ui-carousel';
 import itempng from '../../../assets/img/item.png';
 import item2png from '../../../assets/img/logo.png';
 import item3png from '../../../assets/img/dientu-category.png';
@@ -11,11 +11,11 @@ function SameProduct(): JSX.Element {
   console.log(index);
   return (
     <Container>
-      <div className="Same-product__wrapper">
-        <div className="title text-center">Sản phẩm tương tự</div>
+      <div className='Same-product__wrapper'>
+        <div className='title text-center'>Sản phẩm tương tự</div>
         <Carousel
             index={index}
-            next={() => setIndex(index === items.length - 4 ? 0 : index + 1 )}
+            next={() => setIndex(index === items.length - 4 ? 0 : index + 1)}
             prev={() => setIndex(index === 0 ? items.length - 4 : index - 1)}
           >
             <div className='flex flex-center'>

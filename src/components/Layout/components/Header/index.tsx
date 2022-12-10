@@ -59,9 +59,9 @@ function Header() {
                 </Button>
               ))}
             </Box>
-  
+
             {token
-            ? <Box sx={{ flexGrow: 0 }} className='header-avt'>
+              ? <Box sx={{ flexGrow: 0 }} className='header-avt'>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -73,12 +73,12 @@ function Header() {
                 anchorEl={anchorElUser}
                 anchorOrigin={{
                   vertical: 'top',
-                  horizontal: 'right',
+                  horizontal: 'right'
                 }}
                 keepMounted
                 transformOrigin={{
                   vertical: 'top',
-                  horizontal: 'right',
+                  horizontal: 'right'
                 }}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
@@ -90,7 +90,7 @@ function Header() {
                 ))}
               </Menu>
             </Box>
-            : <>
+              : <>
               <div className='btn__wrapper'>
                 <Button variant="contained" className='header-btn' onClick={() => navigate('/auth/login')}>Đăng nhập</Button>
                 <Button variant="contained" className='header-btn'>Đăng ký</Button>
@@ -110,12 +110,12 @@ function Header() {
                   anchorEl={anchorEl}
                   anchorOrigin={{
                     vertical: 'top',
-                    horizontal: 'right',
+                    horizontal: 'right'
                   }}
                   keepMounted
                   transformOrigin={{
                     vertical: 'top',
-                    horizontal: 'right',
+                    horizontal: 'right'
                   }}
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
@@ -125,8 +125,7 @@ function Header() {
                 </Menu>
               </div>
             </>
-            
-            
+
           }
           </Toolbar>
         </Container>

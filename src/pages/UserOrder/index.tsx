@@ -7,11 +7,10 @@ import './userOrder.scss';
 import TabPanel from './components/TabPanel';
 import OrderItem from './components/OrderItem';
 
-
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`
   };
 }
 

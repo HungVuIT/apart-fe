@@ -33,7 +33,7 @@ function OrderItem({ value }: IProps) {
         <div className='OI-btn__wrapper'>
             <Button variant="text" className='OI-btn'>Thông tin vận chuyển</Button>
             <Button variant="text" className='OI-btn'>Liên hệ người bán</Button>
-            {(value != 4 && value != 5) && <Button variant="text" className='OI-btn cl-red'>Hủy đơn</Button>}
+            {(value !== 4 && value !== 5) && <Button variant="text" className='OI-btn cl-red'>Hủy đơn</Button>}
             <Button variant="text" className='OI-btn cl-red'>Mua lại</Button>
         </div>
         </li>

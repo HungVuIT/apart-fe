@@ -1,31 +1,31 @@
-import Home from "../pages/Home";
-import LoginPage from "../pages/login";
-import Product from "../pages/Product";
-import ProductList from "../pages/ProductList";
-import UserInfor from "../pages/UserInfor";
-import UserOrder from "../pages/UserOrder";
+import Home from '../pages/Home';
+import LoginPage from '../pages/login';
+import Product from '../pages/Product';
+import ProductList from '../pages/ProductList';
+import UserInfor from '../pages/UserInfor';
+import UserOrder from '../pages/UserOrder';
 
 const mainRouter = [
   {
     path: '/',
-    component: Home,
+    component: Home
   },
   {
     path: '/search',
-    component: ProductList,
+    component: ProductList
   },
   {
     path: '/product',
-    component: Product,
+    component: Product
   },
   {
     path: '/user/order',
-    component: UserOrder,
+    component: UserOrder
   },
   {
     path: 'user/information',
     component: UserInfor
-  },
+  }
 ];
 const authRouter = [
   {

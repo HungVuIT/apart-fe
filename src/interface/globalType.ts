@@ -4,4 +4,6 @@ export interface IPropsChildren {
 export interface IPropsInput {
   type: string
   placeholder: string
+  value: string
+  setValue: React.Dispatch<React.SetStateAction<string>>
 }
