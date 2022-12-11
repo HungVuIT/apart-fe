@@ -12,7 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import './header.scss';
-import { getAccessToken } from '../../../../untils/localStorage';
+import { getAccessToken } from '../../../../../untils/localStorage';
 import { useNavigate } from 'react-router-dom';
 const items = ['Đồng hồ', 'Best selling', 'Nam', 'Nữ', 'Smartwatch', 'Cặp đôi', 'Tin tức'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];

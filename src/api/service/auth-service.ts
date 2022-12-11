@@ -3,8 +3,8 @@ import axiosClient from '../axiosClient';
 
 export const login = async (params: IDataLogin) => {
   try {
-    const url = 'auth/sign-in';
-    const response = await axiosClient.post(url, { ...params });
+    const url = 'watchs/list';
+    const response = await axiosClient.get(url);
     console.log(response);
     return response;
   } catch (err) {

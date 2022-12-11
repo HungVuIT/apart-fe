@@ -13,13 +13,16 @@ export default function Login() {
       username,
       password
     };
+    fetch('https://dhwatch.onrender.com/api/watchs/list').then(async res => await res.json())
+      .then(data => console.log(data));
     console.log(data);
+    // axios
     const response = await login(data);
     console.log(response);
   };
   return (
     <div className='form-container sign-in-container have-input'>
-      <form >
+      <div className='form-auth' >
         <h1>Đăng nhập</h1>
         <div className='social-container'>
           <a href='#' className='social'>
@@ -49,7 +52,7 @@ export default function Login() {
           Quên mật khẩu
         </a>
         <button onClick={handleSubmitLogin}>Đăng nhập</button>
-      </form>
+      </div>
     </div>
   );
 }

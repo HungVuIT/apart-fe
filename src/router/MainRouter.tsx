@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { authRouter, mainRouter } from '.';
+import { adminRouter, authRouter, mainRouter } from '.';
 import { DefaultLayout } from '../components/Layout';
+import DashboardLayout from '../components/Layout/DashboardLayout';
 
 function MainRouter (): JSX.Element {
   return (
@@ -28,6 +29,20 @@ function MainRouter (): JSX.Element {
             path={route.path}
             element={
               <Page />
+            }
+          />
+        );
+      })}
+      {adminRouter.map((route, index) => {
+        const Page = route.component;
+        return (
+          <Route
+            key={index}
+            path={route.path}
+            element={
+              <DashboardLayout>
+                <Page />
+              </DashboardLayout>
             }
           />
         );

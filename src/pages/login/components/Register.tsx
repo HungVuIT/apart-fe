@@ -8,7 +8,7 @@ export default function Register() {
   const [password, setPasword] = React.useState('');
   return (
     <div className='form-container sign-up-container have-input'>
-      <form action='#'>
+      <div className='form-auth'>
         <h1>Đăng Ký</h1>
         <div className='social-container'>
           <a href='#' className='social'>
@@ -41,7 +41,7 @@ export default function Register() {
             setValue = {setPasword}
           />
         <button>Đăng ký</button>
-      </form>
+      </div>
     </div>
   );
 }

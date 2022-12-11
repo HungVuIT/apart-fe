@@ -1,3 +1,4 @@
+import Dashboard from '../pages/Dashboard';
 import Home from '../pages/Home';
 import LoginPage from '../pages/login';
 import Product from '../pages/Product';
@@ -33,4 +34,10 @@ const authRouter = [
     component: LoginPage
   }
 ];
-export { mainRouter, authRouter };
+const adminRouter = [
+  {
+    path: 'admin/dashboard',
+    component: Dashboard
+  }
+];
+export { mainRouter, authRouter, adminRouter };
