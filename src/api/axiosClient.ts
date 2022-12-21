@@ -33,11 +33,10 @@ axiosClient.interceptors.response.use((response) => {
   return response;
 }, (error) => {
   // Handle errors
-  // if (error.response.data) {
-  //   return error.response;
-  // } else {
-  //   return error;
-  // }
-  return error;
+  if (error.response.data) {
+    return error.response;
+  } else {
+    return error;
+  }
 });
 export default axiosClient;

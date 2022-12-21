@@ -7,3 +7,13 @@ export interface IPropsInput {
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
 }
+export interface GlobalContext {
+  loading: boolean
+}
+export interface ContextProviderProps {
+  children: React.ReactNode
+}
+export enum typeToast {
+  SUCCESS = 'success',
+  ERROR = 'error'
+}

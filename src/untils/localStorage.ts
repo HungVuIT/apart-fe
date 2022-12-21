@@ -1,5 +1,5 @@
-const accessToken = 'watchshop_token';
-
+const accessToken = 'access_token_watchshop';
+const refreshToken = 'refresh_token_watchshop';
 const getLocalStorage = (nameItem: string) => {
   return localStorage.getItem(nameItem);
 };
@@ -23,5 +23,23 @@ const setAccessToken = (value: string) => {
 const removeAccessToken = () => {
   return removeLocalStorage(accessToken);
 };
+const getRefreshToken = () => {
+  return getLocalStorage(refreshToken);
+};
 
-export { getAccessToken, setAccessToken, removeAccessToken };
+const setRefreshToken = (value: string) => {
+  return setLocalStorage(refreshToken, value);
+};
+
+const removeRefreshToken = () => {
+  return removeLocalStorage(refreshToken);
+};
+
+export {
+  getAccessToken,
+  setAccessToken,
+  removeAccessToken,
+  getRefreshToken,
+  setRefreshToken,
+  removeRefreshToken
+};

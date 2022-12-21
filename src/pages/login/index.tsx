@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import Login from './components/Login';
 import Register from './components/Register';
 import logo from '../../assets/img/logo.png';
 import './login.scss';
+import { showToastMessage } from '../../untils/showToast';
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(1);
   const overlayBtn: HTMLElement | null = document.getElementById('overlayBtn');
@@ -27,8 +29,8 @@ export default function LoginPage() {
         }
         id='container'
       >
-        <Register />
-        <Login />
+        <Register toast={showToastMessage} />
+        <Login toast={showToastMessage} />
         <div className='overlay-container' id='overlayCon'>
           <div className='overlay'>
             <div className='overlay-panel overlay-left'>
@@ -43,6 +45,7 @@ export default function LoginPage() {
           </button>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
