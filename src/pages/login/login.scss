@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import '../../components/Global/foundation/variable';
+.await {
+  opacity: 0.6;
+  pointer-events: none;
+}
 .login__wrapper {
   height: 100vh;
   background: #f6f5f7;
@@ -82,16 +86,32 @@ button {
   padding: 12px 45px;
   letter-spacing: 1px;
   text-transform: uppercase;
+  transition: all 0.5s ease-in;
   cursor: pointer;
 }
 .form-container button {
   margin-top: 17px;
-  transition: 80ms ease-in;
+  transition: 0.5s all ease-in;
+  border-radius: 36px;
+  background: linear-gradient(145deg, #0f3158, #1b285a);
+  box-shadow:  12px 12px 61px #243b55,
+             -12px -12px 61px #ffffff;
 }
+
 .form-container button:hover {
-  background-color: #fff;
-  border: 1px solid gray;
+  background: #e0e0e0;
   color: $grad-clr1;
+  border-radius: 36px;
+  box-shadow: inset 25px 25px 36px #b4b1b1,
+            inset -25px -25px 36px #e9e2e2;
+}
+.form-container button:disabled {
+  background: #ced4da;
+  color: $grad-clr1;
+  box-shadow:  5px 5px 30px #243b55,
+             -5px -5px 30px #ffffff;
+  cursor: default;
+  
 }
 .overlay-container {
   position: absolute;
@@ -220,4 +240,9 @@ p {
   100% {
     width: 143.67px;
   }
+}
+.message-error {
+  font-size: 12px;
+  padding-left: 15px;
+  color: var(--text-error);
 }

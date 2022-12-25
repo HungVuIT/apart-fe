@@ -7,6 +7,8 @@ import './login.scss';
 import { showToastMessage } from '../../untils/showToast';
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(1);
+  const [isLoad, setIsLoad] = useState(false);
+
   const overlayBtn: HTMLElement | null = document.getElementById('overlayBtn');
   const handleClick = () => {
     setIsLogin((prev) => {
@@ -20,7 +22,7 @@ export default function LoginPage() {
     }
   };
   return (
-    <div className='login__wrapper'>
+    <div className={'login__wrapper ' + (isLoad ? 'await' : '')}>
       <div
         className={
           isLogin === 1
@@ -30,7 +32,7 @@ export default function LoginPage() {
         id='container'
       >
         <Register toast={showToastMessage} />
-        <Login toast={showToastMessage} />
+        <Login toast={showToastMessage} setIsLoad={setIsLoad}/>
         <div className='overlay-container' id='overlayCon'>
           <div className='overlay'>
             <div className='overlay-panel overlay-left'>

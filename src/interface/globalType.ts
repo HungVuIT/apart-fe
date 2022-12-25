@@ -8,12 +8,14 @@ export interface IPropsInput {
   setValue: React.Dispatch<React.SetStateAction<string>>
 }
 export interface GlobalContext {
-  loading: boolean
+  isLoading: boolean
+  setIsLoading: (c: boolean) => void
 }
 export interface ContextProviderProps {
   children: React.ReactNode
 }
 export enum typeToast {
   SUCCESS = 'success',
-  ERROR = 'error'
+  ERROR = 'error',
+  WARNING = 'warning'
 }

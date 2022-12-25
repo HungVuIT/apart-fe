@@ -2,6 +2,10 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faGooglePlusG, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import Input from '../../../components/Input';
+import { IDataResgister } from '../../../interface/auth';
+import { register } from '../../../api/service/auth-service';
+import Toast from '../../../components/Toast';
+import { typeToast } from '../../../interface/globalType';
 interface IProps {
   toast: (content: JSX.Element, type: string) => void
 }
@@ -9,11 +13,55 @@ export default function Register({ toast }: IProps) {
   const [name, setName] = React.useState('');
   const [username, setUsername] = React.useState('');
   const [password, setPasword] = React.useState('');
-  const handleRegister = () => {
-    const fullname = name.split(' ');
-    const lastName = fullname.pop();
-    const firstName = fullname.join(' ');
+  const [message, setMessage] = React.useState('');
+
+  const validator = () => {
+    if (!username) {
+      const mess = 'Vui lòng nhập tên đăng nhập!';
+      toast(<Toast title='' message={mess} />, typeToast.WARNING);
+      return false;
+    } else if (!password) {
+      const mess = 'Vui lòng nhập mật khẩu!';
+      toast(<Toast title='' message={mess} />, typeToast.WARNING);
+      return false;
+    } else if (message) {
+      const mess = `Vui lòng nhập ${message}!`;
+      toast(<Toast title='' message={mess} />, typeToast.WARNING);
+      return false;
+    }
+    return true;
   };
+
+  const handleRegister = async () => {
+    console.log('dangky');
+    if (validator()) {
+      const fullname = name.split(' ');
+      const lastName = fullname.pop();
+      const firstName = fullname.join(' ');
+      const params: IDataResgister = {
+        username,
+        password,
+        firstName,
+        lastName: lastName || ''
+      };
+      const data = await register(params);
+      console.log(data);
+      if (data.success) {
+        toast(<Toast title='Đăng ký thành công' message={data.message} />, typeToast.SUCCESS);
+      } else {
+        toast(<Toast title='Đăng ký thất bại!' message={data.message} />, typeToast.ERROR);
+      }
+    }
+  };
+  React.useEffect(() => {
+    if (username.length < 4) {
+      setMessage('username must be longer than or equal to 4 characters');
+    } else if (password.length < 4) {
+      setMessage('password must be longer than or equal to 4 characters');
+    } else {
+      setMessage('');
+    }
+  }, [username, password]);
   return (
     <div className='form-container sign-up-container have-input'>
       <div className='form-auth'>
@@ -48,7 +96,7 @@ export default function Register({ toast }: IProps) {
             value = {password}
             setValue = {setPasword}
           />
-        <button onClick={handleRegister}>Đăng ký</button>
+        <button onClick={handleRegister} >Đăng ký</button>
       </div>
     </div>
   );

@@ -6,7 +6,11 @@ export const showToastMessage = (content: JSX.Element, type: string) => {
     ? toast.success(content, {
       position: toast.POSITION.BOTTOM_RIGHT
     })
-    : toast.error(content, {
-      position: toast.POSITION.BOTTOM_RIGHT
-    });
+    : type === typeToast.ERROR
+      ? toast.error(content, {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+      : toast.warning(content, {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
 };

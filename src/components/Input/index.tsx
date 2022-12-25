@@ -1,18 +1,24 @@
 import React from 'react';
 import { IPropsInput } from '../../interface/globalType';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import './input.scss';
 function Input(props: IPropsInput) {
+  const [iconHide, setIconHide] = React.useState(true);
   return (
     <div className='infield'>
       <div className='group__input'>
         <input
-          type={props.type}
+          type={props.type !== 'password' ? props.type : (iconHide ? props.type : 'text')}
           required
           value={props.value}
           onChange={(e) => {
             props.setValue(e.target.value);
           }}
         />
+        {props.type === 'password' && (
+          iconHide ? <VisibilityOffIcon className='eye-icon' onClick={() => setIconHide(false)}/> : <VisibilityIcon className='eye-icon' onClick={() => setIconHide(true)}/>
+        )}
         <span className='highlight'></span>
         <span className='bar'></span>
         <label>{props.placeholder}</label>

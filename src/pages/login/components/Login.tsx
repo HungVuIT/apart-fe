@@ -1,6 +1,5 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { faFacebookF, faGooglePlusG, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import Input from '../../../components/Input';
@@ -10,21 +9,55 @@ import Toast from '../../../components/Toast';
 import { typeToast } from '../../../interface/globalType';
 interface IProps {
   toast: (content: JSX.Element, type: string) => void
+  setIsLoad: (c: boolean) => void
 }
-export default function Login({ toast }: IProps) {
+export default function Login({ toast, setIsLoad }: IProps) {
   const [username, setUsername] = React.useState('');
   const [password, setPasword] = React.useState('');
+  const [error, setError] = React.useState('');
 
-  const handleSubmitLogin = async () => {
-    const data: IDataLogin = {
-      username,
-      password
-    };
-    const response = await login(data);
-    toast(<Toast title='123' message='12345' />, typeToast.SUCCESS);
-    console.log(response);
+  const validator = () => {
+    if (!username) {
+      const mess = 'Vui lòng nhập tên đăng nhập!';
+      toast(<Toast title='' message={mess} />, typeToast.WARNING);
+      return false;
+    } else if (!password) {
+      const mess = 'Vui lòng nhập mật khẩu!';
+      toast(<Toast title='' message={mess} />, typeToast.WARNING);
+      return false;
+    } else if (error) {
+      const mess = `Vui lòng nhập ${error}!`;
+      toast(<Toast title='' message={mess} />, typeToast.WARNING);
+      return false;
+    }
+    return true;
   };
 
+  const handleSubmitLogin = async () => {
+    if (validator()) {
+      const params: IDataLogin = {
+        username,
+        password
+      };
+      setIsLoad(true);
+      const data = await login(params);
+      setIsLoad(false);
+      if (data.success) {
+        toast(<Toast title='Đăng nhập thành công' message={data.message} />, typeToast.SUCCESS);
+      } else {
+        toast(<Toast title='Đăng nhập thất bại!' message={data.message} />, typeToast.ERROR);
+      }
+    }
+  };
+  React.useEffect(() => {
+    if (username.length < 4) {
+      setError('username must be longer than or equal to 4 characters');
+    } else if (password.length < 4) {
+      setError('password must be longer than or equal to 4 characters');
+    } else {
+      setError('');
+    }
+  }, [username, password]);
   return (
     <div className='form-container sign-in-container have-input'>
       <div className='form-auth' >
@@ -43,7 +76,7 @@ export default function Login({ toast }: IProps) {
         <span>hoặc tài khoản của bạn</span>
           <Input
             type='text'
-            placeholder='Email hoặc tên đăng nhập'
+            placeholder='Tên đăng nhập'
             value = {username}
             setValue = {setUsername}
           />
@@ -58,7 +91,6 @@ export default function Login({ toast }: IProps) {
         </a>
         <button onClick={handleSubmitLogin}>Đăng nhập</button>
       </div>
-      <ToastContainer/>
     </div>
   );
 }

@@ -1,4 +1,10 @@
 .have-input {
+  & .eye-icon {
+    position: absolute;
+    font-size: 20px;
+    top: 13px;
+    right: 23px;
+  }
   & .infield .group__input { 
     position:relative; 
     margin-bottom: 20px; 

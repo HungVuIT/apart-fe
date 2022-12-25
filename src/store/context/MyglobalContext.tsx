@@ -4,10 +4,12 @@ import { initGlobalContext } from '../../interface/initConst';
 
 export const MyGlobalContext = React.createContext<GlobalContext>(initGlobalContext);
 export const GlobalContextWrapper = ({ children }: ContextProviderProps) => {
+  const [isLoading, setIsLoading] = React.useState(false);
   const valueContext = {
-    loading: false
+    isLoading,
+    setIsLoading
   };
-  return <MyGlobalContext.Provider value = {valueContext}>
+  return <MyGlobalContext.Provider value={valueContext}>
     {children}
   </MyGlobalContext.Provider>;
 };
