@@ -6,33 +6,33 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import './header.scss';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { getAccessToken } from '../../../../../untils/localStorage';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { MyGlobalContext } from '../../../../../store/context/MyglobalContext';
+import './header.scss';
 const items = ['Đồng hồ', 'Best selling', 'Nam', 'Nữ', 'Smartwatch', 'Cặp đôi', 'Tin tức'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const locationUrl = useLocation();
   const token = getAccessToken();
   const navigate = useNavigate();
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  const { setNowUrl } = React.useContext(MyGlobalContext);
+
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleClickLogin = () => {
+    setNowUrl(locationUrl.pathname.toString());
+    navigate('/auth/login');
   };
   return (
     <div className='header__layout'>
@@ -61,38 +61,10 @@ function Header() {
             </Box>
 
             {token
-              ? <Box sx={{ flexGrow: 0 }} className='header-avt'>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
+              ? <ShoppingCartIcon className='shopping-cart'/>
               : <>
               <div className='btn__wrapper'>
-                <Button variant="contained" className='header-btn' onClick={() => navigate('/auth/login')}>Đăng nhập</Button>
+                <Button variant="contained" className='header-btn' onClick={handleClickLogin}>Đăng nhập</Button>
                 <Button variant="contained" className='header-btn'>Đăng ký</Button>
               </div>
               <div className='btn-avt'>

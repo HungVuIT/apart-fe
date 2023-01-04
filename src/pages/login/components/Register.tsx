@@ -8,8 +8,9 @@ import Toast from '../../../components/Toast';
 import { typeToast } from '../../../interface/globalType';
 interface IProps {
   toast: (content: JSX.Element, type: string) => void
+  setIsLoad: (c: boolean) => void
 }
-export default function Register({ toast }: IProps) {
+export default function Register({ toast, setIsLoad }: IProps) {
   const [name, setName] = React.useState('');
   const [username, setUsername] = React.useState('');
   const [password, setPasword] = React.useState('');
@@ -31,6 +32,15 @@ export default function Register({ toast }: IProps) {
     }
     return true;
   };
+  React.useEffect(() => {
+    if (username.length < 4) {
+      setMessage('username must be longer than or equal to 4 characters');
+    } else if (password.length < 4) {
+      setMessage('password must be longer than or equal to 4 characters');
+    } else {
+      setMessage('');
+    }
+  }, [username, password]);
 
   const handleRegister = async () => {
     console.log('dangky');
@@ -44,7 +54,9 @@ export default function Register({ toast }: IProps) {
         firstName,
         lastName: lastName || ''
       };
+      setIsLoad(true);
       const data = await register(params);
+      setIsLoad(false);
       console.log(data);
       if (data.success) {
         toast(<Toast title='Đăng ký thành công' message={data.message} />, typeToast.SUCCESS);
@@ -53,15 +65,10 @@ export default function Register({ toast }: IProps) {
       }
     }
   };
-  React.useEffect(() => {
-    if (username.length < 4) {
-      setMessage('username must be longer than or equal to 4 characters');
-    } else if (password.length < 4) {
-      setMessage('password must be longer than or equal to 4 characters');
-    } else {
-      setMessage('');
-    }
-  }, [username, password]);
+
+  const handleKeyDown = () => {
+    handleRegister();
+  };
   return (
     <div className='form-container sign-up-container have-input'>
       <div className='form-auth'>
@@ -89,12 +96,14 @@ export default function Register({ toast }: IProps) {
             placeholder='Tên đăng nhập'
             value = {username}
             setValue = {setUsername}
+            keyDown = {handleKeyDown}
           />
           <Input
             type='password'
             placeholder='Mật khẩu'
             value = {password}
             setValue = {setPasword}
+            keyDown = {handleKeyDown}
           />
         <button onClick={handleRegister} >Đăng ký</button>
       </div>

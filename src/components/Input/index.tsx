@@ -5,6 +5,13 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import './input.scss';
 function Input(props: IPropsInput) {
   const [iconHide, setIconHide] = React.useState(true);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      if (props.keyDown) {
+        props.keyDown();
+      }
+    }
+  };
   return (
     <div className='infield'>
       <div className='group__input'>
@@ -15,6 +22,7 @@ function Input(props: IPropsInput) {
           onChange={(e) => {
             props.setValue(e.target.value);
           }}
+          onKeyDown={e => handleKeyDown(e)}
         />
         {props.type === 'password' && (
           iconHide ? <VisibilityOffIcon className='eye-icon' onClick={() => setIconHide(false)}/> : <VisibilityIcon className='eye-icon' onClick={() => setIconHide(true)}/>

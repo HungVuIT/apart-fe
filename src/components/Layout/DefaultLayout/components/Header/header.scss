@@ -5,6 +5,12 @@
   width: 100%;
   top: 0;
   z-index: 1000;
+  & .shopping-cart {
+    font-size: 30px;
+    position: absolute;
+    top: 22px;
+    right: 20px;
+  }
 }
 .header__layout .header__wrapper {
   background-color: var(--default-bg-color);

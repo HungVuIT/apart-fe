@@ -5,9 +5,12 @@ import { initGlobalContext } from '../../interface/initConst';
 export const MyGlobalContext = React.createContext<GlobalContext>(initGlobalContext);
 export const GlobalContextWrapper = ({ children }: ContextProviderProps) => {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [nowUrl, setNowUrl] = React.useState('');
   const valueContext = {
     isLoading,
-    setIsLoading
+    setIsLoading,
+    nowUrl,
+    setNowUrl
   };
   return <MyGlobalContext.Provider value={valueContext}>
     {children}

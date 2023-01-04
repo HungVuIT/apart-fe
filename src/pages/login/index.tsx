@@ -31,7 +31,7 @@ export default function LoginPage() {
         }
         id='container'
       >
-        <Register toast={showToastMessage} />
+        <Register toast={showToastMessage} setIsLoad={setIsLoad}/>
         <Login toast={showToastMessage} setIsLoad={setIsLoad}/>
         <div className='overlay-container' id='overlayCon'>
           <div className='overlay'>

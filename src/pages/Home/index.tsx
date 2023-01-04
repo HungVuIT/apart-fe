@@ -7,9 +7,13 @@ import Category from '../../components/Category';
 import { menCategory, womenCategory, coCategory, dientuCategory, treemCategory, capdoiCategory } from './image';
 import FeaturedProducts from '../../components/FeaturedProducts';
 import { MyGlobalContext } from '../../store/context/MyglobalContext';
+import { getListProduct } from '../../api/service/home-service';
 function Home() {
   const { isLoading } = useContext(MyGlobalContext);
   console.log(isLoading);
+  React.useEffect(() => {
+    getListProduct();
+  });
   return (
     <>
       {/* <Loading /> */}

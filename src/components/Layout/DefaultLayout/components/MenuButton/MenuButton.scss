@@ -1,0 +1,50 @@
+@import '../../../../Global/foundation/mixin';
+
+.Menu-btn__wrapper {
+  position: fixed;
+  margin-top: 30px;
+  width: 4.5%;
+  & .menu-btn {
+    padding: 5px 0;
+    min-width: 100%;
+    border-radius: 0;
+    background-color: var(--default-bg-color);
+    transition: all 1s ease-out;
+    &:hover {
+      background-color: var(--default-btn-color);
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+      & .menu-icon {
+        font-size: 25px;
+        color: var(--black);
+      }
+    }
+    & .menu-icon {
+      font-size: 25px;
+      color: var(--text-color);
+
+    }
+  }
+}
+.logo {
+  width: 100%;
+  font-family: 'Caramel', cursive;
+  font-size: 40px;
+  text-align: center;
+}
+.bku {
+  width: 100%;
+  position: absolute;
+  bottom: 10px;
+  text-align: center;
+}
+
+.menu-box {
+  & .menu-icon {
+    font-size: 25px;
+  }
+  & .menu-text {
+    & span {
+      font-size: 14px;
+    }
+  }
+}
