@@ -10,10 +10,10 @@ import { MyGlobalContext } from '../../store/context/MyglobalContext';
 import { getListProduct } from '../../api/service/home-service';
 function Home() {
   const { isLoading } = useContext(MyGlobalContext);
-  console.log(isLoading);
   React.useEffect(() => {
     getListProduct();
   });
+  console.log('Home');
   return (
     <>
       {/* <Loading /> */}

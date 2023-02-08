@@ -2,7 +2,7 @@ import { IDataLogin, IDataResgister } from '../../interface/auth';
 import { setAccessToken, setRefreshToken } from '../../untils/localStorage';
 import axiosClient from '../axiosClient';
 
-export const login = async (params: IDataLogin) => {
+export const loginAccount = async (params: IDataLogin) => {
   try {
     const url = 'auth/sign-in';
     const response = await axiosClient.post(url, params);

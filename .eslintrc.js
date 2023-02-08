@@ -34,6 +34,7 @@ module.exports = {
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/space-before-function-paren': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
     'no-useless-catch': 'off'
   }
 };

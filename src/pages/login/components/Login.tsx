@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'react-toastify/dist/ReactToastify.css';
 import { faFacebookF, faGooglePlusG, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import Input from '../../../components/Input';
-import { login } from '../../../api/service/auth-service';
+import { loginAccount } from '../../../api/service/auth-service';
 import { IDataLogin } from '../../../interface/auth';
 import Toast from '../../../components/Toast';
 import { typeToast } from '../../../interface/globalType';
@@ -56,7 +56,7 @@ export default function Login({ toast, setIsLoad }: IProps) {
         password
       };
       setIsLoad(true);
-      const data = await login(params);
+      const data = await loginAccount(params);
       setIsLoad(false);
       if (data.success) {
         toast(<Toast title='Đăng nhập thành công' message={data.message} />, typeToast.SUCCESS);

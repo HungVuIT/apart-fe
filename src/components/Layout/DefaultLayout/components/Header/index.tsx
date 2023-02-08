@@ -13,11 +13,16 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { getAccessToken } from '../../../../../untils/localStorage';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MyGlobalContext } from '../../../../../store/context/MyglobalContext';
+
+import Dialog from '@mui/material/Dialog';
 import './header.scss';
+import LoginModal from '../../../../../pages/auth/LoginModal';
 const items = ['Đồng hồ', 'Best selling', 'Nam', 'Nữ', 'Smartwatch', 'Cặp đôi', 'Tin tức'];
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [isOpenLogin, setIsOpenLogin] = React.useState(false);
+  const [isLogin, setIsLogin] = React.useState(true);
 
   const locationUrl = useLocation();
   const token = getAccessToken();
@@ -30,9 +35,15 @@ function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleClickLogin = () => {
-    setNowUrl(locationUrl.pathname.toString());
-    navigate('/auth/login');
+
+  const handleClickLogin = (_isLogin: boolean) => {
+    setIsOpenLogin(true);
+    setIsLogin(_isLogin);
+    // setNowUrl(locationUrl.pathname.toString());
+    // navigate('/auth/login');
+  };
+  const handleCloseLogin = () => {
+    setIsOpenLogin(false);
   };
   return (
     <div className='header__layout'>
@@ -64,8 +75,11 @@ function Header() {
               ? <ShoppingCartIcon className='shopping-cart'/>
               : <>
               <div className='btn__wrapper'>
-                <Button variant="contained" className='header-btn' onClick={handleClickLogin}>Đăng nhập</Button>
-                <Button variant="contained" className='header-btn'>Đăng ký</Button>
+                <Button variant="contained" className='header-btn' onClick={() => handleClickLogin(true)}>Đăng nhập</Button>
+                <Dialog open={isOpenLogin} onClose={handleCloseLogin} className='dialog-login'>
+                  <LoginModal isLogin={isLogin} onClose={handleCloseLogin}/>
+                </Dialog>
+                <Button variant="contained" className='header-btn' onClick={() => handleClickLogin(false)}>Đăng ký</Button>
               </div>
               <div className='btn-avt'>
                 <IconButton

@@ -1,0 +1,83 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 50px;
+}
+.closeBtn {
+  font-size: 25px !important;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+}
+.title {
+  margin-top: 30px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  line-height: 1.5;
+  color: #141e30;
+}
+.social-container {
+  margin: 20px 0px;
+}
+.social-container a {
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 5px;
+  height: 40px;
+  width: 40px;
+
+  &:hover {
+    background-color: #ff6b6b;
+  }
+}
+span {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.input {
+  width: 330px;
+  margin: 10px !important;
+}
+.loginBtn {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  transition: 0.5s all ease-in;
+  border-radius: 36px;
+  background: linear-gradient(145deg, #0f3158, #1b285a);
+  &:hover {
+    background: #e0e0e0;
+    color: #141e30;
+    border-radius: 36px;
+    box-shadow: inset 25px 25px 36px #b4b1b1, inset -25px -25px 36px #e9e2e2;
+  }
+}
+.forgot {
+  width: 90%;
+  text-align: right;
+}
+.transferBtn, .forgot {
+  color: #228be6 !important;
+  font-style: italic;
+  text-decoration:underline !important;
+  cursor: pointer;
+}
+.password {
+  position: relative;
+}
+.hidePassword {
+  position: absolute;
+  font-size: 20px;
+  top: 25px;
+  right: 20px;
+}
+
+.question {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
