@@ -11,105 +11,94 @@ import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import classes from './LoginModal.module.scss';
 import './customMUI.scss';
-import { IDataLogin } from '../../interface/auth';
-import { loginAccount } from '../../api/service/auth-service';
+import { IDataLogin, IDataResgister } from '../../interface/auth';
+import { loginAccount, registerAccount } from '../../api/service/auth-service';
 import { showToastMessage } from '../../untils/showToast';
 import Toast from '../../components/Toast';
 import { typeToast } from '../../interface/globalType';
 import { ToastContainer } from 'react-toastify';
 import checkString from '../../untils/checkString';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 interface IProps {
   isLogin: boolean
   onClose: () => void
 }
+interface ILoginFormValue {
+  fullname: string
+  username: string
+  password: string
+}
+const schema = yup.object().shape({
+  username: yup.string().required('Vui lòng nhập tên đăng nhập!').min(4, 'Tên đăng nhập phải dài hơn hoặc bằng 4 kí tự'),
+  password: yup.string().required('Vui lòng nhập mật khẩu!').min(4, 'Mật khẩu phải dài hơn hoặc bằng 4 kí tự').matches(
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d@$!%*#?&]/,
+    'Mật khẩu phải có 1 chữ số 1 chữ thường và 1 chữ hoa'
+  )
+});
 const LoginModal = ({ isLogin, onClose }: IProps) => {
+  const { register, setValue, control, handleSubmit, clearErrors, formState: { errors } } = useForm<ILoginFormValue>({
+    resolver: yupResolver(schema)
+  });
   const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPasword] = useState('');
-
-  const [error, setError] = useState({
-    username: false,
-    password: false
-  });
-  const [message, setMessage] = useState({
-    username: '',
-    password: ''
-  });
   const [isShow, setIsShow] = useState(false);
   const [isSignIn, setIsSignIn] = useState(isLogin);
   console.log('re-render');
-  const validator = () => {
-    if (username.trim().length < 4) {
-      setMessage(prev => ({ ...prev, username: 'Tên đăng nhập phải dài hơn hoặc bằng 4 kí tự' }));
-    }
-    if (password.trim().length < 4) {
-      setMessage(prev => ({ ...prev, password: 'Mật khẩu phải dài hơn hoặc bằng 4 kí tự' }));
-    } else if (!checkString(password)) {
-      setMessage(prev => ({ ...prev, password: 'Mật khẩu phải có 1 chữ số 1 chữ thường và 1 chữ hoa' }));
-    }
-    return !message.username && !message.password && !!username.trim() && !!password.trim();
-  };
 
   const handleTransfer = () => {
-    resetError(false, false);
+    setValue('fullname', '');
+    setValue('username', '');
+    setValue('password', '');
+    clearErrors(['username', 'password']);
     setIsSignIn((isSignIn) => !isSignIn);
   };
 
+  const resetForm = () => {
+    setValue('fullname', '');
+    setValue('username', '');
+    setValue('password', '');
+  };
   const handleClickHidePassword = () => {
     setIsShow(isShow => !isShow);
   };
 
-  const resetError = (_username: boolean, _password: boolean) => {
-    setError({
-      username: _username,
-      password: _password
-    });
-    setMessage(prev => (
-      {
-        username: _username ? prev.username : '',
-        password: _password ? prev.password : ''
-      }
-    ));
-  };
-  const handleChangeUserName = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setUsername(e.target.value);
-    resetError(false, !!message.password);
-  };
-  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setPasword(e.target.value);
-    resetError(!!message.username, false);
-  };
-
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-    console.log('submit', {
-      name,
-      username,
-      password
-    });
-    if (validator()) {
-      if (isSignIn) {
-        const params: IDataLogin = {
-          username,
-          password
-        };
-        const data = await loginAccount(params);
-        if (data.success) {
-          showToastMessage(<Toast title='Đăng nhập thành công' message={data.message} />, typeToast.SUCCESS);
-        } else {
-          showToastMessage(<Toast title='Đăng nhập thất bại!' message={data.message} />, typeToast.ERROR);
-        }
+  const onSubmit: SubmitHandler<ILoginFormValue> = async (_data: ILoginFormValue) => {
+    console.log(_data);
+    if (isSignIn) {
+      const params: IDataLogin = {
+        username: _data.username,
+        password: _data.password
+      };
+      const data = await loginAccount(params);
+      if (data.success) {
+        showToastMessage(<Toast title='Đăng nhập thành công' message={data.message} />, typeToast.SUCCESS);
+      } else {
+        showToastMessage(<Toast title='Đăng nhập thất bại!' message={data.message} />, typeToast.ERROR);
       }
     } else {
-      console.log('not ok');
+      const fullname = _data.fullname.split(' ');
+      const lastName = fullname.pop();
+      const firstName = fullname.join(' ');
+      const params: IDataResgister = {
+        username: _data.username,
+        password: _data.password,
+        firstName,
+        lastName: lastName || ''
+      };
+      const data = await registerAccount(params);
+      console.log(data);
+      if (data.success) {
+        resetForm();
+        showToastMessage(<Toast title='Đăng ký thành công' message={data.message} />, typeToast.SUCCESS);
+      } else {
+        showToastMessage(<Toast title='Đăng ký thất bại!' message={data.message} />, typeToast.ERROR);
+      }
     }
-    console.log(message);
-    // TODO: submit form data to the server
   };
-
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       className={classes.modal + ' customMUI-login'}
     >
       <CloseIcon className={classes.closeBtn} onClick={onClose} />
@@ -127,34 +116,49 @@ const LoginModal = ({ isLogin, onClose }: IProps) => {
       </div>
       <span>hoặc tài khoản của bạn</span>
       {!isSignIn && (
-        <TextField
-          label='Họ và tên'
-          variant='filled'
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className={classes.input}
-        />
+        <Controller name='fullname' control={control}
+          render={({
+            field: { onChange, onBlur, value, name, ref },
+            fieldState: { invalid, isTouched, isDirty, error },
+            formState
+          }) => (
+            <TextField
+              label='Họ và tên'
+              variant='filled'
+              {...register('fullname')}
+              onBlur={onBlur}
+              onChange={onChange}
+              className={classes.input}
+          />
+          )}
+      />
       )}
-      <TextField
-        label='Tên Đăng nhập'
-        variant='filled'
-        error={error.username ? error.username : !!message.username}
-        helperText={message.username ? message.username : error.username ? 'Vui lòng nhập tên đăng nhập' : ''}
-        onBlur={() => setError(prev => ({ ...prev, username: !username }))}
-        value={username}
-        onChange={(e) => handleChangeUserName(e)}
-        className={classes.input}
+      <Controller name='username' control={control}
+        render={({
+          field: { onChange, onBlur, value, name, ref },
+          fieldState: { invalid, isTouched, isDirty, error },
+          formState
+        }) => (
+          <TextField
+            label='Tên Đăng nhập'
+            variant='filled'
+            {...register('username')}
+            onBlur={onBlur}
+            onChange={onChange}
+            error={!!errors.username}
+            helperText={errors.username?.message}
+            className={classes.input}
+          />
+        )}
       />
       <div className={classes.password}>
         <TextField
           label='Mật khẩu'
           variant='filled'
           type={isShow ? 'text' : 'password'}
-          value={password}
-          error={error.password ? error.password : !!message.password}
-          helperText={message.password ? message.password : error.password ? 'Vui lòng nhập mật khẩu' : ''}
-          onBlur={() => setError(prev => ({ ...prev, password: !password }))}
-          onChange={(e) => handleChangePassword(e)}
+          {...register('password')}
+          error={!!errors.password}
+          helperText={errors.password?.message}
           className={classes.input}
         />
         {isShow

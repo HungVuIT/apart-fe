@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faGooglePlusG, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import Input from '../../../components/Input';
 import { IDataResgister } from '../../../interface/auth';
-import { register } from '../../../api/service/auth-service';
+import { registerAccount } from '../../../api/service/auth-service';
 import Toast from '../../../components/Toast';
 import { typeToast } from '../../../interface/globalType';
 interface IProps {
@@ -55,7 +55,7 @@ export default function Register({ toast, setIsLoad }: IProps) {
         lastName: lastName || ''
       };
       setIsLoad(true);
-      const data = await register(params);
+      const data = await registerAccount(params);
       setIsLoad(false);
       console.log(data);
       if (data.success) {

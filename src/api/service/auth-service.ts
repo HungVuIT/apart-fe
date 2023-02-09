@@ -16,7 +16,7 @@ export const loginAccount = async (params: IDataLogin) => {
     return err;
   }
 };
-export const register = async (params: IDataResgister) => {
+export const registerAccount = async (params: IDataResgister) => {
   try {
     const url = 'auth/sign-up';
     const response = await axiosClient.post(url, { ...params });
