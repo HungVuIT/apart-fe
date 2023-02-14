@@ -16,14 +16,14 @@ import { MyGlobalContext } from '../../../../../store/context/MyglobalContext';
 
 import Dialog from '@mui/material/Dialog';
 import './header.scss';
-import LoginModal from '../../../../../pages/auth/LoginModal';
+import LoginModal from '../../../../../pages/common/auth/LoginModal';
 const items = ['Đồng hồ', 'Best selling', 'Nam', 'Nữ', 'Smartwatch', 'Cặp đôi', 'Tin tức'];
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isOpenLogin, setIsOpenLogin] = React.useState(false);
   const [isLogin, setIsLogin] = React.useState(true);
-
+  const [loading, setLoading] = React.useState(false);
   const locationUrl = useLocation();
   const token = getAccessToken();
   const navigate = useNavigate();
@@ -39,11 +39,9 @@ function Header() {
   const handleClickLogin = (_isLogin: boolean) => {
     setIsOpenLogin(true);
     setIsLogin(_isLogin);
-    // setNowUrl(locationUrl.pathname.toString());
-    // navigate('/auth/login');
   };
   const handleCloseLogin = () => {
-    setIsOpenLogin(false);
+    !loading && setIsOpenLogin(false);
   };
   return (
     <div className='header__layout'>
@@ -77,7 +75,7 @@ function Header() {
               <div className='btn__wrapper'>
                 <Button variant="contained" className='header-btn' onClick={() => handleClickLogin(true)}>Đăng nhập</Button>
                 <Dialog open={isOpenLogin} onClose={handleCloseLogin} className='dialog-login'>
-                  <LoginModal isLogin={isLogin} onClose={handleCloseLogin}/>
+                  <LoginModal isLogin={isLogin} onClose={handleCloseLogin} loading={loading} setLoading={setLoading}/>
                 </Dialog>
                 <Button variant="contained" className='header-btn' onClick={() => handleClickLogin(false)}>Đăng ký</Button>
               </div>

@@ -11,8 +11,12 @@ interface IProps {
 }
 function Item ({ linkImg, tradeMark, rating, price }: IProps): JSX.Element {
   const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/product');
+    window.scrollTo(0, 0);
+  };
   return (
-    <div className="item__wrapper" onClick = {() => navigate('/product')}>
+    <div className="item__wrapper" onClick = {handleClick}>
       <div className='item-img__wrapper'><img src={linkImg} alt={tradeMark} className="item-img" /></div>
       <div className="item-trademark">{tradeMark}</div>
       <div className='rating__wrapper'>

@@ -1,6 +1,6 @@
 import { Accordion, AccordionDetails, AccordionSummary, Button, Rating, TextField, Typography } from '@mui/material';
 import React from 'react';
-import Container from '../../../components/Container';
+import Container from '../../../../components/Container';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function Comment(): JSX.Element {

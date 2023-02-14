@@ -1,6 +1,6 @@
 import React from 'react';
-import Container from '../../../components/Container';
-import avt from '../../../assets/img/avtshop.png';
+import Container from '../../../../components/Container';
+import avt from '../../../../assets/img/avtshop.png';
 function SubContent() {
   return (
     <Container >

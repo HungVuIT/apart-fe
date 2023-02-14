@@ -1,13 +1,13 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faCartPlus } from '@fortawesome/free-solid-svg-icons';
-import Container from '../../../components/Container';
+import Container from '../../../../components/Container';
 import Carousel from 'react-material-ui-carousel';
 import Rating from '@mui/material/Rating';
 
-import itempng from '../../../assets/img/item.png';
-import item2png from '../../../assets/img/logo.png';
-import item3png from '../../../assets/img/dientu-category.png';
+import itempng from '../../../../assets/img/item.png';
+import item2png from '../../../../assets/img/logo.png';
+import item3png from '../../../../assets/img/dientu-category.png';
 function MainContent() {
   const [index, setIndex] = React.useState(0);
   const items = [itempng, item2png, item3png];

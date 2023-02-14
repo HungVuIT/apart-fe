@@ -1,19 +1,18 @@
 import React, { useContext } from 'react';
-import Container from '../../components/Container';
+import Container from '../../../components/Container';
 import './home.scss';
-import banner from '../../assets/img/banner.png';
-import Search from '../../components/Search';
-import Category from '../../components/Category';
+import banner from '../../../assets/img/banner.png';
+import Search from '../../../components/Search';
+import Category from '../../../components/Category';
 import { menCategory, womenCategory, coCategory, dientuCategory, treemCategory, capdoiCategory } from './image';
-import FeaturedProducts from '../../components/FeaturedProducts';
-import { MyGlobalContext } from '../../store/context/MyglobalContext';
-import { getListProduct } from '../../api/service/home-service';
+import FeaturedProducts from '../../../components/FeaturedProducts';
+import { MyGlobalContext } from '../../../store/context/MyglobalContext';
+import { getListProduct } from '../../../api/service/home-service';
 function Home() {
   const { isLoading } = useContext(MyGlobalContext);
   React.useEffect(() => {
     getListProduct();
   });
-  console.log('Home');
   return (
     <>
       {/* <Loading /> */}

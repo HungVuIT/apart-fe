@@ -1,10 +1,11 @@
+import { MenuItemName } from './enum';
 export interface IMenuItem {
   icon: any
-  name: string
-  func: () => void
+  name: MenuItemName
 }
 
 export interface IPropsChildren {
+  className?: string
   children: JSX.Element
 }
 export interface IPropsInput {

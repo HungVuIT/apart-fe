@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebookF,
@@ -11,19 +11,20 @@ import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import classes from './LoginModal.module.scss';
 import './customMUI.scss';
-import { IDataLogin, IDataResgister } from '../../interface/auth';
-import { loginAccount, registerAccount } from '../../api/service/auth-service';
-import { showToastMessage } from '../../untils/showToast';
-import Toast from '../../components/Toast';
-import { typeToast } from '../../interface/globalType';
+import { IDataLogin, IDataResgister } from '../../../interface/auth';
+import { loginAccount, registerAccount } from '../../../api/service/auth-service';
+import { showToastMessage } from '../../../untils/showToast';
+import Toast from '../../../components/Toast';
+import { typeToast } from '../../../interface/globalType';
 import { ToastContainer } from 'react-toastify';
-import checkString from '../../untils/checkString';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 interface IProps {
   isLogin: boolean
   onClose: () => void
+  loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 interface ILoginFormValue {
   fullname: string
@@ -37,11 +38,10 @@ const schema = yup.object().shape({
     'Mật khẩu phải có 1 chữ số 1 chữ thường và 1 chữ hoa'
   )
 });
-const LoginModal = ({ isLogin, onClose }: IProps) => {
+const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
   const { register, setValue, control, handleSubmit, clearErrors, formState: { errors } } = useForm<ILoginFormValue>({
     resolver: yupResolver(schema)
   });
-  const [name, setName] = useState('');
   const [isShow, setIsShow] = useState(false);
   const [isSignIn, setIsSignIn] = useState(isLogin);
   console.log('re-render');
@@ -70,8 +70,11 @@ const LoginModal = ({ isLogin, onClose }: IProps) => {
         username: _data.username,
         password: _data.password
       };
+      setLoading(true);
       const data = await loginAccount(params);
+      setLoading(false);
       if (data.success) {
+        window.location.reload();
         showToastMessage(<Toast title='Đăng nhập thành công' message={data.message} />, typeToast.SUCCESS);
       } else {
         showToastMessage(<Toast title='Đăng nhập thất bại!' message={data.message} />, typeToast.ERROR);
@@ -86,8 +89,9 @@ const LoginModal = ({ isLogin, onClose }: IProps) => {
         firstName,
         lastName: lastName || ''
       };
+      setLoading(true);
       const data = await registerAccount(params);
-      console.log(data);
+      setLoading(false);
       if (data.success) {
         resetForm();
         showToastMessage(<Toast title='Đăng ký thành công' message={data.message} />, typeToast.SUCCESS);
@@ -99,7 +103,7 @@ const LoginModal = ({ isLogin, onClose }: IProps) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={classes.modal + ' customMUI-login'}
+      className={classes.modal + ' customMUI-login ' + (loading ? classes.loading : '')}
     >
       <CloseIcon className={classes.closeBtn} onClick={onClose} />
       <h1 className={classes.title}>{isSignIn ? 'Đăng nhập' : 'Đăng Ký'}</h1>

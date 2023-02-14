@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from '../../components/Container';
+import Container from '../../../components/Container';
 import './UserInfor.scss';
 import TextField from '@mui/material/TextField';
 import Radio from '@mui/material/Radio';
@@ -7,7 +7,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-import avt from '../../assets/img/avtshop.png';
+import avt from '../../../assets/img/avtshop.png';
 function UserInfor() {
   return (
     <div className='wrapper user-infor'>
@@ -49,19 +49,20 @@ function UserInfor() {
                   className='item-content'
                 />
               </div>
-              <FormControl className='item'>
-              <div className='item-title'>Giới tính :</div>
-                <RadioGroup
-                  row
-                  aria-labelledby='demo-row-radio-buttons-group-label'
-                  name='row-radio-buttons-group'
-                  className='item-content'
-                >
-                  <FormControlLabel className='item-radio' value='female' control={<Radio />} label='Nam' />
-                  <FormControlLabel className='item-radio' value='male' control={<Radio />} label='Nữ' />
-                  <FormControlLabel className='item-radio' value='other' control={<Radio />} label='Khác' />
-                </RadioGroup>
-              </FormControl>
+              <div className='item'>
+                <div className='item-title'>Giới tính :</div>
+                <div className='item-content'>
+                  <RadioGroup
+                    row
+                    aria-labelledby='demo-row-radio-buttons-group-label'
+                    name='row-radio-buttons-group'
+                  >
+                    <FormControlLabel className='item-radio' value='female' control={<Radio />} label='Nam' />
+                    <FormControlLabel className='item-radio' value='male' control={<Radio />} label='Nữ' />
+                    <FormControlLabel className='item-radio' value='other' control={<Radio />} label='Khác' />
+                  </RadioGroup>
+                </div>
+              </div>
               <div className='item'>
                 <div className='item-title'>Ngày sinh :</div>
                 <TextField

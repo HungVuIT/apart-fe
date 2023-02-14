@@ -1,7 +1,7 @@
 import React from 'react';
-import Container from '../../components/Container';
-import Search from '../../components/Search';
-import banner from '../../assets/img/productList-banner.png';
+import Container from '../../../components/Container';
+import Search from '../../../components/Search';
+import banner from '../../../assets/img/productList-banner.png';
 import './productList.scss';
 import ListItemProduct from './ListItem';
 function ProductList (): JSX.Element {

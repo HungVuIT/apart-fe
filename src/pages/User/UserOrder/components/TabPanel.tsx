@@ -1,5 +1,6 @@
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import './TabPanel.scss';
 interface TabPanelProps {
   children?: React.ReactNode
   index: number

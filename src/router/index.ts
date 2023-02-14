@@ -1,10 +1,11 @@
 import Dashboard from '../pages/Dashboard';
-import Home from '../pages/Home';
+import FavoriteList from '../pages/User/FavoriteList';
+import Home from '../pages/common/Home';
 import LoginPage from '../pages/login';
-import Product from '../pages/Product';
-import ProductList from '../pages/ProductList';
-import UserInfor from '../pages/UserInfor';
-import UserOrder from '../pages/UserOrder';
+import Product from '../pages/common/Product';
+import ProductList from '../pages/common/ProductList';
+import UserInfor from '../pages/User/UserInfor';
+import UserOrder from '../pages/User/UserOrder';
 
 const mainRouter = [
   {
@@ -24,8 +25,12 @@ const mainRouter = [
     component: UserOrder
   },
   {
-    path: 'user/information',
+    path: '/user/profile',
     component: UserInfor
+  },
+  {
+    path: '/user/favorite-list',
+    component: FavoriteList
   }
 ];
 const authRouter = [

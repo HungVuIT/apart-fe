@@ -1,5 +1,5 @@
 import React from 'react';
-import BreadCrumbComponent from '../../components/BreadCrumb';
+import BreadCrumbComponent from '../../../components/BreadCrumb';
 import Comment from './components/Comment';
 import Describe from './components/Describe';
 import MainContent from './components/MainContent';

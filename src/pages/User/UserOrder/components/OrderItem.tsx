@@ -1,6 +1,6 @@
 import React from 'react';
-import avt from '../../../assets/img/avtshop.png';
-import watch from '../../../assets/img/dientu-category.png';
+import avt from '../../../../assets/img/avtshop.png';
+import watch from '../../../../assets/img/dientu-category.png';
 import ChatIcon from '@mui/icons-material/Chat';
 import Button from '@mui/material/Button';
 interface IProps {

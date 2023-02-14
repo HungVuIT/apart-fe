@@ -1,10 +1,10 @@
 import React from 'react';
-import Container from '../../../components/Container';
+import Container from '../../../../components/Container';
 import Carousel from 'react-material-ui-carousel';
-import itempng from '../../../assets/img/item.png';
-import item2png from '../../../assets/img/logo.png';
-import item3png from '../../../assets/img/dientu-category.png';
-import Item from '../../../components/Item';
+import itempng from '../../../../assets/img/item.png';
+import item2png from '../../../../assets/img/logo.png';
+import item3png from '../../../../assets/img/dientu-category.png';
+import Item from '../../../../components/Item';
 function SameProduct(): JSX.Element {
   const [index, setIndex] = React.useState(0);
   const items = [itempng, item2png, item3png, item2png, itempng, item3png, item3png, item2png, item3png];
