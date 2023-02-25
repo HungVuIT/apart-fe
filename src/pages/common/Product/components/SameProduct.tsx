@@ -8,7 +8,6 @@ import Item from '../../../../components/Item';
 function SameProduct(): JSX.Element {
   const [index, setIndex] = React.useState(0);
   const items = [itempng, item2png, item3png, item2png, itempng, item3png, item3png, item2png, item3png];
-  console.log(index);
   return (
     <Container>
       <div className='Same-product__wrapper'>

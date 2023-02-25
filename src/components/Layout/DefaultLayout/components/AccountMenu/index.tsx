@@ -1,0 +1,135 @@
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Logout from '@mui/icons-material/Logout';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
+import ViewListIcon from '@mui/icons-material/ViewList';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
+import defaultAvt from '../../../../../assets/img/default-avt.png';
+import classes from './menu.module.scss';
+import { removeAccessToken, removeRefreshToken } from '../../../../../untils/localStorage';
+import { useNavigate } from 'react-router-dom';
+import { MenuItemName } from '../../../../../interface/enum';
+import { useAppSelector } from '../../../../../hooks/hooks';
+function AccountMenu() {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+  const { profile } = useAppSelector((state) => state.user);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleLogout = () => {
+    removeAccessToken();
+    removeRefreshToken();
+    window.location.reload();
+  };
+  const handleClickMenu = (_name: MenuItemName) => {
+    switch (_name) {
+      case MenuItemName.LOGOUT:
+        handleLogout();
+        break;
+      case MenuItemName.PROFILE:
+        navigate('/user/profile');
+        break;
+      case MenuItemName.FAVEORITE_LIST:
+        navigate('/user/favorite-list');
+        break;
+      case MenuItemName.ORDER:
+        navigate('/user/order');
+        break;
+    }
+  };
+  return (
+    <React.Fragment>
+      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', right: '20px' }}>
+        <ShoppingCartIcon className='shopping-cart' onClick={() => navigate('/user/cart')}/>
+        <Tooltip title="Menu">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2 }}
+            aria-controls={open ? 'account-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+          >
+            <Avatar src={profile.avatar ? profile.avatar : defaultAvt} sx={{ width: 32, height: 32 }} />
+          </IconButton>
+        </Tooltip>
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            mt: 1.5,
+            '& .MuiAvatar-root': {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1
+            },
+            '&:before': {
+              content: '""',
+              display: 'block',
+              position: 'absolute',
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: 'background.paper',
+              transform: 'translateY(-50%) rotate(45deg)',
+              zIndex: 0
+            }
+          }
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem onClick={() => handleClickMenu(MenuItemName.PROFILE)} className={classes.menuItem}>
+          <AccountCircleIcon className={classes.icon}/> Hồ Sơ
+        </MenuItem>
+        <MenuItem onClick={() => handleClickMenu(MenuItemName.FAVEORITE_LIST)} className={classes.menuItem}>
+          <FavoriteIcon className={classes.icon}/> Sản phẩm yêu thích
+        </MenuItem>
+        <MenuItem onClick={() => handleClickMenu(MenuItemName.ORDER)} className={classes.menuItem}>
+          <ViewListIcon className={classes.icon}/> Đơn mua
+        </MenuItem>
+        <Divider />
+        <MenuItem onClick={() => handleClickMenu(MenuItemName.NOTIFICATION)}>
+          <ListItemIcon>
+            <CircleNotificationsIcon fontSize="small" />
+          </ListItemIcon>
+          Thông báo
+        </MenuItem>
+        <MenuItem onClick={() => handleClickMenu(MenuItemName.LOGOUT)}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Đăng xuất
+        </MenuItem>
+      </Menu>
+    </React.Fragment>
+  );
+}
+
+export default AccountMenu;

@@ -1,0 +1,36 @@
+@import '../../../../components/Global/foundation/mixin';
+
+.wrapper {
+  width: 25%;
+  padding: 10px;
+  margin-right: 10px;
+  box-shadow: 0px 3px 1px -2px RGB(0 0 0/20%), 0px 2px 2px 0px RGB(0 0 0/14%), 0px 1px 5px 0px RGB(0 0 0/12%);
+  @include responsive_max1024 {
+    width: 20%;
+  }
+  & .title {
+    font-size: 18px;
+    text-align: center;
+  }
+  & .line {
+    margin: 5px 0;
+  }
+  & .form-control {
+    width: 100%;
+    margin: 10px 0 20px 0;
+    padding: 0 10px;
+
+    & .label {
+      margin-left: 20px;
+      @include responsive_max1024 {
+        margin-left: 5px;
+      }
+      & .checkbox {
+        font-size: 16px;
+      }
+      &.css-ahj2mt-MuiTypography-root {
+        font-size: 16px;
+      }
+    }
+  }
+}

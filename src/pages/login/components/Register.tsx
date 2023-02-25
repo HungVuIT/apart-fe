@@ -43,7 +43,6 @@ export default function Register({ toast, setIsLoad }: IProps) {
   }, [username, password]);
 
   const handleRegister = async () => {
-    console.log('dangky');
     if (validator()) {
       const fullname = name.split(' ');
       const lastName = fullname.pop();
@@ -57,7 +56,6 @@ export default function Register({ toast, setIsLoad }: IProps) {
       setIsLoad(true);
       const data = await registerAccount(params);
       setIsLoad(false);
-      console.log(data);
       if (data.success) {
         toast(<Toast title='Đăng ký thành công' message={data.message} />, typeToast.SUCCESS);
       } else {

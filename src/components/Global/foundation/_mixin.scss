@@ -9,6 +9,7 @@ $res_M768 : "only screen and (max-width: 768px)";
 $res_M992 : "only screen and (max-width: 992px)";
 $res_M1024 : "only screen and (max-width: 1024px)";
 $res_M1200 : "only screen and (max-width: 1200px)";
+$res_M1366 : "only screen and (max-width: 1366px)";
 $res_min425 : "only screen and (min-width: 425px)";
 $res_min768 : "only screen and (min-width: 768px)";
 $res_min992 : "only screen and (min-width: 992px)";
@@ -101,3 +102,8 @@ $res_1200 : "only screen andin (min-width: 1200px)";
       @content;
   }
 }
+@mixin responsive_max1366() {
+    @media #{$res_M1366} {
+        @content;
+    }
+  }

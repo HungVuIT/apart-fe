@@ -17,6 +17,7 @@ function FeaturedProducts ({ title }: IProps): JSX.Element {
           <Item linkImg={item} tradeMark='RTX' rating={2} price={25000000}/>
           <Item linkImg={item} tradeMark='RTX' rating={2} price={25000000}/>
         </div>
+        <div className="product-all">Xem tất cả</div>
       </div>
     </Container>
   );

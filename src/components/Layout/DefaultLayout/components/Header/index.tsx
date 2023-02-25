@@ -17,6 +17,10 @@ import { MyGlobalContext } from '../../../../../store/context/MyglobalContext';
 import Dialog from '@mui/material/Dialog';
 import './header.scss';
 import LoginModal from '../../../../../pages/common/auth/LoginModal';
+import { getCart, getProfile } from '../../../../../redux/user/userThunk';
+import { useAppDispatch } from '../../../../../hooks/hooks';
+import AccountMenu from '../AccountMenu';
+import { getListOfShop } from '../../../../../redux/common/commonThunk';
 const items = ['Đồng hồ', 'Best selling', 'Nam', 'Nữ', 'Smartwatch', 'Cặp đôi', 'Tin tức'];
 
 function Header() {
@@ -28,7 +32,16 @@ function Header() {
   const token = getAccessToken();
   const navigate = useNavigate();
   const { setNowUrl } = React.useContext(MyGlobalContext);
-
+  const dispatch = useAppDispatch();
+  React.useEffect(() => {
+    if (getAccessToken()) {
+      dispatch(getProfile());
+      dispatch(getCart());
+    }
+  }, [getAccessToken(), dispatch]);
+  React.useEffect(() => {
+    dispatch(getListOfShop());
+  }, []);
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -52,7 +65,7 @@ function Header() {
               variant="h6"
               noWrap
               component="a"
-              href="/"
+              onClick={() => navigate('/')}
               className='header__logo'
             >
               D&H
@@ -70,7 +83,9 @@ function Header() {
             </Box>
 
             {token
-              ? <ShoppingCartIcon className='shopping-cart'/>
+              ? <div className='user-group'>
+                <AccountMenu />
+              </div>
               : <>
               <div className='btn__wrapper'>
                 <Button variant="contained" className='header-btn' onClick={() => handleClickLogin(true)}>Đăng nhập</Button>

@@ -6,7 +6,6 @@ export const loginAccount = async (params: IDataLogin) => {
   try {
     const url = 'auth/sign-in';
     const response = await axiosClient.post(url, params);
-    console.log(response.data);
     if (response.data.success) {
       setAccessToken(response.data.data.access_token);
       setRefreshToken(response.data.data.refresh_token);

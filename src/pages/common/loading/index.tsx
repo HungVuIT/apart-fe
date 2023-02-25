@@ -1,14 +1,13 @@
 import React from 'react';
 import './loading.scss';
-function Loading() {
+import ReactLoading from 'react-loading';
+interface IProps {
+  _type: any
+}
+function Loading({ _type }: IProps) {
   return (
     <div className="loading__wrapper">
-        <div className="loading__container">
-            <span className="one"></span>
-            <span className="two"></span>
-            <span className="three"></span>
-            <span className="four"></span>
-        </div>
+        <ReactLoading type={_type} color="#000" />
         <i className="title">Loading...</i>
     </div>
   );

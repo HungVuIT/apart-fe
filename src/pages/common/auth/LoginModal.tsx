@@ -20,6 +20,7 @@ import { ToastContainer } from 'react-toastify';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { setAccessToken } from '../../../untils/localStorage';
 interface IProps {
   isLogin: boolean
   onClose: () => void
@@ -44,7 +45,6 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
   });
   const [isShow, setIsShow] = useState(false);
   const [isSignIn, setIsSignIn] = useState(isLogin);
-  console.log('re-render');
 
   const handleTransfer = () => {
     setValue('fullname', '');
@@ -64,7 +64,6 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
   };
 
   const onSubmit: SubmitHandler<ILoginFormValue> = async (_data: ILoginFormValue) => {
-    console.log(_data);
     if (isSignIn) {
       const params: IDataLogin = {
         username: _data.username,
@@ -74,7 +73,6 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
       const data = await loginAccount(params);
       setLoading(false);
       if (data.success) {
-        window.location.reload();
         showToastMessage(<Toast title='Đăng nhập thành công' message={data.message} />, typeToast.SUCCESS);
       } else {
         showToastMessage(<Toast title='Đăng nhập thất bại!' message={data.message} />, typeToast.ERROR);

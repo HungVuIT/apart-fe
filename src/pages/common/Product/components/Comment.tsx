@@ -9,7 +9,6 @@ function Comment(): JSX.Element {
   const handleClick = () => {
     setIsShow(!isShow);
   };
-  console.log(value);
   return (
     <Container >
       <div className="describe__wrapper">

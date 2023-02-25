@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import Container from '../../../components/Container';
 import './UserInfor.scss';
 import TextField from '@mui/material/TextField';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-import avt from '../../../assets/img/avtshop.png';
+import Loading from '../../common/loading';
+import { useSelector } from 'react-redux/es/exports';
+import { RootState } from '../../../redux/store';
 function UserInfor() {
+  const { profile, loading } = useSelector((state: RootState) => state.user);
   return (
     <div className='wrapper user-infor'>
       <Container>
-        <>
+        {(!loading.profile && profile.username)
+          ? <>
           <div className='infor-title'>Hồ sơ của tôi</div>
           <div className='infor-content flex'>
             <div className='content-all'>
@@ -21,7 +24,7 @@ function UserInfor() {
                 <TextField
                   disabled
                   id='outlined-disabled'
-                  defaultValue='Letiendung123'
+                  defaultValue={profile.username}
                   className='item-content'
                 />
               </div>
@@ -29,7 +32,7 @@ function UserInfor() {
                 <div className='item-title'>Họ và tên :</div>
                 <TextField
                   id='outlined-disabled'
-                  defaultValue='Lê Tiến Dũng'
+                  defaultValue={profile.firstName + ' ' + profile.lastName}
                   className='item-content'
                 />
               </div>
@@ -37,7 +40,7 @@ function UserInfor() {
                 <div className='item-title'>Email :</div>
                 <TextField
                   id='outlined-disabled'
-                  defaultValue='dungle1305@gmail.com'
+                  defaultValue={profile.email ? profile.email : ''}
                   className='item-content'
                 />
               </div>
@@ -45,7 +48,7 @@ function UserInfor() {
                 <div className='item-title'>Số điện thoại :</div>
                 <TextField
                   id='outlined-disabled'
-                  defaultValue='0905029453'
+                  defaultValue={profile.phoneNumber ? profile.phoneNumber : ''}
                   className='item-content'
                 />
               </div>
@@ -69,7 +72,7 @@ function UserInfor() {
                   id='date'
                   className='item-content'
                   type='date'
-                  defaultValue='2017-05-24'
+                  defaultValue={profile.birthDay ? profile.birthDay : ''}
                   sx={{ width: 220 }}
                   InputLabelProps={{
                     shrink: true
@@ -79,14 +82,16 @@ function UserInfor() {
             </div>
             <hr className='hight-line content-line'></hr>
             <div className='content-avt'>
-              <img src={avt} alt='Avatar' className='img-avt' />
+              <img src={profile.avatar} alt='Avatar' className='img-avt' />
               <Button variant='outlined'>Chọn ảnh</Button>
             </div>
           </div>
           <div className='infor-save'>
           <Button className='btn-save' variant='contained'>Lưu</Button>
           </div>
-        </>
+          </>
+          : <Loading _type='balls' />
+        }
       </Container>
     </div>
   );

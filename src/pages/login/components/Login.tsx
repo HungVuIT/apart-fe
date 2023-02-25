@@ -20,7 +20,6 @@ export default function Login({ toast, setIsLoad }: IProps) {
 
   const navigate = useNavigate();
   const { nowUrl } = React.useContext(MyGlobalContext);
-  console.log(nowUrl);
 
   React.useEffect(() => {
     if (username.length < 4) {
