@@ -25,7 +25,7 @@ interface IProps {
   isLogin: boolean
   onClose: () => void
   loading: boolean
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setLoading: (c: boolean) => void
 }
 interface ILoginFormValue {
   fullname: string

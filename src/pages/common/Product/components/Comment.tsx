@@ -1,11 +1,21 @@
 import { Accordion, AccordionDetails, AccordionSummary, Button, Rating, TextField, Typography } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Container from '../../../../components/Container';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-function Comment(): JSX.Element {
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
+import { getCommentById } from '../../../../redux/watch/watchThunk';
+interface IProps {
+  id: number | undefined
+}
+function Comment({ id }: IProps): JSX.Element {
   const [isShow, setIsShow] = React.useState(false);
   const [value, setValue] = React.useState<number | null>(2);
+  const dispatch = useAppDispatch();
+  const { displayWatch } = useAppSelector(state => state.watch);
+  const { comment } = displayWatch;
+  useEffect(() => {
+    id && dispatch(getCommentById(id));
+  }, []);
   const handleClick = () => {
     setIsShow(!isShow);
   };

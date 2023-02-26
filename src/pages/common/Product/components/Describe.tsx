@@ -3,8 +3,10 @@ import Container from '../../../../components/Container';
 import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TableDescribe from './TableDescribe';
-
-function Describe() {
+interface IProps {
+  id: number | undefined
+}
+function Describe({ id }: IProps) {
   return (
     <Container >
       <div className="describe__wrapper">

@@ -25,6 +25,7 @@
     "@types/react-dom": "^18.0.8",
     "axios": "^1.2.0",
     "eslint-config-standard-with-typescript": "^23.0.0",
+    "moment": "^2.29.4",
     "query-string": "^7.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

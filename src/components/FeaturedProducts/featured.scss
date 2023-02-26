@@ -13,9 +13,19 @@
   }
 }
 .product-list {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  @include responsive_max992 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include responsive_min1600 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
 }
 .product-all {
   margin: 20px 0;

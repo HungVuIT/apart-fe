@@ -3,7 +3,7 @@ $res_375 : "only screen and (min-width: 375px) and (max-width: 424px)";
 $res_425 : "only screen and (min-width: 425px) and (max-width: 767px)";
 $res_768 : "only screen and (min-width: 768px) and (max-width: 991px)";
 $res_992 : "only screen and (min-width: 992px) and (max-width: 1023px)";
-$res_1024 : "only screen and (min-width: 1024px) and (max-width: 1999px)";
+$res_1024 : "only screen and (min-width: 1024px) and (max-width: 1199px)";
 $res_M425 : "only screen and (max-width: 425px)";
 $res_M768 : "only screen and (max-width: 768px)";
 $res_M992 : "only screen and (max-width: 992px)";
@@ -15,7 +15,9 @@ $res_min768 : "only screen and (min-width: 768px)";
 $res_min992 : "only screen and (min-width: 992px)";
 $res_min1024 : "only screen and (min-width: 1024px)";
 $res_min1200 : "only screen and (min-width: 1200px)";
-$res_1200 : "only screen andin (min-width: 1200px)";
+$res_min1366 : "only screen and (min-width: 1366px)";
+$res_min1600 : "only screen and (min-width: 1600px)";
+$res_1200 : "only screen and (min-width: 1200px) and (max-width: 1999px)";
  
 @mixin responsive_320() {
     @media #{$res_320} {
@@ -76,6 +78,16 @@ $res_1200 : "only screen andin (min-width: 1200px)";
   @media #{$res_min1200} {
       @content;
   }
+}
+@mixin responsive_min1366() {
+    @media #{$res_min1366} {
+        @content;
+    }
+  }
+@mixin responsive_min1600() {
+@media #{$res_min1600} {
+    @content;
+}
 }
 @mixin responsive_max425() {
   @media #{$res_M425} {

@@ -8,14 +8,17 @@ import { menCategory, womenCategory, coCategory, dientuCategory, treemCategory, 
 import FeaturedProducts from '../../../components/FeaturedProducts';
 import { MyGlobalContext } from '../../../store/context/MyglobalContext';
 import { getListProduct } from '../../../api/service/home-service';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { getListSaleOfWatch } from '../../../redux/watch/watchThunk';
 function Home() {
   const { isLoading } = useContext(MyGlobalContext);
+  const dispatch = useAppDispatch();
+  const { saleWatchList } = useAppSelector(state => state.watch);
   React.useEffect(() => {
-    getListProduct();
-  });
+    dispatch(getListSaleOfWatch());
+  }, []);
   return (
     <>
-      {/* <Loading /> */}
       <>
         <Container>
           <div className="banner">
@@ -35,9 +38,9 @@ function Home() {
             </div>
           </div>
         </Container>
-        <FeaturedProducts title='Top bán chạy'/>
-        <FeaturedProducts title='Khuyến mãi shock'/>
-        <FeaturedProducts title='Sản phẩm mới'/>
+        <FeaturedProducts title='Top bán chạy' watchList={saleWatchList}/>
+        <FeaturedProducts title='Khuyến mãi shock' watchList={saleWatchList}/>
+        <FeaturedProducts title='Sản phẩm mới' watchList={saleWatchList}/>
       </>
     </>
   );

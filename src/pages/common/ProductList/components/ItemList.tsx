@@ -8,7 +8,7 @@ function ItemList() {
   return (
     <div className={classes.grid}>
       {arr.map(i => (
-        <Item key={i} linkImg={item} tradeMark='RTX' rating={2} price={25000000}/>
+        <Item key={i} id={i} linkImg={item} tradeMark='RTX' rating={2} price={25000000}/>
       ))}
     </div>
   );

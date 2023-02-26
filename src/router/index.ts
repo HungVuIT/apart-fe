@@ -18,7 +18,7 @@ const mainRouter = [
     component: ProductList
   },
   {
-    path: '/product',
+    path: '/product/:productId',
     component: Product
   },
   {

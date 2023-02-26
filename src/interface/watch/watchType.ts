@@ -1,3 +1,4 @@
+import { initShop, IShop } from './../common/interface';
 export interface IWatch {
   id: number
   createdAt: string
@@ -31,5 +32,64 @@ export interface IWatch {
   image: string[]
   madeBy?: string
   warranty?: string
-
+  sale_off?: number
+  rating: number
 }
+interface ILoadingWatch {
+  watch: boolean
+  top: boolean
+  new: boolean
+  sale: boolean
+  now: boolean
+  cmt: boolean
+}
+export const initWatch: IWatch = {
+  id: 1,
+  createdAt: '',
+  updatedAt: '',
+  name: '',
+  SID: 1,
+  CID: [],
+  description: '',
+  content: '',
+  quantity: 300,
+  saled: 0,
+  price: 2000000,
+  priceFloor: 1000000,
+  gender: '',
+  materialCord: '',
+  glassSurface: '',
+  glassSize: '',
+  image: [],
+  isActive: true,
+  sale_off: 0,
+  rating: 5
+};
+interface IStateProduct {
+  watch: IWatch
+  comment: any
+  shop: IShop
+}
+export const initStateProduct: IStateProduct = {
+  watch: initWatch,
+  comment: '',
+  shop: initShop
+};
+export interface IStateWatch {
+  displayWatch: IStateProduct
+  watchList: IWatch[]
+  topWatchList: IWatch[]
+  newWatchList: IWatch[]
+  saleWatchList: IWatch[]
+  loading: ILoadingWatch
+  error: string
+}
+export const initWatchList: IWatch[] = [];
+export const initLoadingWatch: ILoadingWatch = {
+  watch: false,
+  top: false,
+  new: false,
+  sale: false,
+  now: false,
+  cmt: false
+};

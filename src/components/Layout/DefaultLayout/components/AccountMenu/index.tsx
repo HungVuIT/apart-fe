@@ -24,8 +24,7 @@ function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
-  const { profile } = useAppSelector((state) => state.user);
-
+  const { profile, cart } = useAppSelector((state) => state.user);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -53,10 +52,17 @@ function AccountMenu() {
         break;
     }
   };
+  const handleClickCart = () => {
+    window.scrollTo(0, 0);
+    navigate('/user/cart');
+  };
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', right: '20px' }}>
-        <ShoppingCartIcon className='shopping-cart' onClick={() => navigate('/user/cart')}/>
+        <div className={classes['cart-group']}>
+          <ShoppingCartIcon className='shopping-cart' onClick={handleClickCart}/>
+          <div className={classes['cart-number']}>{cart.length || 0}</div>
+        </div>
         <Tooltip title="Menu">
           <IconButton
             onClick={handleClick}
@@ -114,17 +120,12 @@ function AccountMenu() {
         <MenuItem onClick={() => handleClickMenu(MenuItemName.ORDER)} className={classes.menuItem}>
           <ViewListIcon className={classes.icon}/> Đơn mua
         </MenuItem>
-        <Divider />
-        <MenuItem onClick={() => handleClickMenu(MenuItemName.NOTIFICATION)}>
-          <ListItemIcon>
-            <CircleNotificationsIcon fontSize="small" />
-          </ListItemIcon>
+        <MenuItem onClick={() => handleClickMenu(MenuItemName.NOTIFICATION)} className={classes.menuItem}>
+          <CircleNotificationsIcon className={classes.icon}/>
           Thông báo
         </MenuItem>
-        <MenuItem onClick={() => handleClickMenu(MenuItemName.LOGOUT)}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
+        <MenuItem onClick={() => handleClickMenu(MenuItemName.LOGOUT)} className={classes.menuItem} >
+          <Logout className={classes.icon} />
           Đăng xuất
         </MenuItem>
       </Menu>

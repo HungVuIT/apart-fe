@@ -4,15 +4,16 @@ import Rating from '@mui/material/Rating';
 import { useNavigate } from 'react-router-dom';
 import { formatMoney } from '../../untils/formartMoney';
 interface IProps {
+  id: number
   linkImg: string
   tradeMark: string
   rating: number
   price: number
 }
-function Item ({ linkImg, tradeMark, rating, price }: IProps): JSX.Element {
+function Item ({ linkImg, tradeMark, rating, price, id }: IProps): JSX.Element {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate('/product');
+    navigate(`/product/${id}`);
     window.scrollTo(0, 0);
   };
   return (

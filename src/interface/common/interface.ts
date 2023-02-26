@@ -22,3 +22,21 @@ export interface IShop {
   UID: number
   isActive: boolean
 }
+export const initShop: IShop = {
+  id: 0,
+  createdAt: '',
+  updatedAt: '',
+  name: '',
+  description: '',
+  content: '',
+  province: '',
+  district: '',
+  ward: '',
+  address: '',
+  email: '',
+  phoneNumber: '',
+  logo: '',
+  banner: null,
+  UID: 0,
+  isActive: false
+};

@@ -20,6 +20,12 @@ export interface GlobalContext {
   setIsLoading: (c: boolean) => void
   nowUrl: string
   setNowUrl: (c: string) => void
+  loading: boolean
+  setLoading: (c: boolean) => void
+  isOpenLogin: boolean
+  setIsOpenLogin: (c: boolean) => void
+  isLogin: boolean
+  setIsLogin: (c: boolean) => void
 }
 export interface ContextProviderProps {
   children: React.ReactNode

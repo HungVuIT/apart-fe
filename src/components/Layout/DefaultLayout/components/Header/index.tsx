@@ -25,9 +25,10 @@ const items = ['Đồng hồ', 'Best selling', 'Nam', 'Nữ', 'Smartwatch', 'C�
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [isOpenLogin, setIsOpenLogin] = React.useState(false);
-  const [isLogin, setIsLogin] = React.useState(true);
-  const [loading, setLoading] = React.useState(false);
+  // const [isOpenLogin, setIsOpenLogin] = React.useState(false);
+  // const [isLogin, setIsLogin] = React.useState(true);
+  // const [loading, setLoading] = React.useState(false);
+  const { isOpenLogin, setIsOpenLogin, isLogin, setIsLogin, loading, setLoading } = React.useContext(MyGlobalContext);
   const locationUrl = useLocation();
   const token = getAccessToken();
   const navigate = useNavigate();
@@ -67,6 +68,9 @@ function Header() {
               component="a"
               onClick={() => navigate('/')}
               className='header__logo'
+              style={{
+                cursor: 'pointer'
+              }}
             >
               D&H
             </Typography>

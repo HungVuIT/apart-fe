@@ -5,3 +5,24 @@
   font-size: 20px;
   margin-right: 20px;
 }
+.cart-group {
+  position: relative;
+  margin-top: 10px;
+  & .shopping-cart {
+    font-size: 30px;
+    cursor: pointer;
+  }
+  & .cart-number {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 23px;
+    height: 18px;
+    font-size: 14px;
+    border-radius: 2.75rem;
+    text-align: center;
+    background-color: #e03131;
+    color: white;
+    padding: 0 0.3125rem;
+  }
+}

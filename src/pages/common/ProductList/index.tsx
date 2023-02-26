@@ -9,13 +9,13 @@ function ProductList (): JSX.Element {
   return (
     <div className='product-list__wrapper'>
       <Container >
-        <div className="search__wrapper">
-          <Search />
+        <div className="banner">
+          <img src={banner} alt="banner" className='img-banner'/>
         </div>
       </Container>
       <Container >
-        <div className="banner">
-          <img src={banner} alt="banner" className='img-banner'/>
+        <div className="search__wrapper">
+          <Search />
         </div>
       </Container>
       <div className='tags-and-lst flex'>

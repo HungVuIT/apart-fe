@@ -1,11 +1,24 @@
 import React from 'react';
 import Container from '../../../../components/Container';
 import avt from '../../../../assets/img/avtshop.png';
-function SubContent() {
+import { useAppSelector } from '../../../../hooks/hooks';
+import moment from 'moment';
+import 'moment/locale/vi';
+interface IProps {
+  id: number | undefined
+}
+function SubContent({ id }: IProps) {
+  const { displayWatch } = useAppSelector(state => state.watch);
+  const { watch, shop } = displayWatch;
+  const caculatorDay = (_day: string) => {
+    const date = new Date(_day);
+    const formattedDate = moment(date, 'YYYYMMDD').locale('vi').fromNow();
+    return formattedDate;
+  };
   return (
     <Container >
       <div className="sub-content__wrapper">
-        <img src={avt} alt="" className="sub-img" />
+        <img src={shop.logo || avt} alt="" className="sub-img" />
         <hr className="line" />
         <div className="sub-info">
           <div className="info" style={{ width: '25%' }}>
@@ -31,7 +44,7 @@ function SubContent() {
           <div className="info 3" style={{ width: '35%' }}>
             <div className="item">
               <span className="title">Tham gia</span>
-              <span className="value">4 năm trước</span>
+              <span className="value">{caculatorDay(shop.createdAt)}</span>
             </div>
             <div className="item">
               <span className="title">Người theo dõi</span>
@@ -41,7 +54,7 @@ function SubContent() {
         </div>
         <hr className="line" />
         <div className="sub-address">
-          Địa chỉ: 175/ đường Quang Trung - Quận 10 - Thành phố Hồ Chí Minh
+          {shop.address + ', ' + shop.ward + ', ' + shop.district + ', ' + shop.province}
         </div>
       </div>
     </Container>
