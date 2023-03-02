@@ -1,0 +1,19 @@
+.css-1e2bxag-MuiDataGrid-root .MuiDataGrid-columnHeaderTitleContainer {
+  justify-content: center;
+}
+.MuiDataGrid-root .MuiDataGrid-cell:focus {
+  outline: none !important;
+}
+.css-1e2bxag-MuiDataGrid-root .MuiDataGrid-columnHeader:focus {
+  outline: none !important;
+}
+.css-1jbbcbn-MuiDataGrid-columnHeaderTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+.css-1e2bxag-MuiDataGrid-root .MuiDataGrid-row,
+.css-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell--textLeft,
+.css-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell--textCenter {
+  min-height: 90px !important;
+  max-height: 90px !important;
+}

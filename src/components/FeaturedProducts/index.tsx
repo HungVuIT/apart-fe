@@ -5,6 +5,7 @@ import './featured.scss';
 import Item from '../Item';
 import { IWatch } from '../../interface/watch/watchType';
 import defaultLogo from '../../assets/img/logo-watch.png';
+import Loading from '../../pages/common/loading';
 interface IProps {
   title: string
   watchList: IWatch[]
@@ -31,7 +32,8 @@ function FeaturedProducts ({ title, watchList }: IProps): JSX.Element {
   }, [ele, watchList]);
   return (
     <Container >
-      <div className="featured__wrapper">
+      {watchListRender.length > 0
+        ? (<div className="featured__wrapper">
         <div className="featured-title">{title}</div>
         <div className="product-list">
           {watchListRender.map(watch => (
@@ -39,7 +41,9 @@ function FeaturedProducts ({ title, watchList }: IProps): JSX.Element {
           ))}
         </div>
         <div className="product-all">Xem tất cả</div>
-      </div>
+      </div>)
+        : <Loading _type={'balls'} />
+      }
     </Container>
   );
 }

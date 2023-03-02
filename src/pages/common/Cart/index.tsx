@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { IShop } from '../../../interface/common/interface';
 import { ICart } from '../../../interface/user/interface';
@@ -16,6 +16,20 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import axiosClient from '../../../api/axiosClient';
 import { getCart } from '../../../redux/user/userThunk';
 import { removeItemCart } from '../../../redux/user/userSlice';
+import CartPages from './Cart';
+import './customMUI.scss';
+
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridRowId,
+  GridColumns,
+  GridColDef,
+  GridValueGetterParams,
+  GridRenderCellParams
+} from '@mui/x-data-grid';
+import Box from '@mui/material/Box';
+
 interface IItemCart {
   id: number
   item: ICart
@@ -26,10 +40,83 @@ interface ICartRender {
   items: IItemCart[]
   checked: boolean
 }
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height
+  };
+}
 function Cart() {
   const dispatch = useAppDispatch();
   const { cart, loading } = useAppSelector(state => state.user);
   const { shopList } = useAppSelector(state => state.common);
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  console.log(windowDimensions);
+  const caculatorWidth = (value: number) => {
+    return (windowDimensions.width * 70 / 100) * (value / 100);
+  };
+  const columns: GridColDef[] = [
+    {
+      field: 'image',
+      headerName: 'Sản phẩm',
+      width: caculatorWidth(20),
+      renderCell: (params) => (
+        <div className={classes['watch-name']}>
+          <img src={params.row.image || defaultLogo} alt={params.row.name} className={classes.productAvt}/>
+          <div className={classes.productName}>{params.row.name}</div>
+        </div>
+      )
+    },
+    {
+      field: 'price',
+      headerName: 'Đơn giá',
+      width: caculatorWidth(18),
+      renderCell: (params) => (
+        <div className={classes['watch-price']}>{formatMoney.format(params.row.price)}</div>
+      )
+    },
+    {
+      field: 'quantity',
+      headerName: 'Số lượng',
+      width: caculatorWidth(24),
+      renderCell: (params) => (
+        <div className={classes['watch-quantity']}>
+          <Button className={classes.btn}><RemoveIcon /></Button>
+          <span className={classes.watchQuantity}>{params.row.quantity}</span>
+          <Button className={classes.btn}><AddIcon /></Button>
+        </div>
+      )
+    },
+    {
+      field: 'totalPrice',
+      headerName: 'Tổng',
+      width: caculatorWidth(18),
+      renderCell: (params) => (
+        <div className={classes['watch-total']}>
+          <span>{formatMoney.format(params.row.quantity * params.row.price)}</span>
+        </div>
+      )
+    },
+    {
+      field: 'actions',
+      type: 'actions',
+      width: caculatorWidth(5),
+      renderCell: (params) => (
+        <div className={classes['watch-total']}>
+          <DeleteForeverIcon className={classes.totalIcon} onClick={() => handleRemoveItemFromCart(params.row.id)}/>
+        </div>
+      )
+    }
+  ];
   const CartRender: ICartRender[] = useMemo(() => {
     const lst: ICartRender[] = [];
     cart.forEach(item => {
@@ -50,6 +137,57 @@ function Cart() {
     return lst;
   }, [cart]);
   console.log('CartRender', CartRender);
+  const rows = [
+    {
+      id: 1,
+      image: defaultAvt,
+      name: '123',
+      price: '1231241',
+      quantity: '123'
+    },
+    {
+      id: 2,
+      image: 'a',
+      name: '123',
+      price: '1231241',
+      quantity: '123'
+    },
+    {
+      id: 3,
+      image: 'a',
+      name: '123',
+      price: '1231241',
+      quantity: '123'
+    },
+    {
+      id: 4,
+      image: 'a',
+      name: '123',
+      price: '1231241',
+      quantity: '123'
+    },
+    {
+      id: 5,
+      image: 'a',
+      name: '123',
+      price: '1231241',
+      quantity: '123'
+    },
+    {
+      id: 6,
+      image: 'a',
+      name: '123',
+      price: '1231241',
+      quantity: '123'
+    },
+    {
+      id: 7,
+      image: 'a',
+      name: '123',
+      price: '1231241',
+      quantity: '123'
+    }
+  ];
   const handleShopName = (id: number): (IShop | null) => {
     let res: (IShop | null) = null;
     shopList.forEach(shop => {
@@ -90,61 +228,22 @@ function Cart() {
     <>
       {loading.cart
         ? <Container className={classes.mgT100}>
-          <Loading _type={'balls'}/>
+          {/* <Loading _type={'balls'}/> */}
+          <CartPages />
         </Container>
         : cart.length > 0
           ? <div className={classes.wrapper}>
-         <div className={classes.list}>
-           <ul className={classes.title}>
-             <li className={classes['product-title']}>Sản phẩm</li>
-             <li className={classes['price-title']}>Đơn giá</li>
-             <li className={classes['quantity-title']}>Số lượng</li>
-             <li className={classes['total-title']}>Tổng</li>
-           </ul>
-           <div className={classes.items}>
-             {CartRender.map(cart => (
-               <div key={cart.SID} className={classes.shopItem}>
-                 <div className={classes['shop-wrapper']}>
-                   <Checkbox
-                     style={{
-                       transform: 'scale(1.4)'
-                     }}
-                     indeterminate={true}
-                   />
-                   <div className={classes.avt}><img src={handleShopName(cart.SID)?.logo || defaultAvt} alt="Shop Avatar" className={classes.shopAvt}/></div>
-                   <span className={classes.shopName}>{handleShopName(cart.SID)?.name}</span>
-                 </div>
-                 {cart.items.map(value => (
-                   <React.Fragment key={value.id}>
-                     <hr color="#ced4da" />
-                     <div className={classes['product-wrapper']}>
-                       <div className={classes['watch-name']}>
-                         <Checkbox
-                           style={{
-                             transform: 'scale(1.3)'
-                           }}
-                           checked={value.checked}
-                         />
-                         <img src={value.item.watch.image[0] || defaultLogo} alt={value.item.watch.name} className={classes.productAvt}/>
-                         <div className={classes.productName}>{value.item.watch.name}</div>
-                       </div>
-                       <div className={classes['watch-price']}>{formatMoney.format(value.item.watch.price)}</div>
-                       <div className={classes['watch-quantity']}>
-                         <Button className={classes.btn}><RemoveIcon /></Button>
-                         <span className={classes.watchQuantity}>{value.item.quantity}</span>
-                         <Button className={classes.btn}><AddIcon /></Button>
-                       </div>
-                       <div className={classes['watch-total']}>
-                         <span>{caculatorTotal(value)}</span>
-                         <DeleteForeverIcon className={classes.totalIcon} onClick={() => handleRemoveItemFromCart(value.id)}/>
-                       </div>
-                     </div>
-                   </React.Fragment>
-                 ))}
-               </div>
-             ))}
-           </div>
-         </div>
+         <Box sx={{ height: 500, minHeight: 400, width: '73%' }}>
+          <DataGrid
+            className={classes.list}
+            rows={rows} columns={columns}
+            experimentalFeatures={{ newEditingApi: false }}
+            disableColumnMenu
+            checkboxSelection
+            hideFooterPagination
+            hideFooterSelectedRowCount
+          />
+        </Box>
          <div className={classes.total}>
            <h1 className={classes.title}>Tóm tắt đơn hàng</h1>
            <hr color="#ced4da" />
