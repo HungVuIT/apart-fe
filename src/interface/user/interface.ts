@@ -17,7 +17,25 @@ export interface IUserInfo {
   avatar: string
   status: string | null
   role: ROLE
+  gender: string | null
   isActive: boolean
+}
+export interface IProfile {
+  email: string
+  fullname: string | null
+  phoneNumber: string | null
+  gender: string | null
+  birthDay: string | null
+  avatar: string
+}
+export interface IEditProfile {
+  email: string
+  firstName: string | null
+  lastName: string | null
+  phoneNumber: string | null
+  gender: string | null
+  birthDay: string | null
+  avatar: string
 }
 export interface ICart {
   id: number
@@ -55,6 +73,7 @@ export const initUserInfo: IUserInfo = {
   birthDay: null,
   avatar: '',
   status: null,
+  gender: null,
   role: ROLE.CUSTOMER,
   isActive: true
 };

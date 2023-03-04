@@ -7,6 +7,7 @@ import ProductList from '../pages/common/ProductList';
 import UserInfor from '../pages/User/UserInfor';
 import UserOrder from '../pages/User/UserOrder';
 import Cart from '../pages/common/Cart';
+import RegisterShop from '../pages/Vendor/RegisterShop';
 
 const mainRouter = [
   {
@@ -50,4 +51,10 @@ const adminRouter = [
     component: Dashboard
   }
 ];
-export { mainRouter, authRouter, adminRouter };
+const vendorRouter = [
+  {
+    path: '/shop/register',
+    component: RegisterShop
+  }
+];
+export { mainRouter, authRouter, adminRouter, vendorRouter };

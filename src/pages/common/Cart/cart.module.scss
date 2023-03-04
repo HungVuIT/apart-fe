@@ -4,6 +4,7 @@
   & .list {
     margin-right: 1%;
     & .watch-name {
+      width: 100%;
       display: flex;
       & .productAvt {
         width: 50px;
@@ -12,15 +13,19 @@
         margin: auto 0;
       }
       & .productName {
+        width: calc(100% - 50px);
         text-align: center;
+        margin: auto 0;
+        font-size: 14px;
       }
     }
     & .watch-price {
       width: 100%;
       text-align: center;
+      font-size: 12px;
     }
     & .watch-quantity {
-      width: 18%;
+      width: 100%;
       display: flex;
       justify-content: center;
       & .btn {
@@ -35,14 +40,10 @@
       }
     }
     & .watch-total {
-      width: 27%;
       margin: auto 0;
-      position: relative;
       word-break: break-all;
-      & span {
-        font-size: 14px;
-      }
-
+      font-size: 12px;
+      text-align: center;
     }
     }
   & .total {

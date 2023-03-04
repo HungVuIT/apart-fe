@@ -13,13 +13,15 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
+import StorefrontIcon from '@mui/icons-material/Storefront';
 import defaultAvt from '../../../../../assets/img/default-avt.png';
 import classes from './menu.module.scss';
 import { removeAccessToken, removeRefreshToken } from '../../../../../untils/localStorage';
 import { useNavigate } from 'react-router-dom';
 import { MenuItemName } from '../../../../../interface/enum';
 import { useAppSelector } from '../../../../../hooks/hooks';
+import { ROLE } from '../../../../../interface/user/enum';
 function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -48,6 +50,12 @@ function AccountMenu() {
         navigate('/user/favorite-list');
         break;
       case MenuItemName.ORDER:
+        navigate('/user/order');
+        break;
+      case MenuItemName.CREATE:
+        navigate('/shop/register');
+        break;
+      case MenuItemName.SHOP:
         navigate('/user/order');
         break;
     }
@@ -111,6 +119,15 @@ function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+        {
+          profile.role === ROLE.VENDOR
+            ? <MenuItem onClick={() => handleClickMenu(MenuItemName.SHOP)} className={classes.menuItem}>
+              <StorefrontIcon className={classes.icon}/> Shop của tôi
+            </MenuItem>
+            : <MenuItem onClick={() => handleClickMenu(MenuItemName.CREATE)} className={classes.menuItem}>
+              <AddBusinessIcon className={classes.icon}/> Đăng ký trở thành người bán
+            </MenuItem>
+        }
         <MenuItem onClick={() => handleClickMenu(MenuItemName.PROFILE)} className={classes.menuItem}>
           <AccountCircleIcon className={classes.icon}/> Hồ Sơ
         </MenuItem>

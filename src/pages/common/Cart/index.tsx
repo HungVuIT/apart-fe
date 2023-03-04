@@ -36,9 +36,11 @@ interface IItemCart {
   checked: boolean
 }
 interface ICartRender {
-  SID: number
-  items: IItemCart[]
-  checked: boolean
+  id: number
+  image: string
+  name: string
+  price: number
+  quantity: number
 }
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -68,7 +70,7 @@ function Cart() {
     {
       field: 'image',
       headerName: 'Sản phẩm',
-      width: caculatorWidth(20),
+      width: caculatorWidth(22),
       renderCell: (params) => (
         <div className={classes['watch-name']}>
           <img src={params.row.image || defaultLogo} alt={params.row.name} className={classes.productAvt}/>
@@ -79,7 +81,7 @@ function Cart() {
     {
       field: 'price',
       headerName: 'Đơn giá',
-      width: caculatorWidth(18),
+      width: caculatorWidth(17),
       renderCell: (params) => (
         <div className={classes['watch-price']}>{formatMoney.format(params.row.price)}</div>
       )
@@ -87,6 +89,7 @@ function Cart() {
     {
       field: 'quantity',
       headerName: 'Số lượng',
+      type: 'actions',
       width: caculatorWidth(24),
       renderCell: (params) => (
         <div className={classes['watch-quantity']}>
@@ -99,10 +102,10 @@ function Cart() {
     {
       field: 'totalPrice',
       headerName: 'Tổng',
-      width: caculatorWidth(18),
+      width: caculatorWidth(17),
       renderCell: (params) => (
         <div className={classes['watch-total']}>
-          <span>{formatMoney.format(params.row.quantity * params.row.price)}</span>
+          {formatMoney.format(params.row.quantity * params.row.price)}
         </div>
       )
     },
@@ -117,90 +120,19 @@ function Cart() {
       )
     }
   ];
-  const CartRender: ICartRender[] = useMemo(() => {
+  const cartRender: ICartRender[] = useMemo(() => {
     const lst: ICartRender[] = [];
     cart.forEach(item => {
-      if (lst.some(value => value.SID === item.watch.SID)) {
-        lst.forEach(value => value.SID === item.watch.SID && value.items.push({
-          id: item.id,
-          item,
-          checked: false
-        }));
-      } else {
-        lst.push({
-          SID: item.watch.SID,
-          items: [{ item, checked: false, id: item.id }],
-          checked: false
-        });
-      }
+      lst.push({
+        id: item.id,
+        image: item.watch.image[0] || defaultLogo,
+        name: item.watch.name,
+        price: item.watch.price,
+        quantity: item.quantity
+      });
     });
     return lst;
   }, [cart]);
-  console.log('CartRender', CartRender);
-  const rows = [
-    {
-      id: 1,
-      image: defaultAvt,
-      name: '123',
-      price: '1231241',
-      quantity: '123'
-    },
-    {
-      id: 2,
-      image: 'a',
-      name: '123',
-      price: '1231241',
-      quantity: '123'
-    },
-    {
-      id: 3,
-      image: 'a',
-      name: '123',
-      price: '1231241',
-      quantity: '123'
-    },
-    {
-      id: 4,
-      image: 'a',
-      name: '123',
-      price: '1231241',
-      quantity: '123'
-    },
-    {
-      id: 5,
-      image: 'a',
-      name: '123',
-      price: '1231241',
-      quantity: '123'
-    },
-    {
-      id: 6,
-      image: 'a',
-      name: '123',
-      price: '1231241',
-      quantity: '123'
-    },
-    {
-      id: 7,
-      image: 'a',
-      name: '123',
-      price: '1231241',
-      quantity: '123'
-    }
-  ];
-  const handleShopName = (id: number): (IShop | null) => {
-    let res: (IShop | null) = null;
-    shopList.forEach(shop => {
-      if (shop.id === id) {
-        res = shop;
-      }
-    });
-    return res;
-  };
-  const caculatorTotal = (value: IItemCart) => {
-    const price = value.item.quantity * value.item.watch.price;
-    return formatMoney.format(price);
-  };
   const caculatorTotalPayment = () => {
     let totalPrice = 0;
     cart.forEach(item => {
@@ -228,15 +160,14 @@ function Cart() {
     <>
       {loading.cart
         ? <Container className={classes.mgT100}>
-          {/* <Loading _type={'balls'}/> */}
-          <CartPages />
+          <Loading _type={'balls'}/>
         </Container>
         : cart.length > 0
-          ? <div className={classes.wrapper}>
-         <Box sx={{ height: 500, minHeight: 400, width: '73%' }}>
+          ? <div className={classes.wrapper + ' ' + 'cart-page'}>
+         <Box sx={{ height: 400, minHeight: 400, width: '73%' }}>
           <DataGrid
             className={classes.list}
-            rows={rows} columns={columns}
+            rows={cartRender} columns={columns}
             experimentalFeatures={{ newEditingApi: false }}
             disableColumnMenu
             checkboxSelection

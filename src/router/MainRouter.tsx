@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { adminRouter, authRouter, mainRouter } from '.';
+import { adminRouter, authRouter, mainRouter, vendorRouter } from '.';
 import { DefaultLayout } from '../components/Layout';
 import DashboardLayout from '../components/Layout/DashboardLayout';
 
@@ -22,6 +22,18 @@ function MainRouter (): JSX.Element {
         );
       })}
       {authRouter.map((route, index) => {
+        const Page = route.component;
+        return (
+          <Route
+            key={index}
+            path={route.path}
+            element={
+              <Page />
+            }
+          />
+        );
+      })}
+      {vendorRouter.map((route, index) => {
         const Page = route.component;
         return (
           <Route

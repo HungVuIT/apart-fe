@@ -73,6 +73,7 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
       const data = await loginAccount(params);
       setLoading(false);
       if (data.success) {
+        resetForm();
         showToastMessage(<Toast title='Đăng nhập thành công' message={data.message} />, typeToast.SUCCESS);
       } else {
         showToastMessage(<Toast title='Đăng nhập thất bại!' message={data.message} />, typeToast.ERROR);

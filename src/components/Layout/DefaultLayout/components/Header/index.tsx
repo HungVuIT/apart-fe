@@ -25,9 +25,6 @@ const items = ['Đồng hồ', 'Best selling', 'Nam', 'Nữ', 'Smartwatch', 'C�
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  // const [isOpenLogin, setIsOpenLogin] = React.useState(false);
-  // const [isLogin, setIsLogin] = React.useState(true);
-  // const [loading, setLoading] = React.useState(false);
   const { isOpenLogin, setIsOpenLogin, isLogin, setIsLogin, loading, setLoading } = React.useContext(MyGlobalContext);
   const locationUrl = useLocation();
   const token = getAccessToken();
@@ -40,9 +37,9 @@ function Header() {
       dispatch(getCart());
     }
   }, [getAccessToken(), dispatch]);
-  React.useEffect(() => {
-    dispatch(getListOfShop());
-  }, []);
+  // React.useEffect(() => {
+  //   dispatch(getListOfShop());
+  // }, []);
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
