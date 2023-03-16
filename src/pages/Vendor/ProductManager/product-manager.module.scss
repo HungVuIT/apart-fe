@@ -1,0 +1,92 @@
+.wrapper {
+  & .title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  & .box {
+    display: flex;
+    & .btn {
+      margin-bottom: 10px;
+      width: 28%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      background-color: #fa5252;
+      color: white;
+      margin-left: 2%;
+      font-size: 14px;
+      border-radius: 8px;
+      & .icon {
+        font-size: 16px;
+        font-weight: 700;
+      }
+    }
+  }
+  & .list {
+    & .watch-name {
+      width: 100%;
+      display: flex;
+      & .productAvt {
+        width: 50px;
+        height: 50px;
+        border: 1px solid #dee2e6;
+        margin: auto 0;
+      }
+      & .productName {
+        width: calc(100% - 50px);
+        text-align: center;
+        margin: auto 0;
+        font-size: 14px;
+      }
+    }
+    & .watch-price {
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+    }
+    & .watch-quantity {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      & .btn {
+        min-width: 25px;
+        margin: auto 0;
+        border: 1px solid #e9ecef;
+      }
+      & .watchQuantity {
+        width: 25px;
+        text-align: center;
+        margin: auto 0;
+      }
+    }
+    & .watch-status {
+      width: 100%;
+      word-break: break-all;
+      text-align: center;
+      & span {
+        font-size: 14px;
+        border-radius: 15px;
+        padding: 5px 15px;
+      }
+      & .active {
+        border: 1px solid #74c0fc;
+        background-color: #74c0fc;
+      }
+      & .deactive {
+        border: 1px solid #fa5252;
+        background-color: #fa5252;
+        color: #495057;
+      }
+    }
+  }
+}
+.nodata {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  font-size: 16px;
+  font-weight: 700;
+}

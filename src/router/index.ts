@@ -8,6 +8,10 @@ import UserInfor from '../pages/User/UserInfor';
 import UserOrder from '../pages/User/UserOrder';
 import Cart from '../pages/common/Cart';
 import RegisterShop from '../pages/Vendor/RegisterShop';
+import { VendorLayout } from '../components/Layout';
+import ProductManager from '../pages/Vendor/ProductManager';
+import NewWatch from '../pages/Vendor/NewWatch';
+import OrderManager from '../pages/Vendor/OrderManager';
 
 const mainRouter = [
   {
@@ -55,6 +59,21 @@ const vendorRouter = [
   {
     path: '/shop/register',
     component: RegisterShop
+  },
+  {
+    path: '/shop/manager/watch',
+    component: ProductManager,
+    Layout: true
+  },
+  {
+    path: '/shop/manager/order',
+    component: OrderManager,
+    Layout: true
+  },
+  {
+    path: '/shop/watch/new',
+    component: NewWatch,
+    Layout: false
   }
 ];
 export { mainRouter, authRouter, adminRouter, vendorRouter };

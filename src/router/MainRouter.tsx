@@ -1,7 +1,8 @@
+import Layout from 'antd/es/layout/layout';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { adminRouter, authRouter, mainRouter, vendorRouter } from '.';
-import { DefaultLayout } from '../components/Layout';
+import { DefaultLayout, VendorLayout } from '../components/Layout';
 import DashboardLayout from '../components/Layout/DashboardLayout';
 
 function MainRouter (): JSX.Element {
@@ -40,7 +41,7 @@ function MainRouter (): JSX.Element {
             key={index}
             path={route.path}
             element={
-              <Page />
+              route.Layout ? <VendorLayout><Page /></VendorLayout> : <Page />
             }
           />
         );

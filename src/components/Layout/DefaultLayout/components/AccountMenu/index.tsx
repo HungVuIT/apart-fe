@@ -56,7 +56,7 @@ function AccountMenu() {
         navigate('/shop/register');
         break;
       case MenuItemName.SHOP:
-        navigate('/user/order');
+        navigate('/shop/manager/watch');
         break;
     }
   };

@@ -65,14 +65,22 @@ export const initWatch: IWatch = {
   sale_off: 0,
   rating: 5
 };
+export interface IComment {
+  id: string
+  createdAt: string
+  updatedAt: string
+  user: string
+  WID: string
+  content: string
+}
 interface IStateProduct {
   watch: IWatch
-  comment: any
+  comment: IComment[]
   shop: IShop
 }
 export const initStateProduct: IStateProduct = {
   watch: initWatch,
-  comment: '',
+  comment: [],
   shop: initShop
 };
 export interface IStateWatch {

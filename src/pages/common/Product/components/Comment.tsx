@@ -4,10 +4,18 @@ import Container from '../../../../components/Container';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { getCommentById } from '../../../../redux/watch/watchThunk';
+import { ToastContainer, toast } from 'react-toastify';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { IComment } from '../../../../interface/watch/watchType';
+
 interface IProps {
   id: number | undefined
 }
 function Comment({ id }: IProps): JSX.Element {
+  const { register, control, handleSubmit, getValues, clearErrors, formState: { errors } } = useForm<IComment>({
+  });
   const [isShow, setIsShow] = React.useState(false);
   const [value, setValue] = React.useState<number | null>(2);
   const dispatch = useAppDispatch();
@@ -19,6 +27,9 @@ function Comment({ id }: IProps): JSX.Element {
   const handleClick = () => {
     setIsShow(!isShow);
   };
+  const onSubmit: SubmitHandler<IComment> = async () => {
+  };
+
   return (
     <Container >
       <div className="describe__wrapper">
@@ -38,11 +49,24 @@ function Comment({ id }: IProps): JSX.Element {
                   <span className="rate-tite"><i>Dựa trên 100 đánh giá</i></span>
                   <Button variant="contained" className='rate-btn' onClick={handleClick}>Viết đánh giá</Button>
                 </div>
-                <div className={'form-comment' + (isShow ? ' active' : '')}>
+                <form onSubmit={handleSubmit(onSubmit)} className={'form-comment' + (isShow ? ' active' : '')}>
                   <div className="line"></div>
                   <div className="form-title">Đánh giá của bạn</div>
                   <div className="form-input">
-                    <TextField id="outlined-basic" label="Tên hoặc nickname của bạn" variant="outlined" />
+                    <Controller name='user' control={control}
+                      render={({
+                        field: { onChange, onBlur, value }
+                      }) => (
+                        <TextField
+                          variant='outlined'
+                          {...register('user')}
+                          onBlur={onBlur}
+                          onChange={onChange}
+                          className='item-content'
+                      />
+                      )}
+                    />
+                    {/* <TextField id="outlined-basic" label="Tên hoặc nickname của bạn" variant="outlined" /> */}
                   </div>
                   <div className="form-input">
                     <TextField id="outlined-basic" label="Email của bạn" variant="outlined" />
@@ -65,7 +89,7 @@ function Comment({ id }: IProps): JSX.Element {
                     <TextField className='input-detail' id="outlined-basic" variant="outlined" placeholder='Vui lòng nhập chi tiết đánh giá ở đây'/>
                   </div>
                   <Button variant="contained" className='rate-submit' onClick={handleClick}>Gửi đánh giá</Button>
-                </div>
+                </form>
                 <div className="line"></div>
                 <div className="comment-item">
                   <Rating name="half-rating-read" value={4.5} precision={0.5} readOnly className='item-star' />

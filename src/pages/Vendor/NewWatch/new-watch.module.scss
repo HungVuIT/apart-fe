@@ -1,0 +1,94 @@
+@import '../../../components/Global/foundation/mixin';
+
+.wrapper {
+  margin-top: 20px;
+
+  & .container {
+    margin: 0 5% 2% 5%;
+    padding: 10px 20px;
+    & .title {
+      font-weight: 700;
+      font-size: 25px;
+      line-height: 42px;
+      margin-bottom: 20px;
+    }
+    
+    & .item {
+      display: flex;
+      height: 50px;
+      margin: 10px 0;
+      & .item-title {
+        width: 30%;
+        margin: auto 0;
+        text-align: left;
+      }
+      & .item-content {
+        min-width: 300px;
+        width: 70%;
+        max-width: 600px;
+        height: 60px;
+        & .input {
+          width: 100%;
+        }
+      }
+    }
+    & .mutil {
+      height: 150px;
+      & .item-title {
+        margin: 0;
+      }
+      & .item-content {
+        height: 150px;
+        & .input {
+          font-size: 16px !important;
+        }
+      }
+    }
+    & .group {
+      display: flex;
+      & .groupLeft, .groupRight {
+        width: 48%;
+        margin: 0 1%;
+        & .itemGroup {
+          display: flex;
+          width: 100%;
+          & .itemGroup-title {
+            width: 25%;
+            font-size: 12px;
+            margin: auto 0;
+            padding-right: 20px;
+            text-align: right;
+          }
+          & .itemGroup-content {
+            width: 75%;
+            height: 60px;
+            & .input {
+              width: 100%;
+            }
+          }
+        }
+      }
+      @include responsive_max768 {
+        display: block;
+        & .groupLeft, .groupRight {
+          width: 90%;
+        }
+      }
+    }
+  }
+  & .groupBtn {
+    display: flex;
+    margin: 30px 5% 5% 5%;
+    flex-flow: row-reverse;
+    & .btn {
+      height: 50px;
+      width: 200px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    & .save {
+      background-color: #f03e3e;
+      margin-right: 20px;
+    }
+  }
+}

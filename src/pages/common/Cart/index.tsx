@@ -21,12 +21,7 @@ import './customMUI.scss';
 
 import {
   DataGrid,
-  GridActionsCellItem,
-  GridRowId,
-  GridColumns,
-  GridColDef,
-  GridValueGetterParams,
-  GridRenderCellParams
+  GridColDef
 } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 
