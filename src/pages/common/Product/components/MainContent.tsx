@@ -31,7 +31,6 @@ function MainContent({ id }: IProps) {
     try {
       const url = 'cart/item';
       const response = await axiosClient.post(url, { itemId });
-      console.log('res', response);
       return response.data;
     } catch (err) {
       return err;

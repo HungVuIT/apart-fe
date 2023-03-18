@@ -22,7 +22,6 @@ export const getListSaleOfWatch = createAsyncThunk(
     try {
       const url = 'watchs/list?orderBy=saled.desc';
       const response = await axiosClient.get(url);
-      console.log('sale', response.data.data);
       return response.data.data;
     } catch (error) {
       throw new Error(String(error));
@@ -35,7 +34,6 @@ export const getWatchById = createAsyncThunk(
     try {
       const url = `watchs/id/${id}`;
       const response = await axiosClient.get(url);
-      console.log('product', response.data.data);
       return response.data.data;
     } catch (error) {
       throw new Error(String(error));
@@ -48,7 +46,6 @@ export const getShopById = createAsyncThunk(
     try {
       const url = `shops/id/${id}`;
       const response = await axiosClient.get(url);
-      console.log('shop', response.data.data);
       return response.data.data;
     } catch (error) {
       throw new Error(String(error));
@@ -61,7 +58,6 @@ export const getCommentById = createAsyncThunk(
     try {
       const url = `comment/${id}`;
       const response = await axiosClient.get(url);
-      console.log('comment', response.data.data);
       return response.data.data;
     } catch (error) {
       throw new Error(String(error));

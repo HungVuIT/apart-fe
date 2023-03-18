@@ -57,7 +57,6 @@ function Cart() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  console.log(windowDimensions);
   const caculatorWidth = (value: number) => {
     return (windowDimensions.width * 70 / 100) * (value / 100);
   };

@@ -23,6 +23,8 @@ import MailIcon from '@mui/icons-material/Mail';
 import { menuVendor } from './definitionMenu';
 import { useNavigate } from 'react-router-dom';
 import { IMenuVendorItem } from './type';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { getProfileShop } from '../../../redux/vendor/vendorThunk';
 
 const drawerWidth = 240;
 
@@ -100,6 +102,11 @@ export default function VendorLayout({ children }: IPropsChildren) {
   const [open, setOpen] = React.useState(false);
   const [menuRender, setMenuRender] = React.useState([...menuVendor]);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  React.useEffect(() => {
+    dispatch(getProfileShop());
+  }, []);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -113,7 +120,6 @@ export default function VendorLayout({ children }: IPropsChildren) {
     setMenuRender(newMenu);
     navigate(_item.link);
   };
-  console.log(menuRender);
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />

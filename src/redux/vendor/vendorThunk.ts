@@ -1,12 +1,12 @@
-import { IStateCommon } from './../../interface/common/interface';
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosClient from '../../api/axiosClient';
+import { IStateVendor } from '../../interface/vendor/interface';
 
-export const getListOfShop = createAsyncThunk(
-  'common/get/ShopList',
+export const getProfileShop = createAsyncThunk(
+  'shop/profile/get',
   async () => {
     try {
-      const url = 'shops/list';
+      const url = 'shops/my-shop';
       const response = await axiosClient.get(url);
       return response.data.data;
     } catch (error) {
@@ -15,19 +15,19 @@ export const getListOfShop = createAsyncThunk(
   }
 );
 
-export const extraReducersCommon = (
-  builder: ActionReducerMapBuilder<IStateCommon>
+export const extraReducersVendor = (
+  builder: ActionReducerMapBuilder<IStateVendor>
 ) => {
   builder
-    .addCase(getListOfShop.pending, (state, action) => {
+    .addCase(getProfileShop.pending, (state, action) => {
       state.loading = true;
     })
-    .addCase(getListOfShop.rejected, (state, action) => {
+    .addCase(getProfileShop.rejected, (state, action) => {
       state.error = action.error as string;
       state.loading = false;
     })
-    .addCase(getListOfShop.fulfilled, (state, action) => {
+    .addCase(getProfileShop.fulfilled, (state, action) => {
       state.loading = false;
-      state.shopList = action.payload;
+      state.shop = action.payload;
     });
 };

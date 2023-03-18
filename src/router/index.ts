@@ -12,6 +12,7 @@ import { VendorLayout } from '../components/Layout';
 import ProductManager from '../pages/Vendor/ProductManager';
 import NewWatch from '../pages/Vendor/NewWatch';
 import OrderManager from '../pages/Vendor/OrderManager';
+import ProfileStore from '../pages/Vendor/ProfileStore';
 
 const mainRouter = [
   {
@@ -74,6 +75,11 @@ const vendorRouter = [
     path: '/shop/watch/new',
     component: NewWatch,
     Layout: false
+  },
+  {
+    path: '/shop/profile',
+    component: ProfileStore,
+    Layout: true
   }
 ];
 export { mainRouter, authRouter, adminRouter, vendorRouter };

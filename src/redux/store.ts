@@ -2,11 +2,13 @@ import userReducer from './user/userSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import commonReducer from './common/commonSlice';
 import watchReducer from './watch/watchSlice';
+import vendorReducer from './vendor/vendorSlice';
 
 const rootReducer = {
   user: userReducer,
   common: commonReducer,
-  watch: watchReducer
+  watch: watchReducer,
+  vendor: vendorReducer
 };
 
 const store = configureStore({

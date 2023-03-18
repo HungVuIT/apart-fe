@@ -20,7 +20,6 @@ export const fetchDistrict = async (id: string, setDistrict: React.Dispatch<Reac
     if (response.ok) {
       const data = await response.json();
       setDistrict(data.results);
-      console.log(data.results);
       return data.results;
     } else {
       throw new Error('Request failed!');
@@ -35,7 +34,6 @@ export const fetchWard = async (id: string, setWard: React.Dispatch<React.SetSta
     if (response.ok) {
       const data = await response.json();
       setWard(data.results);
-      console.log(data.results);
       return data.results;
     } else {
       throw new Error('Request failed!');

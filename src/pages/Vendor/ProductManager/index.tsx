@@ -141,7 +141,6 @@ function ProductManager() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  console.log('re');
   const productRender = useMemo(() => {
     const searchRender = [...rows].filter((product: any) => product.name ? product.name.toLowerCase().includes(searchValue.toLowerCase()) : '');
     return searchRender;

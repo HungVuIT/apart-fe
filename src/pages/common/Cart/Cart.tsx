@@ -42,13 +42,11 @@ function CartPages() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  console.log(windowDimensions);
   const caculatorTotal = (value: IItemCart) => {
     const price = value.item.quantity * value.item.watch.price;
     return formatMoney.format(price);
   };
   const handleRemoveItemFromCart = (id: number) => {
-    console.log(id);
   };
   const caculatorWidth = (value: number) => {
     return (windowDimensions.width * 70 / 100) * (value / 100);

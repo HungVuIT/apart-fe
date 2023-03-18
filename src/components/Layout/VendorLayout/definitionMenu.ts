@@ -28,7 +28,7 @@ export const menuVendor: IMenuVendorItem[] = [
   {
     id: 4,
     name: 'Hồ sơ cửa hàng',
-    link: '/shop/manager/watch',
+    link: '/shop/profile',
     icon: StoreIcon,
     active: false
   }

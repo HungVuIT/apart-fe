@@ -20,7 +20,6 @@ export const getCart = createAsyncThunk(
     try {
       const url = 'cart';
       const response = await axiosClient.get(url);
-      console.log('cart', response.data.data);
       return response.data.data;
     } catch (error) {
       throw new Error(String(error));
