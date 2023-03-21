@@ -18,10 +18,10 @@ function SameProduct(): JSX.Element {
             prev={() => setIndex(index === 0 ? items.length - 4 : index - 1)}
           >
             <div className='flex flex-center'>
-              <Item id={1} tradeMark='product' linkImg={items[index]} rating={4} price={100000} />
+              {/* <Item id={1} tradeMark='product' linkImg={items[index]} rating={4} price={100000} />
               <Item id={1} tradeMark='product' linkImg={items[index + 1]} rating={4} price={100000} />
               <Item id={1} tradeMark='product' linkImg={items[index + 2]} rating={4} price={100000} />
-              <Item id={1} tradeMark='product' linkImg={items[index + 3]} rating={4} price={100000} />
+              <Item id={1} tradeMark='product' linkImg={items[index + 3]} rating={4} price={100000} /> */}
             </div>
           </Carousel>
       </div>

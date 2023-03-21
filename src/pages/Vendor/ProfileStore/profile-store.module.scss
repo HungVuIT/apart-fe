@@ -10,7 +10,8 @@
       display: flex;
       & .left {
         width: 70%;
-        padding: 10px;
+        margin-top: 10px;
+        padding: 0 10px;
         & .email,
         .address,
         .shop {
@@ -26,12 +27,39 @@
         }
         & .phone {
           width: 100%;
-          margin-bottom: 30px;
         }
       }
       & .right {
         width: 30%;
+        & .avt-box {
+          margin-top: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          flex-wrap: 10px;
+          & .avt {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #868e96;
+          }
+          & .btn {
+            margin-top: 20px;
+            background-color: black;
+            color: white;
+            font-size: 14px;
+          }
+        }
       }
+    }
+    & .save {
+      margin-top: 20px;
+      margin-left: 30%;
+      width: 100px;
+      height: 40px;
+      background-color: #f03e3e;
+      color: #fff;
+      font-size: 16px;
     }
   }
 }

@@ -26,9 +26,11 @@ function getWindowDimensions() {
   };
 }
 enum ProductStatus {
-  ACTIVE = 'active',
-  OUT = 'out_of_stock',
-  INFRINGE = 'infringe'
+  CONFIRM = 'Chờ xác nhận',
+  PICKUP = 'Chờ lấy hàng',
+  DELIVERY = 'Đang giao',
+  DELIVERED = 'Đã giao',
+  CANCEL = 'Đơn đã hủy'
 }
 function OrderManager() {
   const [value, setValue] = React.useState(0);
@@ -90,7 +92,7 @@ function OrderManager() {
       renderCell: (params) => (
         <div className={classes.groupBtn}>
           <Button className={classes.info} variant='text'>Thông tin chi tết</Button>
-          {value < 3 && <div className={classes.btnFlex}>
+          {(params.row.status === ProductStatus.CONFIRM || params.row.status === ProductStatus.PICKUP) && <div className={classes.btnFlex}>
             <Button className={classes.btn + ' ' + classes.save} variant='text'>Xác nhận</Button>
             <Button className={classes.btn} variant='text'>Hủy</Button>
           </div>}
@@ -100,37 +102,76 @@ function OrderManager() {
   ];
   const rows = [
     {
-      id: 1,
+      id: '1',
       price: 1212412,
       quantity: 1,
-      status: ProductStatus.ACTIVE,
+      status: ProductStatus.CONFIRM,
       deliveryAddress: '132/14 KTX khu B, Đông Hòa, Dĩ An, Bình Dương'
     },
     {
-      id: 2,
+      id: '2',
       price: 1212413,
       quantity: 1,
-      status: ProductStatus.ACTIVE,
+      status: ProductStatus.PICKUP,
       deliveryAddress: '132/14 KTX khu B, Đông Hòa, Dĩ An, Bình Dương'
     },
     {
-      id: 3,
+      id: '3',
       price: 1212415,
       quantity: 1,
-      status: ProductStatus.ACTIVE,
+      status: ProductStatus.DELIVERED,
       deliveryAddress: '132/14 KTX khu B, Đông Hòa, Dĩ An, Bình Dương'
     },
     {
-      id: 4,
+      id: '4',
       price: 1212410,
       quantity: 1,
-      status: ProductStatus.ACTIVE,
+      status: ProductStatus.DELIVERY,
+      deliveryAddress: '132/14 KTX khu B, Đông Hòa, Dĩ An, Bình Dương'
+    },
+    {
+      id: '5',
+      price: 1212410,
+      quantity: 1,
+      status: ProductStatus.CANCEL,
       deliveryAddress: '132/14 KTX khu B, Đông Hòa, Dĩ An, Bình Dương'
     }
   ];
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const handleChangeValue = (lst: any) => {
+    let result;
+    switch (value) {
+      case 0:
+        result = lst;
+        break;
+      case 1:
+        result = lst.filter((item: any) => item.status === ProductStatus.CONFIRM);
+        break;
+      case 2:
+        result = lst.filter((item: any) => item.status === ProductStatus.PICKUP);
+        break;
+      case 3:
+        result = lst.filter((item: any) => item.status === ProductStatus.DELIVERY);
+        break;
+      case 4:
+        result = lst.filter((item: any) => item.status === ProductStatus.DELIVERED);
+        break;
+      case 5:
+        result = lst.filter((item: any) => item.status === ProductStatus.CANCEL);
+        break;
+      default:
+        result = [];
+        break;
+    }
+    return result;
+  };
+  const productRender = useMemo(() => {
+    const searchRender = [...rows].filter((item: any) => item.id ? item.id.toLowerCase().includes(searchValue.toLowerCase()) : '');
+    const valueRender = handleChangeValue(searchRender);
+    return valueRender;
+  }, [searchValue, value]);
   return (
     <div className={classes.wrapper + ' pm-mui'}>
       <div className={classes.title}>Quản lý đơn hàng</div>
@@ -149,10 +190,10 @@ function OrderManager() {
             </Tabs>
           </Box>
           <Box sx={{ height: 400, minHeight: 400, width: '100%' }} >
-            {rows.length > 0
+            {productRender.length > 0
               ? <DataGrid
               className={classes.list}
-              rows={rows} columns={columns}
+              rows={productRender} columns={columns}
               experimentalFeatures={{ newEditingApi: false }}
               disableColumnMenu
               hideFooterPagination

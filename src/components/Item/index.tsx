@@ -3,27 +3,32 @@ import './item.scss';
 import Rating from '@mui/material/Rating';
 import { useNavigate } from 'react-router-dom';
 import { formatMoney } from '../../untils/formartMoney';
+import { useAppSelector } from '../../hooks/hooks';
+import defaultLogo from '../../assets/img/logo-watch.png';
+import { IWatch } from '../../interface/watch/watchType';
+import { getShop } from '../../untils/getShop';
 interface IProps {
-  id: number
-  linkImg: string
-  tradeMark: string
-  rating: number
-  price: number
+  watch: IWatch
 }
-function Item ({ linkImg, tradeMark, rating, price, id }: IProps): JSX.Element {
+function Item ({ watch }: IProps): JSX.Element {
   const navigate = useNavigate();
+  const { shopList } = useAppSelector(state => state.common);
   const handleClick = () => {
-    navigate(`/product/${id}`);
+    navigate(`/product/${watch.id}`);
     window.scrollTo(0, 0);
   };
+  // console.log(getShop(watch.id, shopList), watch);
   return (
     <div className="item__wrapper" onClick = {handleClick}>
-      <div className='item-img__wrapper'><img src={linkImg} alt={tradeMark} className="item-img" /></div>
-      <div className="item-trademark">{tradeMark}</div>
-      <div className='rating__wrapper'>
-        <Rating className='item-rating' name="read-only" value={rating} readOnly />
+      <div className='item-img__wrapper'>
+        <img src={watch.image[0] || defaultLogo} alt={watch.name} className="item-img" />
+        <div className='item-shop-name'>{getShop(watch.SID, shopList)?.name}</div>
       </div>
-      <div className="item-price">{formatMoney.format(price)}</div>
+      <div className="item-trademark">{watch.name}</div>
+      <div className='rating__wrapper'>
+        <Rating className='item-rating' name="read-only" value={watch.rating || 2} readOnly />
+      </div>
+      <div className="item-price">{formatMoney.format(watch.price)}</div>
     </div>
   );
 }

@@ -37,9 +37,9 @@ function Header() {
       dispatch(getCart());
     }
   }, [getAccessToken(), dispatch]);
-  // React.useEffect(() => {
-  //   dispatch(getListOfShop());
-  // }, []);
+  React.useEffect(() => {
+    dispatch(getListOfShop());
+  }, []);
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };

@@ -12,19 +12,23 @@ export const setDefaultValue = async (
   setLoadingPage(true);
   const province = await fetchProvince(setProvince);
   const idProvince = getIdProvince(shop.province, province);
-  const district = await fetchDistrict(idProvince, setDistrict);
-  const idDistrict = getIdDistrict(shop.district, district);
-  fetchWard(idDistrict, setWard);
-  setValue('province', shop.province);
-  setValue('district', shop.district);
-  setValue('ward', shop.ward);
+  if (idProvince) {
+    const district = await fetchDistrict(idProvince, setDistrict);
+    const idDistrict = getIdDistrict(shop.district, district);
+    setValue('province', shop.province);
+    if (idDistrict) {
+      fetchWard(idDistrict, setWard);
+      setValue('district', shop.district);
+      setValue('ward', shop.ward);
+    }
+  }
   setLoadingPage(false);
 };
 const getIdProvince = (name: string, province: IProvince[]) => {
   const id = province.findIndex(item => item.province_name === name);
-  return province[id].province_id;
+  return id === -1 ? null : province[id].province_id;
 };
 const getIdDistrict = (name: string, district: IDistrict[]) => {
   const id = district.findIndex(item => item.district_name === name);
-  return district[id].district_id;
+  return id === -1 ? null : district[id].district_id;
 };

@@ -25,7 +25,7 @@ const schema = yup.object().shape({
   description: yup.string().required('Vui lòng nhập mô tả'),
   province: yup.string().required('Vui lòng chọn một giá trị'),
   district: yup.string().required('Vui lòng chọn một giá trị'),
-  ward: yup.string().required('Vui lòng nhập tên giá trị'),
+  ward: yup.string().required('Vui lòng chọn một giá trị'),
   address: yup.string().required('Vui lòng nhập địa chỉ đường'),
   phoneNumber: yup.string().matches(/^\d{10}$/, 'Số điện thoại phải 10 chữ số').required('Vui lòng nhập số điện thoại')
 });
@@ -75,6 +75,7 @@ function RegisterShop() {
     setLoading(false);
     if (data.success) {
       toast('Đăng ký thành công');
+      navigate('/shop/profile');
     } else {
       toast('Đăng ký thất bại');
     }

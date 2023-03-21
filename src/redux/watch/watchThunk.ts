@@ -20,7 +20,7 @@ export const getListSaleOfWatch = createAsyncThunk(
   'watch/get/list-saled',
   async () => {
     try {
-      const url = 'watchs/list?orderBy=saled.desc';
+      const url = 'watchs/list?orderBy=price.desc';
       const response = await axiosClient.get(url);
       return response.data.data;
     } catch (error) {

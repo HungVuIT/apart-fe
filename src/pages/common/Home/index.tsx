@@ -9,13 +9,14 @@ import FeaturedProducts from '../../../components/FeaturedProducts';
 import { MyGlobalContext } from '../../../store/context/MyglobalContext';
 import { getListProduct } from '../../../api/service/home-service';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { getListSaleOfWatch } from '../../../redux/watch/watchThunk';
+import { getListOfWatch, getListSaleOfWatch } from '../../../redux/watch/watchThunk';
 function Home() {
   const { isLoading } = useContext(MyGlobalContext);
   const dispatch = useAppDispatch();
   const { saleWatchList } = useAppSelector(state => state.watch);
   React.useEffect(() => {
     dispatch(getListSaleOfWatch());
+    dispatch(getListOfWatch());
   }, []);
   return (
     <>

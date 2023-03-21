@@ -37,7 +37,7 @@ function FeaturedProducts ({ title, watchList }: IProps): JSX.Element {
         <div className="featured-title">{title}</div>
         <div className="product-list">
           {watchListRender.map(watch => (
-            <Item key={watch.id} id={watch.id} linkImg={watch.image[0] || defaultLogo} tradeMark={watch.name} rating={2} price={watch.price} />
+            <Item key={watch.id} watch={watch} />
           ))}
         </div>
         <div className="product-all">Xem tất cả</div>

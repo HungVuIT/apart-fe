@@ -4,6 +4,7 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -15,8 +16,12 @@ import { fetchProvince, fetchDistrict, fetchWard } from '../RegisterShop/fetch';
 import { useAppSelector, useAppDispatch } from '../../../hooks/hooks';
 import { getProfileShop } from '../../../redux/vendor/vendorThunk';
 import Loading from '../../common/loading';
+import defaultAvt from '../../../assets/img/default-avt.png';
 import { setDefaultValue } from './setDefaultValue';
-interface IProfileStore {
+import { editShop } from '../../../api/service/shop-service';
+import { ToastContainer, toast } from 'react-toastify';
+import { IShop } from '../../../interface/common/interface';
+export interface IProfileStore {
   email: string
   name: string
   userName: string
@@ -26,12 +31,19 @@ interface IProfileStore {
   address: string
   phoneNumber: string
   description: string
-  logo: any
-  banner: any
+  // logo: any
+  // banner: any
 }
 
 const schema = yup.object().shape({
-
+  email: yup.string().email('Email không hợp lệ').required('Vui lòng nhập email'),
+  name: yup.string().required('Vui lòng nhập tên cửa hàng'),
+  description: yup.string().required('Vui lòng nhập mô tả'),
+  province: yup.string().required('Vui lòng chọn một giá trị'),
+  district: yup.string().required('Vui lòng chọn một giá trị'),
+  ward: yup.string().required('Vui lòng chọn một giá trị'),
+  address: yup.string().required('Vui lòng nhập địa chỉ đường'),
+  phoneNumber: yup.string().matches(/^\d{10}$/, 'Số điện thoại phải 10 chữ số').required('Vui lòng nhập số điện thoại')
 });
 function ProfileStore() {
   const { register, setValue, control, handleSubmit, clearErrors, formState: { errors } } = useForm<IProfileStore>({
@@ -80,8 +92,30 @@ function ProfileStore() {
     return district[id].district_id;
   };
   const onSubmit: SubmitHandler<IProfileStore> = async (_data: IProfileStore) => {
+    setLoadingPage(true);
+    // const data = await editShop(_data);
+    const data = await fetch('https://aafb-171-247-144-13.ap.ngrok.io/api/shops/my-shop', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'access-control-allow-methods': '*',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Credentials': 'true'
+      },
+      body: JSON.stringify(_data)
+    })
+      .then((response: any) => response.json())
+      .catch(error => console.error(error));
+    console.log(data);
+    setLoadingPage(false);
+    if (data.success) {
+      toast.success('Chỉnh sửa hồ sơ thành công');
+    } else {
+      const mes: string = data.data.message ? data.data.message : '';
+      toast.error(`Chỉnh sửa hồ sơ thất bại: ${mes}`);
+    }
   };
-  console.log(shop);
   return (
     <>
       {(loading || loadingPage)
@@ -263,9 +297,17 @@ function ProfileStore() {
               )}
             />
             </div>
-            <div className={classes.right}></div>
+            <hr />
+            <div className={classes.right}>
+              <div className={classes['avt-box']}>
+                <img src={shop.logo || defaultAvt} alt="Avatar" className={classes.avt} />
+                <Button variant='outlined' className={classes.btn}>Thay ảnh</Button>
+              </div>
+            </div>
           </div>
+          <Button variant='contained' className={classes.save} type='submit'>Lưu</Button>
         </form>
+        <ToastContainer autoClose={2000} position='bottom-right' />
       </div>
       }
     </>

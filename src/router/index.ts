@@ -1,7 +1,6 @@
 import Dashboard from '../pages/admin/Dashboard';
 import FavoriteList from '../pages/User/FavoriteList';
 import Home from '../pages/common/Home';
-import LoginPage from '../pages/login';
 import Product from '../pages/common/Product';
 import ProductList from '../pages/common/ProductList';
 import UserInfor from '../pages/User/UserInfor';
@@ -13,6 +12,7 @@ import ProductManager from '../pages/Vendor/ProductManager';
 import NewWatch from '../pages/Vendor/NewWatch';
 import OrderManager from '../pages/Vendor/OrderManager';
 import ProfileStore from '../pages/Vendor/ProfileStore';
+import Payment from '../pages/User/Payment';
 
 const mainRouter = [
   {
@@ -26,28 +26,33 @@ const mainRouter = [
   {
     path: '/product/:productId',
     component: Product
-  },
+  }
+];
+const userRouter = [
   {
     path: '/user/order',
+    Layout: true,
     component: UserOrder
   },
   {
     path: '/user/profile',
+    Layout: true,
     component: UserInfor
   },
   {
     path: '/user/favorite-list',
+    Layout: true,
     component: FavoriteList
   },
   {
     path: '/user/cart',
+    Layout: true,
     component: Cart
-  }
-];
-const authRouter = [
+  },
   {
-    path: 'auth/login',
-    component: LoginPage
+    path: '/payment',
+    Layout: false,
+    component: Payment
   }
 ];
 const adminRouter = [
@@ -82,4 +87,4 @@ const vendorRouter = [
     Layout: true
   }
 ];
-export { mainRouter, authRouter, adminRouter, vendorRouter };
+export { mainRouter, adminRouter, vendorRouter, userRouter };

@@ -1,5 +1,6 @@
 export interface IStateCommon {
   shopList: IShop[]
+  search: string
   loading: boolean
   error: string
 }

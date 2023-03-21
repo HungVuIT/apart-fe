@@ -19,12 +19,16 @@
   color: var(--text-color);
   height: 56px;
   width: 15%;
-  font-size: 18px;
+  font-size: 16px;
   margin-left: 4%;
   border: 1px solid #000000;
+  transition: all 1s ease-in-out;
   &:hover {
     background-color: var(--default-btn-color);
     color: var(--default-btn-text);
+  }
+  @include responsive_max992 {
+    font-size: 14px;
   }
   @include responsive_max768 {
     font-size: 14px;

@@ -126,7 +126,7 @@ function UserInfor() {
                   <Controller
                     name="gender"
                     control={control}
-                    defaultValue=""
+                    defaultValue={profile.gender}
                     render={({ field: { onChange, value }, fieldState: { error } }) => (
                       <RadioGroup
                         row
@@ -147,12 +147,12 @@ function UserInfor() {
                           control={<Radio />}
                           label="Nữ"
                         />
-                        <FormControlLabel
+                        {/* <FormControlLabel
                           className="item-radio"
                           value="other"
                           control={<Radio />}
                           label="Khác"
-                        />
+                        /> */}
                       </RadioGroup>
                     )}
                   />
@@ -187,7 +187,7 @@ function UserInfor() {
             <Button className='btn-save' variant='contained' type='submit'>Lưu</Button>
             </div>
           </form>
-          <ToastContainer autoClose={2000} position='bottom-right' />
+          <ToastContainer autoClose={10000} position='bottom-right' />
           </>
           : <Loading _type='balls' />
         }

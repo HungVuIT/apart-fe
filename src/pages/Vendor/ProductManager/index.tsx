@@ -32,9 +32,9 @@ function getWindowDimensions() {
   };
 }
 enum ProductStatus {
-  ACTIVE = 'active',
-  OUT = 'out_of_stock',
-  INFRINGE = 'infringe'
+  ACTIVE = 'Đang hoạt động',
+  OUT = 'Hết hàng',
+  INFRINGE = 'Hàng vi phạm'
 }
 function ProductManager() {
   const [value, setValue] = React.useState(0);
@@ -127,7 +127,7 @@ function ProductManager() {
       name: 'abcsc3',
       price: 1212412,
       quantity: 1,
-      status: ProductStatus.ACTIVE
+      status: ProductStatus.OUT
     },
     {
       id: 4,
@@ -135,16 +135,38 @@ function ProductManager() {
       name: 'abcsc4',
       price: 1212412,
       quantity: 1,
-      status: ProductStatus.ACTIVE
+      status: ProductStatus.INFRINGE
     }
   ];
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const handleChangeValue = (lst: any) => {
+    let result;
+    switch (value) {
+      case 0:
+        result = lst;
+        break;
+      case 1:
+        result = lst.filter((item: any) => item.status === ProductStatus.ACTIVE);
+        break;
+      case 2:
+        result = lst.filter((item: any) => item.status === ProductStatus.OUT);
+        break;
+      case 3:
+        result = lst.filter((item: any) => item.status === ProductStatus.INFRINGE);
+        break;
+      default:
+        result = [];
+        break;
+    }
+    return result;
+  };
   const productRender = useMemo(() => {
     const searchRender = [...rows].filter((product: any) => product.name ? product.name.toLowerCase().includes(searchValue.toLowerCase()) : '');
-    return searchRender;
-  }, [searchValue]);
+    const valueRender = handleChangeValue(searchRender);
+    return valueRender;
+  }, [searchValue, value]);
   return (
     <div className={classes.wrapper + ' pm-mui'}>
       <div className={classes.title}>Quản lý sản phẩm</div>

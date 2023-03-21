@@ -14,21 +14,25 @@ import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import axiosClient from '../../../api/axiosClient';
-import { getCart } from '../../../redux/user/userThunk';
-import { removeItemCart } from '../../../redux/user/userSlice';
-import CartPages from './Cart';
+import { changeQuantity, removeItemCart, setPayment } from '../../../redux/user/userSlice';
 import './customMUI.scss';
 
 import {
   DataGrid,
-  GridColDef
+  GridColDef,
+  GridSelectionModel
 } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
+import { useNavigate } from 'react-router-dom';
 
 interface IItemCart {
   id: number
   item: ICart
   checked: boolean
+}
+export enum TypeChangeQuantity {
+  PLUS = 'Plus',
+  MINUS = 'Minus'
 }
 interface ICartRender {
   id: number
@@ -47,8 +51,9 @@ function getWindowDimensions() {
 function Cart() {
   const dispatch = useAppDispatch();
   const { cart, loading } = useAppSelector(state => state.user);
-  const { shopList } = useAppSelector(state => state.common);
+  const [selectItem, setSelectItem] = useState<GridSelectionModel>([]);
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  const navigate = useNavigate();
   useEffect(() => {
     function handleResize() {
       setWindowDimensions(getWindowDimensions());
@@ -87,9 +92,9 @@ function Cart() {
       width: caculatorWidth(24),
       renderCell: (params) => (
         <div className={classes['watch-quantity']}>
-          <Button className={classes.btn}><RemoveIcon /></Button>
+          <Button className={classes.btn} onClick={() => handleChangeQuantity(params.row.id, TypeChangeQuantity.MINUS)}><RemoveIcon /></Button>
           <span className={classes.watchQuantity}>{params.row.quantity}</span>
-          <Button className={classes.btn}><AddIcon /></Button>
+          <Button className={classes.btn} onClick={() => handleChangeQuantity(params.row.id, TypeChangeQuantity.PLUS)}><AddIcon /></Button>
         </div>
       )
     },
@@ -114,6 +119,84 @@ function Cart() {
       )
     }
   ];
+
+  // các hàm gọi api
+  const removeItemFromCart = async (id: number) => {
+    try {
+      const url = `cart/item/${id}`;
+      const response = await axiosClient.delete(url);
+      if (response.data.success) {
+        dispatch(removeItemCart(id));
+      }
+      return response.data;
+    } catch (err) {
+      return err;
+    }
+  };
+
+  const changeQuantityApi = async ({ cartId, quantity }: any) => {
+    try {
+      const url = 'cart/item';
+      const response = await axiosClient.patch(url, { cartId, quantity });
+      return response.data.data;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  // các hàm xử lý
+  const handleChangeQuantity = (id: number, type: TypeChangeQuantity) => {
+    const newCart = [...cart];
+    const itemIndex = newCart.findIndex((item) => item.id === id);
+    let newItem;
+    if (itemIndex !== -1 && itemIndex < newCart.length) {
+      newItem = type === TypeChangeQuantity.PLUS
+        ? newCart[itemIndex] = {
+          ...newCart[itemIndex],
+          quantity: newCart[itemIndex].quantity + 1
+        }
+        : newCart[itemIndex].quantity > 1
+          ? newCart[itemIndex] = {
+            ...newCart[itemIndex],
+            quantity: newCart[itemIndex].quantity - 1
+          }
+          : null;
+    }
+    if (newItem) {
+      const quantity = newItem.quantity;
+      dispatch(changeQuantity({ id, quantity }));
+      changeQuantityApi({ cartId: id, quantity });
+    } else {
+      removeItemFromCart(id);
+      dispatch(removeItemCart(id));
+    }
+  };
+
+  const caculatorTotalPayment = () => {
+    let totalPrice = 0;
+    cartPayment.forEach(item => {
+      totalPrice += item.quantity * item.watch.price;
+    });
+    return totalPrice;
+  };
+
+  const handleRemoveItemFromCart = (id: number) => {
+    removeItemFromCart(id);
+  };
+  const handlePayment = () => {
+    dispatch(setPayment(cartPayment));
+    if (cartPayment.length > 0) {
+      navigate('/payment');
+    }
+  };
+
+  // tính toán các item hiển thị giỏ hàng và sản phẩm được
+  // chọn thanh toán
+  const cartPayment: ICart[] = useMemo(() => {
+    const lst: ICart[] = [];
+    cart.forEach(item => selectItem.includes(item.id) && lst.push(item));
+    return lst;
+  }, [selectItem, cart]);
   const cartRender: ICartRender[] = useMemo(() => {
     const lst: ICartRender[] = [];
     cart.forEach(item => {
@@ -127,29 +210,7 @@ function Cart() {
     });
     return lst;
   }, [cart]);
-  const caculatorTotalPayment = () => {
-    let totalPrice = 0;
-    cart.forEach(item => {
-      totalPrice += item.quantity * item.watch.price;
-    });
-    return formatMoney.format(totalPrice);
-  };
-
-  const removeItemFromCart = async (id: number) => {
-    try {
-      const url = `cart/item/${id}`;
-      const response = await axiosClient.delete(url);
-      if (response.data.success) {
-        dispatch(removeItemCart(id));
-      }
-      return response.data;
-    } catch (err) {
-      return err;
-    }
-  };
-  const handleRemoveItemFromCart = (id: number) => {
-    removeItemFromCart(id);
-  };
+  console.log(cartPayment);
   return (
     <>
       {loading.cart
@@ -165,6 +226,7 @@ function Cart() {
             experimentalFeatures={{ newEditingApi: false }}
             disableColumnMenu
             checkboxSelection
+            onSelectionModelChange={(ids) => setSelectItem(ids)}
             hideFooterPagination
             hideFooterSelectedRowCount
           />
@@ -174,7 +236,7 @@ function Cart() {
            <hr color="#ced4da" />
            <div className={classes['price-wrapper']}>
              <div className={classes.priceTitle}>Tạm tính</div>
-             <div className={classes.price}>{caculatorTotalPayment()}</div>
+             <div className={classes.price}>{formatMoney.format(caculatorTotalPayment())}</div>
            </div>
            <hr color="#ced4da" />
            <div className={classes['price-wrapper']}>
@@ -184,11 +246,11 @@ function Cart() {
            <hr color="#ced4da" />
            <div className={classes['price-wrapper']}>
              <div className={classes.priceTitle}>Tổng tiền hàng</div>
-             <div className={classes.price}>{caculatorTotalPayment()}</div>
+             <div className={classes.price}>{formatMoney.format(caculatorTotalPayment())}</div>
            </div>
            <hr color="#ced4da" />
            <div className={classes.btns}>
-             <Button className={classes.btn + ' ' + classes.red}>TIẾN HÀNH THANH TOÁN</Button>
+             <Button disabled={caculatorTotalPayment() === 0} className={classes.btn + ' ' + classes.red} onClick={handlePayment}>TIẾN HÀNH THANH TOÁN</Button>
              <Button className={classes.btn + ' ' + classes.black}>TIẾP TỤC MUA HÀNG</Button>
            </div>
          </div>

@@ -56,7 +56,19 @@ export interface IStateUser {
   error: string
   loading: ILoadingUser
   cart: ICart[]
+  payment: ICartItemPayment
 }
+export interface ICartItemPayment {
+  items: ICart[]
+  itemPrice: number
+  shipPrice: number
+}
+export const initCartItemPayment: ICartItemPayment = {
+  items: [],
+  itemPrice: 0,
+  shipPrice: 0
+};
+
 export const initUserInfo: IUserInfo = {
   id: 1,
   createdAt: '',

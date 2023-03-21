@@ -6,9 +6,14 @@ const commonSlice = createSlice({
   initialState: {
     shopList: initShopList,
     loading: false,
+    search: '',
     error: ''
   },
-  reducers: {},
+  reducers: {
+    setSearch: (state, action) => {
+      state.search = action.payload;
+    }
+  },
   extraReducers: extraReducersCommon
 });
 const { reducer: commonReducer } = commonSlice;

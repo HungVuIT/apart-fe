@@ -26,7 +26,6 @@ export const getCart = createAsyncThunk(
     }
   }
 );
-
 export const extraReducersUser = (
   builder: ActionReducerMapBuilder<IStateUser>
 ) => {

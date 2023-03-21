@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import './customMui.scss';
+import { useNavigate } from 'react-router-dom';
 interface IDataNewWatch {
   createdAt: string
   updatedAt: string
@@ -36,6 +37,7 @@ function NewWatch() {
   const { register, setValue, control, handleSubmit, clearErrors, formState: { errors } } = useForm<IDataNewWatch>({
     resolver: yupResolver(schema)
   });
+  const navigate = useNavigate();
   const onSubmit: SubmitHandler<IDataNewWatch> = async (_data: IDataNewWatch) => {
   };
   return (
@@ -426,7 +428,7 @@ function NewWatch() {
         </>
       </Container>
       <div className={classes.groupBtn}>
-        <Button variant="outlined" className={classes.btn}>Hủy</Button>
+        <Button variant="outlined" className={classes.btn} onClick={() => navigate('/shop/manager/watch')}>Hủy</Button>
         <Button variant="contained" className={classes.btn + ' ' + classes.save}>Thêm sản phẩm</Button>
       </div>
     </form>
