@@ -1,0 +1,53 @@
+@import '../../../../components/Global/foundation/mixin';
+
+.loading {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.form {
+  padding: 20px 10%;
+  & .email,
+  .address {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  & .name {
+    width: 100%;
+    display: flex;
+    margin-bottom: 20px;
+    & .shop {
+      width: 49%;
+      margin-right: 2%;
+    }
+    & .user {
+      width: 49%;
+    }
+  }
+  & .description {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  & .select {
+    margin-bottom: 20px;
+  }
+  & .phone {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  & .btns {
+    width: 100%;
+    & .btn {
+      width: 45%;
+      height: 45px;
+      font-size: 14px;
+      color: #fff;
+    }
+    & .cancel {
+      margin-right: 10%;
+      background-color: #000;
+    }
+    & .save {
+      background-color: #fa5252;
+    }
+  }
+}

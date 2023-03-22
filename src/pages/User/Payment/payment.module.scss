@@ -1,0 +1,26 @@
+.wrapper {
+    display: flex;
+    & .box-input {
+        width: 70%;
+        padding: 20px;
+        & .logo {
+            width: 100%;
+            font-family: 'Caramel', cursive;
+            color: #000;
+            font-size: 50px;
+            font-weight: 700;
+        }
+        & .stepper {
+            width: 50%;
+            & span {
+                font-size: 12px;
+            }
+        }
+    }
+    & .box-price {
+        width: 30%;
+        background-color: #DBDBDB;
+        height: 100%;
+        min-height: 100vh;
+    }
+}
