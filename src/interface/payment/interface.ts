@@ -20,11 +20,11 @@ export const initInforPayment: IInforPayment = {
 };
 export interface IPaymentDetails {
   infor: IInforPayment
-  ship: any
-  typePayment: any
+  deliveryOption: string
+  paymentMethod: string
 }
 export const initPaymentDetail: IPaymentDetails = {
   infor: initInforPayment,
-  ship: '',
-  typePayment: ''
+  deliveryOption: '',
+  paymentMethod: ''
 };

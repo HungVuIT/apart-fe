@@ -18,23 +18,19 @@ import { useNavigate } from 'react-router-dom';
 import { fetchDistrict, fetchProvince, fetchWard } from '../../../Vendor/RegisterShop/fetch';
 import { IDistrict, IProvince, IWard } from '../../../Vendor/RegisterShop/type';
 import { IInforPayment, IPaymentDetails } from '../../../../interface/payment/interface';
+import { IPropsPayment } from '../type-props';
 const schema = yup.object().shape({
-  email: yup.string().email('Email không hợp lệ').required('Vui lòng nhập email'),
-  firstName: yup.string().required('Vui lòng nhập họ của bạn'),
-  lastName: yup.string().required('Vui lòng nhập tên của bạn'),
-  province: yup.string().required('Vui lòng chọn một giá trị'),
-  district: yup.string().required('Vui lòng chọn một giá trị'),
-  ward: yup.string().required('Vui lòng chọn một giá trị'),
-  address: yup.string().required('Vui lòng nhập địa chỉ đường'),
-  phoneNumber: yup.string().matches(/^\d{10}$/, 'Số điện thoại phải 10 chữ số').required('Vui lòng nhập số điện thoại')
+  // email: yup.string().email('Email không hợp lệ').required('Vui lòng nhập email'),
+  // firstName: yup.string().required('Vui lòng nhập họ của bạn'),
+  // lastName: yup.string().required('Vui lòng nhập tên của bạn'),
+  // province: yup.string().required('Vui lòng chọn một giá trị'),
+  // district: yup.string().required('Vui lòng chọn một giá trị'),
+  // ward: yup.string().required('Vui lòng chọn một giá trị'),
+  // address: yup.string().required('Vui lòng nhập địa chỉ đường'),
+  // phoneNumber: yup.string().matches(/^\d{10}$/, 'Số điện thoại phải 10 chữ số').required('Vui lòng nhập số điện thoại')
 });
 
-interface IProps {
-  handleNext: any
-  paymentDetails: IPaymentDetails
-  setPaymentDetails: React.Dispatch<React.SetStateAction<IPaymentDetails>>
-}
-function InforBox({ handleNext, setPaymentDetails, paymentDetails }: IProps) {
+function InforBox({ handleNext, setPaymentDetails, paymentDetails }: IPropsPayment) {
   const { register, setValue, control, handleSubmit, getValues, clearErrors, formState: { errors } } = useForm<IInforPayment>({
     resolver: yupResolver(schema)
   });
@@ -270,8 +266,8 @@ function InforBox({ handleNext, setPaymentDetails, paymentDetails }: IProps) {
             )}
           />
           <div className={classes.btns}>
-            <Button className={classes.btn + ' ' + classes.cancel} variant="contained">HỦY</Button>
-            <Button type='submit' className={classes.btn + ' ' + classes.save} variant="contained">ĐĂNG KÝ</Button>
+            <Button className={classes.btn + ' ' + classes.cancel} variant="contained" onClick={() => navigate('/user/cart')}>Quay lại giỏ hàng</Button>
+            <Button type='submit' className={classes.btn + ' ' + classes.save} variant="contained">Tiếp tục</Button>
           </div>
       </form>
       <ToastContainer autoClose={2000} position='bottom-right' />

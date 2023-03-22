@@ -93,20 +93,7 @@ function ProfileStore() {
   };
   const onSubmit: SubmitHandler<IProfileStore> = async (_data: IProfileStore) => {
     setLoadingPage(true);
-    // const data = await editShop(_data);
-    const data = await fetch('https://aafb-171-247-144-13.ap.ngrok.io/api/shops/my-shop', {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        'access-control-allow-methods': '*',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        'Access-Control-Allow-Credentials': 'true'
-      },
-      body: JSON.stringify(_data)
-    })
-      .then((response: any) => response.json())
-      .catch(error => console.error(error));
+    const data = await editShop(_data);
     console.log(data);
     setLoadingPage(false);
     if (data.success) {

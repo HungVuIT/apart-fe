@@ -1,0 +1,61 @@
+.wrapper {
+  padding: 20px 5%;
+  & .box-infor {
+    width: 100%;
+    padding: 0 5px;
+    border: 1px solid black;
+    & .item {
+      display: flex;
+      height: 60px;
+      width: 100%;
+      padding: 5px;
+      font-size: 16px;
+      & .title {
+        width: 20%;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      & .content {
+        width: 70%;
+        height: 60px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+  & .box-ship {
+    margin-top: 30px;
+    & label {
+      font-size: 18px;
+      font-weight: 600;
+      color: #000;
+    }
+    & span {
+      font-size: 16px;
+    }
+    & .radio {
+      margin: 10px 0;
+    }
+  }
+  & .box-button {
+    margin-top: 10px;
+    width: 100%;
+    & .btn {
+      width: 45%;
+      height: 45px;
+      font-size: 14px;
+      color: #fff;
+    }
+    & .cancel {
+      margin-right: 10%;
+      background-color: #000;
+    }
+    & .save {
+      background-color: #fa5252;
+    }
+  }
+}

@@ -187,7 +187,7 @@ function UserInfor() {
             <Button className='btn-save' variant='contained' type='submit'>Lưu</Button>
             </div>
           </form>
-          <ToastContainer autoClose={10000} position='bottom-right' />
+          <ToastContainer autoClose={1000} position='bottom-right' />
           </>
           : <Loading _type='balls' />
         }

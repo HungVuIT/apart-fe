@@ -10,12 +10,20 @@ import InforBox from './components/InforBox';
 import ShipBox from './components/ShipBox';
 import PaymentBox from './components/PaymentBox';
 import { initPaymentDetail } from '../../../interface/payment/interface';
+import { useAppSelector } from '../../../hooks/hooks';
+import { useNavigate } from 'react-router-dom';
+import { formatMoney } from '../../../untils/formartMoney';
 const steps = ['Thông tin', 'Vận chuyển', 'Thanh toán'];
 
 export default function Payment () {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const [paymentDetails, setPaymentDetails] = React.useState(initPaymentDetail);
+  const { payment } = useAppSelector(state => state.user);
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    payment.items.length <= 0 && navigate('/user/cart');
+  }, []);
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(skipped);
@@ -67,11 +75,11 @@ export default function Payment () {
                     activeStep === 0
                       ? <InforBox handleNext={handleNext} setPaymentDetails={setPaymentDetails} paymentDetails={paymentDetails}/>
                       : activeStep === 1
-                        ? <ShipBox />
-                        : <PaymentBox />
+                        ? <ShipBox handleBack={handleBack} handleNext={handleNext} setPaymentDetails={setPaymentDetails} paymentDetails={paymentDetails}/>
+                        : <PaymentBox handleBack={handleBack} handleNext={handleNext} setPaymentDetails={setPaymentDetails} paymentDetails={paymentDetails}/>
                   }
                 </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                {/* <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                   <Button
                     color="inherit"
                     onClick={handleBack}
@@ -83,11 +91,11 @@ export default function Payment () {
                   <Button onClick={handleNext}>
                     {activeStep === steps.length - 1 ? 'Thanh toán' : 'Tiếp tục'}
                   </Button>
-                </Box>
+                </Box> */}
               </React.Fragment>
             )}
       </Box>
-      <div className={classes['box-price']}>a</div>
+      <div className={classes['box-price']}>{formatMoney.format(payment.itemPrice)}</div>
     </div>
   );
 }
