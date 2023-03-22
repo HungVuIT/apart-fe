@@ -79,6 +79,7 @@
         font-size: 14px;
         margin: 10px 0;
         color: var(--text-color);
+        
       }
       & .red {
         background-color: #f03e3e;
@@ -109,4 +110,7 @@
   .MuiDataGrid-root .MuiDataGrid-cell:focus {
     outline: none !important
   }
+}
+button:disabled {
+  background-color: gray !important;
 }
