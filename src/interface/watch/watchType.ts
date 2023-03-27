@@ -69,22 +69,25 @@ export interface IComment {
   id: string
   createdAt: string
   updatedAt: string
-  user: string
+  UID: string
   WID: string
   content: string
 }
-interface IStateProduct {
+export interface IStateProduct {
   watch: IWatch
   comment: IComment[]
   shop: IShop
+  loading: boolean
+  error: string
 }
 export const initStateProduct: IStateProduct = {
   watch: initWatch,
   comment: [],
-  shop: initShop
+  shop: initShop,
+  loading: false,
+  error: ''
 };
 export interface IStateWatch {
-  displayWatch: IStateProduct
   watchList: IWatch[]
   topWatchList: IWatch[]
   newWatchList: IWatch[]

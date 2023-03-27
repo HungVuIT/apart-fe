@@ -3,33 +3,46 @@ import React, { useEffect } from 'react';
 import Container from '../../../../components/Container';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import { getCommentById } from '../../../../redux/watch/watchThunk';
 import { ToastContainer, toast } from 'react-toastify';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { IComment } from '../../../../interface/watch/watchType';
+import { getCommentById } from '../../../../redux/product/productThunk';
+import moment from 'moment';
+import axiosClient from '../../../../api/axiosClient';
+import { commentOnWatch, IDataComment } from '../../../../api/service/product-service';
 
 interface IProps {
   id: number | undefined
 }
 function Comment({ id }: IProps): JSX.Element {
-  const { register, control, handleSubmit, getValues, clearErrors, formState: { errors } } = useForm<IComment>({
-  });
-  const [isShow, setIsShow] = React.useState(false);
-  const [value, setValue] = React.useState<number | null>(2);
+  const [value, setValue] = React.useState<string>('');
   const dispatch = useAppDispatch();
-  const { displayWatch } = useAppSelector(state => state.watch);
-  const { comment } = displayWatch;
+  const { comment, watch } = useAppSelector(state => state.productNow);
   useEffect(() => {
     id && dispatch(getCommentById(id));
   }, []);
-  const handleClick = () => {
-    setIsShow(!isShow);
+  const handleClick = async () => {
+    const data: IDataComment = {
+      content: value,
+      watchId: watch.id
+    };
+    const res = await commentOnWatch(data);
+    console.log(res);
+    if (res.success) {
+      setValue('');
+      id && dispatch(getCommentById(id));
+    } else {
+      toast.error('Bình luận không thành công');
+    }
   };
-  const onSubmit: SubmitHandler<IComment> = async () => {
-  };
+  const handleDate = (cmt: IComment) => {
+    const dateObj = moment.utc(cmt.createdAt);
 
+    const formattedDate = dateObj.format('[Ngày] DD [tháng] M [năm] YYYY');
+    return `${cmt.UID} ${formattedDate}`;
+  };
   return (
     <Container >
       <div className="describe__wrapper">
@@ -44,65 +57,32 @@ function Comment({ id }: IProps): JSX.Element {
           <AccordionDetails>
             <Typography component={'span'} variant={'body2'}>
               <div className="comments">
-                <div className='comments-header'>
-                  <Rating name="half-rating-read" value={4.5} precision={0.5} readOnly className='rate-star' />
-                  <span className="rate-tite"><i>Dựa trên 100 đánh giá</i></span>
-                  <Button variant="contained" className='rate-btn' onClick={handleClick}>Viết đánh giá</Button>
-                </div>
-                <form onSubmit={handleSubmit(onSubmit)} className={'form-comment' + (isShow ? ' active' : '')}>
-                  <div className="line"></div>
-                  <div className="form-title">Đánh giá của bạn</div>
+                <div className={'form-comment active'}>
                   <div className="form-input">
-                    <Controller name='user' control={control}
-                      render={({
-                        field: { onChange, onBlur, value }
-                      }) => (
-                        <TextField
-                          variant='outlined'
-                          {...register('user')}
-                          onBlur={onBlur}
-                          onChange={onChange}
-                          className='item-content'
-                      />
-                      )}
-                    />
-                    {/* <TextField id="outlined-basic" label="Tên hoặc nickname của bạn" variant="outlined" /> */}
-                  </div>
-                  <div className="form-input">
-                    <TextField id="outlined-basic" label="Email của bạn" variant="outlined" />
-                  </div>
-                  <div className="form-rate">
-                    <div className="rate-title">Đánh giá</div>
-                    <Rating
-                      name="simple-controlled"
-                      value={value}
-                      onChange={(event, newValue) => {
-                        setValue(newValue);
-                      }}
+                    <TextField
+                        label='Nội dung'
+                        variant='outlined'
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
                     />
                   </div>
-                  <div className="form-input">
-                    <TextField id="outlined-basic" label="Tiêu đề" variant="outlined" />
-                  </div>
-                  <div className="form-input">
-                    <div className="form-title">Chi tiết đánh giá</div>
-                    <TextField className='input-detail' id="outlined-basic" variant="outlined" placeholder='Vui lòng nhập chi tiết đánh giá ở đây'/>
-                  </div>
-                  <Button variant="contained" className='rate-submit' onClick={handleClick}>Gửi đánh giá</Button>
-                </form>
-                <div className="line"></div>
-                <div className="comment-item">
-                  <Rating name="half-rating-read" value={4.5} precision={0.5} readOnly className='item-star' />
-                  <div className="item-title">Đồng hồ đẹp</div>
-                  <div className="item-date"><i>Dũng Lê ngày 18 tháng 5 năm 2022</i></div>
-                  <div className="item-content">Đồng hồ rất đẹp, đóng gói và vận chuyển rất cẩn thận</div>
-                  <Button variant="text" className='item-btn'>Báo cáo đánh giá không phù hợp</Button>
+                  <Button variant="contained" className='rate-submit' onClick={handleClick}>Bình luận</Button>
                 </div>
-
+                {comment.map((cmt: IComment) => (
+                  <React.Fragment key={cmt.id}>
+                    <hr/>
+                    <div className="comment-item">
+                      <div className="item-date"><i>{handleDate(cmt)}</i></div>
+                      <div className="item-content">{cmt.content}</div>
+                      <Button variant="text" className='item-btn'>Báo cáo đánh giá không phù hợp</Button>
+                    </div>
+                  </React.Fragment>
+                ))}
               </div>
             </Typography>
           </AccordionDetails>
         </Accordion>
+        <ToastContainer autoClose={1000} position='bottom-right' />
       </div>
     </Container>
   );

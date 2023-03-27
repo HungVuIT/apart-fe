@@ -3,12 +3,12 @@ import React, { useEffect } from 'react';
 import Container from '../../../../components/Container';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import { getCommentById } from '../../../../redux/watch/watchThunk';
 import { ToastContainer, toast } from 'react-toastify';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { IComment } from '../../../../interface/watch/watchType';
+import { getCommentById } from '../../../../redux/product/productThunk';
 
 interface IProps {
   id: number | undefined
@@ -19,8 +19,7 @@ function RatingBox({ id }: IProps): JSX.Element {
   const [isShow, setIsShow] = React.useState(false);
   const [value, setValue] = React.useState<number | null>(2);
   const dispatch = useAppDispatch();
-  const { displayWatch } = useAppSelector(state => state.watch);
-  const { comment } = displayWatch;
+  const { comment } = useAppSelector(state => state.productNow);
   useEffect(() => {
     id && dispatch(getCommentById(id));
   }, []);
@@ -53,19 +52,6 @@ function RatingBox({ id }: IProps): JSX.Element {
                   <div className="line"></div>
                   <div className="form-title">Đánh giá của bạn</div>
                   <div className="form-input">
-                    <Controller name='user' control={control}
-                      render={({
-                        field: { onChange, onBlur, value }
-                      }) => (
-                        <TextField
-                          variant='outlined'
-                          {...register('user')}
-                          onBlur={onBlur}
-                          onChange={onChange}
-                          className='item-content'
-                      />
-                      )}
-                    />
                     {/* <TextField id="outlined-basic" label="Tên hoặc nickname của bạn" variant="outlined" /> */}
                   </div>
                   <div className="form-input">

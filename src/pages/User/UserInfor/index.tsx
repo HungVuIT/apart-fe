@@ -24,6 +24,7 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import { IDistrict, IProvince, IWard } from '../../Vendor/RegisterShop/type';
 import { fetchDistrict, fetchWard } from '../../Vendor/RegisterShop/fetch';
+
 const schema = yup.object().shape({
   email: yup.string().email('Email không hợp lệ').required('Vui lòng nhập email'),
   phoneNumber: yup.string().matches(/^\d{10}$/, 'Số điện thoại phải 10 chữ số').required('Vui lòng nhập số điện thoại')
@@ -33,11 +34,19 @@ function UserInfor() {
   const { register, setValue, control, handleSubmit, getValues, clearErrors, formState: { errors } } = useForm<IProfile>({
     resolver: yupResolver(schema)
   });
+  const inputFile = React.useRef<HTMLInputElement>(null);
+  const [image, setImage] = useState<string>(profile.avatar);
+  const [src, setSrc] = useState<string>('');
   const [province, setProvince] = useState<IProvince[]>([]);
   const [district, setDistrict] = useState<IDistrict[]>([]);
   const [ward, setWard] = useState<IWard[]>([]);
   const [loadingSave, setLoadingSave] = useState(false);
 
+  const handleImageUpload = (e: any) => {
+    const selectedFile = e.target.files[0]; // Lấy file đầu tiên được chọn
+    const imageUrl = URL.createObjectURL(selectedFile); // Tạo đường dẫn URL cho file ảnh
+    setImage(imageUrl);
+  };
   const handleChangeProvince = (event: SelectChangeEvent) => {
     clearErrors('province');
     setValue('district', '');
@@ -63,6 +72,11 @@ function UserInfor() {
   const getIdDistrict = (name: string) => {
     const id = district.findIndex(item => item.district_name === name);
     return district[id].district_id;
+  };
+  const handleButtonClick = () => {
+    if (inputFile.current) {
+      inputFile.current.click();
+    }
   };
   const onSubmit: SubmitHandler<IProfile> = async () => {
     const value = getValues();
@@ -238,8 +252,8 @@ function UserInfor() {
                     )}
                   />
                 </div>
-                <div className='item'>
-                  <div className='item-title'>Số điện thoại :</div>
+                <div className={classes.item}>
+                  <div className={classes['item-title']}>Số điện thoại :</div>
                   <Controller name='phoneNumber' control={control}
                     render={({
                       field: { onChange, onBlur, value }
@@ -253,14 +267,14 @@ function UserInfor() {
                         helperText={errors.phoneNumber?.message}
                         onBlur={onBlur}
                         onChange={onChange}
-                        className='item-content'
+                        className={classes['item-content']}
                     />
                     )}
                   />
                 </div>
-                <div className='item'>
-                  <div className='item-title'>Giới tính :</div>
-                  <div className='item-content'>
+                <div className={classes.item}>
+                  <div className={classes['item-title']}>Giới tính :</div>
+                  <div className={classes['item-content']}>
                   <Controller
                     name="gender"
                     control={control}
@@ -274,13 +288,13 @@ function UserInfor() {
                         aria-label="gender"
                       >
                         <FormControlLabel
-                          className="item-radio"
+                          className={classes['item-radio']}
                           value="male"
                           control={<Radio />}
                           label="Nam"
                         />
                         <FormControlLabel
-                          className="item-radio"
+                          className={classes['item-radio']}
                           value="female"
                           control={<Radio />}
                           label="Nữ"
@@ -290,14 +304,14 @@ function UserInfor() {
                   />
                   </div>
                 </div>
-                <div className='item'>
-                  <div className='item-title'>Ngày sinh :</div>
+                <div className={classes.item}>
+                  <div className={classes['item-title']}>Ngày sinh :</div>
                   <Controller name='birthDay' control={control}
                     render={({
                       field: { onChange, onBlur, value }
                     }) => (
                       <TextField
-                        className="item-content"
+                        className={classes['item-content']}
                         type="date"
                         value={value}
                         defaultValue={profile.birthDay ? moment(profile.birthDay).format('YYYY-MM-DD') : '2023-04-01'}
@@ -311,12 +325,19 @@ function UserInfor() {
               </div>
               <hr className={classes['hight-line'] + ' ' + classes['content-line']}></hr>
               <div className={classes['content-avt']}>
-                <img src={profile.avatar} alt='Avatar' className={classes['img-avt']} />
-                <Button variant='outlined'>Chọn ảnh</Button>
+                <img src={image} alt='Avatar' className={classes['img-avt']} />
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  ref={inputFile}
+                  style={{ display: 'none' }}
+                />
+                <Button variant='outlined' onClick={handleButtonClick}>Chọn ảnh</Button>
               </div>
             </div>
-            <div className='infor-save'>
-            <Button className='btn-save' variant='contained' type='submit'>Lưu</Button>
+            <div className={classes['infor-save']}>
+            <Button className={classes['btn-save']} variant='contained' type='submit'>Lưu</Button>
             </div>
           </form>
           <ToastContainer autoClose={1000} position='bottom-right' />

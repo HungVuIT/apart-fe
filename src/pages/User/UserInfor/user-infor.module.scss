@@ -29,6 +29,9 @@
         } 
         & .item-content {
           width: 65%;
+          & input {
+            font-size: 14px;
+          }
           & .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
             font-size: 16px;
             padding: 10px 14px;
@@ -41,8 +44,12 @@
           }
           & .item-radio {
             width: 30%;
+            margin-top: 5px;
             align-items: center;
             justify-content: center;
+            & span {
+              font-size: 16px;
+            }
             & .css-ahj2mt-MuiTypography-root {
               font-size: 16px;
             }

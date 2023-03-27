@@ -18,8 +18,7 @@ interface IProps {
 }
 function MainContent({ id }: IProps) {
   const [index, setIndex] = React.useState(0);
-  const { displayWatch } = useAppSelector(state => state.watch);
-  const { watch } = displayWatch;
+  const { watch } = useAppSelector(state => state.productNow);
   const dispatch = useAppDispatch();
   const items = [itempng, item2png, item3png];
   const { setIsOpenLogin, setIsLogin } = useContext(MyGlobalContext);
@@ -84,7 +83,7 @@ function MainContent({ id }: IProps) {
             <span className='numOfVoter'>{watch.rating || 0} sao trên 1256 đánh giá</span>
           </div>
           <div className='info-describe'>
-            <span>{watch.description}</span>
+            <span>{watch.content}</span>
           </div>
           <div className='product-btns'>
             <button className='icon-tym active'>

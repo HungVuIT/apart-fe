@@ -10,8 +10,7 @@ import Paper from '@mui/material/Paper';
 import { useAppSelector } from '../../../../hooks/hooks';
 
 export default function TableDescribe() {
-  const { displayWatch } = useAppSelector(state => state.watch);
-  const { watch } = displayWatch;
+  const { watch } = useAppSelector(state => state.productNow);
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,

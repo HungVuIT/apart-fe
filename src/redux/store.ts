@@ -3,12 +3,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import commonReducer from './common/commonSlice';
 import watchReducer from './watch/watchSlice';
 import vendorReducer from './vendor/vendorSlice';
+import productReducer from './product/productSlice';
 
 const rootReducer = {
   user: userReducer,
   common: commonReducer,
   watch: watchReducer,
-  vendor: vendorReducer
+  vendor: vendorReducer,
+  productNow: productReducer
 };
 
 const store = configureStore({

@@ -4,7 +4,6 @@ import { extraReducersWatch } from './watchThunk';
 const watchSlice = createSlice({
   name: 'watch',
   initialState: {
-    displayWatch: initStateProduct,
     watchList: initWatchList,
     topWatchList: initWatchList,
     newWatchList: initWatchList,

@@ -8,8 +8,8 @@ interface IProps {
   id: number | undefined
 }
 function SubContent({ id }: IProps) {
-  const { displayWatch } = useAppSelector(state => state.watch);
-  const { watch, shop } = displayWatch;
+  const { watch, shop } = useAppSelector(state => state.productNow);
+
   const caculatorDay = (_day: string) => {
     const date = new Date(_day);
     const formattedDate = moment(date, 'YYYYMMDD').locale('vi').fromNow();

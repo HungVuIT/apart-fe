@@ -186,6 +186,12 @@
       text-align: center;
     }
   }
+  & .infor-details {
+    width: 90%;
+    margin: 0 5%;
+    font-size: 16px;
+    font-weight: 400;
+  }
 }
 
 //--------------COMMENT-----------------------------
@@ -233,6 +239,9 @@
       }
       & .form-input {
         margin: 10px 0;
+        .css-14lo706 {
+          min-width: 60px !important;
+        }
       }
       & .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
         width: 400px;
@@ -254,6 +263,7 @@
       & .rate-submit {
         height: 50px;
         font-size: 16px;
+        margin-bottom: 20px;
         background-color: var(--default-btn-text);
         color: var(--default-btn-color);
       }
