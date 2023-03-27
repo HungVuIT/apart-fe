@@ -5,6 +5,10 @@ import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormLabel from '@mui/material/FormLabel';
+import Button from '@mui/material/Button';
 interface IFilter {
   brand: string[]
   gender: string
@@ -68,14 +72,15 @@ function Tags() {
       <hr className={classes.line}/>
       <FormControl sx={{ m: 3 }} component="fieldset" variant="standard" className={classes['form-control']}>
         <FormGroup>
-          {genders.map((name, index) => (
-            <FormControlLabel className={classes.label} key={index}
-              control={
-                <Checkbox className={classes.checkbox} checked={checkedGender(name)} onChange={(e) => handleChange('gender', e.target.name)} name={name} sx={{ fontSize: 24 }} />
-              }
-              label={name}
-           />
-          ))}
+        <RadioGroup
+          aria-labelledby="demo-radio-buttons-group-label"
+          defaultValue="female"
+          name="radio-buttons-group"
+          className={classes.RadioGroup}
+        >
+          <FormControlLabel value="female" control={<Radio />} label="Nữ" />
+          <FormControlLabel value="male" control={<Radio />} label="Nam" />
+        </RadioGroup>
         </FormGroup>
       </FormControl>
       <h1 className={classes.title}>Mức giá</h1>
@@ -92,6 +97,9 @@ function Tags() {
           ))}
         </FormGroup>
       </FormControl>
+      <div className={classes.btn}>
+      <Button variant='outlined' className={classes.btnFilter}>Lọc</Button>
+      </div>
     </div>
   );
 }

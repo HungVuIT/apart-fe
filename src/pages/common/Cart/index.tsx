@@ -174,7 +174,7 @@ function Cart() {
 
   const caculatorTotalPayment = () => {
     let totalPrice = 0;
-    cartPayment.forEach(item => {
+    cart.forEach(item => {
       totalPrice += item.quantity * item.watch.price;
     });
     return totalPrice;
@@ -184,19 +184,17 @@ function Cart() {
     removeItemFromCart(id);
   };
   const handlePayment = () => {
-    dispatch(setPayment(cartPayment));
-    if (cartPayment.length > 0) {
-      navigate('/payment');
-    }
+    dispatch(setPayment(cart));
+    navigate('/payment');
   };
 
   // tính toán các item hiển thị giỏ hàng và sản phẩm được
   // chọn thanh toán
-  const cartPayment: ICart[] = useMemo(() => {
-    const lst: ICart[] = [];
-    cart.forEach(item => selectItem.includes(item.id) && lst.push(item));
-    return lst;
-  }, [selectItem, cart]);
+  // const cartPayment: ICart[] = useMemo(() => {
+  //   const lst: ICart[] = [];
+  //   cart.forEach(item => selectItem.includes(item.id) && lst.push(item));
+  //   return lst;
+  // }, [selectItem, cart]);
   const cartRender: ICartRender[] = useMemo(() => {
     const lst: ICartRender[] = [];
     cart.forEach(item => {
@@ -210,7 +208,6 @@ function Cart() {
     });
     return lst;
   }, [cart]);
-  console.log(cartPayment);
   return (
     <>
       {loading.cart
@@ -225,8 +222,6 @@ function Cart() {
             rows={cartRender} columns={columns}
             experimentalFeatures={{ newEditingApi: false }}
             disableColumnMenu
-            checkboxSelection
-            onSelectionModelChange={(ids) => setSelectItem(ids)}
             hideFooterPagination
             hideFooterSelectedRowCount
           />

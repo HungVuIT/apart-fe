@@ -23,6 +23,18 @@ export interface IPaymentDetails {
   deliveryOption: string
   paymentMethod: string
 }
+export interface ICheckOut {
+  email: string
+  firstName: string
+  lastName: string
+  province: string
+  district: string
+  ward: string
+  address: string
+  phoneNumber: string
+  deliveryOption: string
+  paymentMethod: string
+}
 export const initPaymentDetail: IPaymentDetails = {
   infor: initInforPayment,
   deliveryOption: '',

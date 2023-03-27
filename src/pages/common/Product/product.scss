@@ -81,6 +81,9 @@
     display: flex;
     justify-content: center;
     & button {
+      width: 120px;
+      height: 40px;
+      border-radius: 10px;
       cursor: pointer;
       background-color: white;
       color: black;

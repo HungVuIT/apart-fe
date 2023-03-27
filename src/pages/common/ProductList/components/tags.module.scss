@@ -19,7 +19,14 @@
     width: 100%;
     margin: 10px 0 20px 0;
     padding: 0 10px;
-
+    & .RadioGroup {
+      & label {
+        margin-left: 20px;
+        @include responsive_max1024 {
+          margin-left: 5px;
+        }
+      }
+    }
     & .label {
       margin-left: 20px;
       @include responsive_max1024 {
@@ -31,6 +38,19 @@
       &.css-ahj2mt-MuiTypography-root {
         font-size: 16px;
       }
+    }
+  }
+  & .btn{
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & .btnFilter {
+      width: 80px;
+      height: 40px;
+      font-size: 14px;
+      font-weight: 700;
     }
   }
 }

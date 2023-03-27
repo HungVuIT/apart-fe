@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { IPropsPayment } from '../type-props';
 import classes from './ship-box.module.scss';
 import Radio from '@mui/material/Radio';
@@ -8,15 +8,34 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
 import { toast, ToastContainer } from 'react-toastify';
+import { checkOut } from '../../../../api/service/user-service';
+import { ICheckOut } from '../../../../interface/payment/interface';
+import { useAppDispatch } from '../../../../hooks/hooks';
+import { setShipPrice } from '../../../../redux/user/userSlice';
 
 function ShipBox({ handleBack, handleNext, setPaymentDetails, paymentDetails }: IPropsPayment) {
-  const [value, setValue] = React.useState('');
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const [value, setValue] = React.useState('1');
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    const params: ICheckOut = {
+      ...paymentDetails.infor,
+      deliveryOption: value,
+      paymentMethod: 'offline'
+    };
+    const data = checkOut(params, dispatch);
+  }, []);
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const params: ICheckOut = {
+      ...paymentDetails.infor,
+      deliveryOption: event.target.value,
+      paymentMethod: 'offline'
+    };
     setValue((event.target as HTMLInputElement).value);
+    const data = await checkOut(params);
+    console.log(data.data.shipFee);
+    dispatch(setShipPrice(data.data.shipFee ? data.data.shipFee : 0));
   };
   const handleContinue = () => {
-    console.log(value);
     if (value) {
       setPaymentDetails(prev => ({
         ...prev,
@@ -65,7 +84,7 @@ function ShipBox({ handleBack, handleNext, setPaymentDetails, paymentDetails }: 
         <Button className={classes.btn + ' ' + classes.cancel} variant="contained" onClick={handleBack}>Quay lại</Button>
         <Button className={classes.btn + ' ' + classes.save} variant="contained" onClick={handleContinue}>Tiếp tục</Button>
       </div>
-      <ToastContainer autoClose={1000} position='top-right'/>
+      <ToastContainer autoClose={1000} position='bottom-right'/>
     </div>
   );
 }

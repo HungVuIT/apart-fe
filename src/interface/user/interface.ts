@@ -27,6 +27,10 @@ export interface IProfile {
   gender: string | null
   birthDay: string | null
   avatar: string
+  province: string
+  district: string
+  ward: string
+  address: string
 }
 export interface IEditProfile {
   email: string

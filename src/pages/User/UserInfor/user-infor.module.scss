@@ -1,0 +1,88 @@
+.loading {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.user-infor {
+  & .css-1wc848c-MuiFormHelperText-root.Mui-error {
+    font-size: 12px;
+  }
+  & .infor-title {
+    padding: 20px;
+    font-size: var(--default-text-title);
+    font-weight: 700;
+  }
+  & .infor-content {
+    margin-top: 20px;
+    & .content-all {
+      
+      width: 70%;
+      
+      & .item {
+        display: flex;
+        margin-bottom: 20px;
+        & .item-title {
+          width: 30%;
+          padding: 10px;
+          padding-right: 20px;
+          text-align: right;
+          height: 40px;
+        } 
+        & .item-content {
+          width: 65%;
+          & .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+            font-size: 16px;
+            padding: 10px 14px;
+          }
+          & .css-1nrlq1o-MuiFormControl-root {
+            flex-direction: row;
+          }
+          & .css-j204z7-MuiFormControlLabel-root {
+            width: 30%;
+          }
+          & .item-radio {
+            width: 30%;
+            align-items: center;
+            justify-content: center;
+            & .css-ahj2mt-MuiTypography-root {
+              font-size: 16px;
+            }
+          }
+          & .css-1hbvpl3-MuiSvgIcon-root {
+            font-size: 25px;
+          }
+          & .css-11zohuh-MuiSvgIcon-root {
+            font-size: 25px;
+          }
+        }
+      }
+    }
+    & .content-line {
+      height: inherit;
+      border-color: gray;
+    }
+    & .content-avt {
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & .img-avt {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  & .infor-save {
+    width: 100%;
+    padding: 40px 0;
+    text-align: center;
+    & .btn-save {
+      width: 80px;
+      height: 40px;
+      font-size: 16px;
+      background-color: var(--btn-red);
+    }
+  }
+}

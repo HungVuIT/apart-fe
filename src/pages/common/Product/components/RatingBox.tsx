@@ -13,7 +13,7 @@ import { IComment } from '../../../../interface/watch/watchType';
 interface IProps {
   id: number | undefined
 }
-function Comment({ id }: IProps): JSX.Element {
+function RatingBox({ id }: IProps): JSX.Element {
   const { register, control, handleSubmit, getValues, clearErrors, formState: { errors } } = useForm<IComment>({
   });
   const [isShow, setIsShow] = React.useState(false);
@@ -39,7 +39,7 @@ function Comment({ id }: IProps): JSX.Element {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography>Bình luận</Typography>
+            <Typography>Đánh giá của khách hàng</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography component={'span'} variant={'body2'}>
@@ -108,4 +108,4 @@ function Comment({ id }: IProps): JSX.Element {
   );
 }
 
-export default Comment;
+export default RatingBox;

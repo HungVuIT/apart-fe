@@ -76,26 +76,27 @@ export default function Payment () {
                       ? <InforBox handleNext={handleNext} setPaymentDetails={setPaymentDetails} paymentDetails={paymentDetails}/>
                       : activeStep === 1
                         ? <ShipBox handleBack={handleBack} handleNext={handleNext} setPaymentDetails={setPaymentDetails} paymentDetails={paymentDetails}/>
-                        : <PaymentBox handleBack={handleBack} handleNext={handleNext} setPaymentDetails={setPaymentDetails} paymentDetails={paymentDetails}/>
+                        : <PaymentBox handleBack={handleBack} setPaymentDetails={setPaymentDetails} paymentDetails={paymentDetails}/>
                   }
                 </Typography>
-                {/* <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                  <Button
-                    color="inherit"
-                    onClick={handleBack}
-                    sx={{ mr: 1 }}
-                  >
-                    {activeStep === 0 ? 'Quay lại giỏ hàng' : 'Quay lại'}
-                  </Button>
-                  <Box sx={{ flex: '1 1 auto' }} />
-                  <Button onClick={handleNext}>
-                    {activeStep === steps.length - 1 ? 'Thanh toán' : 'Tiếp tục'}
-                  </Button>
-                </Box> */}
               </React.Fragment>
             )}
       </Box>
-      <div className={classes['box-price']}>{formatMoney.format(payment.itemPrice)}</div>
+      <div className={classes['box-price']}>
+        <div className={classes.item}>
+          <div className={classes.title}>Tạm tính:</div>
+          <div className={classes.price}>{formatMoney.format(payment.itemPrice)}</div>
+        </div>
+        <div className={classes.item}>
+          <div className={classes.title}>Vận chuyển:</div>
+          <div className={classes.price}>{formatMoney.format(payment.shipPrice)}</div>
+        </div>
+        <hr />
+        <div className={classes.item}>
+          <div className={classes.title}>Tổng tiền:</div>
+          <div className={classes.price}>{formatMoney.format(payment.itemPrice + payment.shipPrice)}</div>
+        </div>
+      </div>
     </div>
   );
 }

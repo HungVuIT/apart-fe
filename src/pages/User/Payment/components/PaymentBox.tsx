@@ -8,9 +8,12 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
 import { toast, ToastContainer } from 'react-toastify';
-function PaymentBox({ handleBack, handleNext, setPaymentDetails, paymentDetails }: IPropsPayment) {
+import { ICheckOut } from '../../../../interface/payment/interface';
+import { checkOut } from '../../../../api/service/user-service';
+import { useNavigate } from 'react-router-dom';
+function PaymentBox({ handleBack, setPaymentDetails, paymentDetails }: IPropsPayment) {
   const [value, setValue] = React.useState('');
-
+  const navigate = useNavigate();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
@@ -22,13 +25,29 @@ function PaymentBox({ handleBack, handleNext, setPaymentDetails, paymentDetails 
         : 'Giao hàng tiết kiệm';
     return res;
   };
-  const handleFinish = () => {
+  const handleFinish = async () => {
     console.log(value);
     if (value) {
       setPaymentDetails(prev => ({
         ...prev,
         paymentMethod: value
       }));
+      const params: ICheckOut = {
+        ...paymentDetails.infor,
+        deliveryOption: paymentDetails.deliveryOption,
+        paymentMethod: value
+      };
+      const data = await checkOut(params);
+      if (data.success && value === 'offline') {
+        toast.success('Đơn hàng đã được tạo');
+        navigate('/');
+      } else if (data.success && value === 'online') {
+        toast.success('Đang chuyển sang trang thanh toán online');
+        navigate(data.data.href);
+      } else {
+        const mes: string = data.data.message ? data.data.message : '';
+        toast.error(`Thanh toán lỗi: ${mes}`);
+      }
     } else {
       toast('Vui lòng chọn một phương thức thanh toán');
     }
@@ -68,7 +87,7 @@ function PaymentBox({ handleBack, handleNext, setPaymentDetails, paymentDetails 
           onChange={handleChange}
         >
           <FormControlLabel className={classes.radio} value={'online'} control={<Radio />} label="Thanh toán online" />
-          <FormControlLabel className={classes.radio} value={'COD'} control={<Radio />} label="Thanh toán khi nhận hàng" />
+          <FormControlLabel className={classes.radio} value={'offline'} control={<Radio />} label="Thanh toán khi nhận hàng" />
         </RadioGroup>
       </FormControl>
       </div>
@@ -76,7 +95,7 @@ function PaymentBox({ handleBack, handleNext, setPaymentDetails, paymentDetails 
         <Button className={classes.btn + ' ' + classes.cancel} variant="contained" onClick={handleBack}>Quay lại</Button>
         <Button className={classes.btn + ' ' + classes.save} variant="contained" onClick={handleFinish}>Thanh toán</Button>
       </div>
-      <ToastContainer autoClose={1000} position='top-right'/>
+      <ToastContainer autoClose={1000} position='bottom-right'/>
     </div>
   );
 }

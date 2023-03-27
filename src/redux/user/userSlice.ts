@@ -32,10 +32,13 @@ const userSlice = createSlice({
         totalPrice += item.quantity * item.watch.price;
       });
       state.payment.itemPrice = totalPrice;
+    },
+    setShipPrice: (state, action) => {
+      state.payment.shipPrice = action.payload;
     }
   },
   extraReducers: extraReducersUser
 });
 const { reducer: userReducer } = userSlice;
-export const { removeItemCart, changeQuantity, setPayment } = userSlice.actions;
+export const { removeItemCart, changeQuantity, setPayment, setShipPrice } = userSlice.actions;
 export default userReducer;

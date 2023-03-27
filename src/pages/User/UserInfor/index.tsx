@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import Container from '../../../components/Container';
 import './UserInfor.scss';
+import classes from './user-infor.module.scss';
 import TextField from '@mui/material/TextField';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -16,7 +17,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import moment from 'moment';
-
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import { IDistrict, IProvince, IWard } from '../../Vendor/RegisterShop/type';
+import { fetchDistrict, fetchWard } from '../../Vendor/RegisterShop/fetch';
 const schema = yup.object().shape({
   email: yup.string().email('Email không hợp lệ').required('Vui lòng nhập email'),
   phoneNumber: yup.string().matches(/^\d{10}$/, 'Số điện thoại phải 10 chữ số').required('Vui lòng nhập số điện thoại')
@@ -26,7 +33,37 @@ function UserInfor() {
   const { register, setValue, control, handleSubmit, getValues, clearErrors, formState: { errors } } = useForm<IProfile>({
     resolver: yupResolver(schema)
   });
+  const [province, setProvince] = useState<IProvince[]>([]);
+  const [district, setDistrict] = useState<IDistrict[]>([]);
+  const [ward, setWard] = useState<IWard[]>([]);
   const [loadingSave, setLoadingSave] = useState(false);
+
+  const handleChangeProvince = (event: SelectChangeEvent) => {
+    clearErrors('province');
+    setValue('district', '');
+    setValue('ward', '');
+    setWard([]);
+    const selectedProvince = event.target.value;
+    setValue('province', selectedProvince);
+    const id = getIdProvince(selectedProvince);
+    fetchDistrict(id, setDistrict);
+  };
+  const handleChangeDistrict = (event: SelectChangeEvent) => {
+    clearErrors('district');
+    setValue('ward', '');
+    const selectedDistrict = event.target.value;
+    setValue('district', selectedDistrict);
+    const id = getIdDistrict(selectedDistrict);
+    fetchWard(id, setWard);
+  };
+  const getIdProvince = (name: string) => {
+    const id = province.findIndex(item => item.province_name === name);
+    return province[id].province_id;
+  };
+  const getIdDistrict = (name: string) => {
+    const id = district.findIndex(item => item.district_name === name);
+    return district[id].district_id;
+  };
   const onSubmit: SubmitHandler<IProfile> = async () => {
     const value = getValues();
     const _fullname = value.fullname?.split(' ');
@@ -47,25 +84,25 @@ function UserInfor() {
     }
   };
   return (
-    <div className={'wrapper user-infor' + (loadingSave ? ' loading' : '')}>
+    <div className={'wrapper ' + classes['user-infor'] + (loadingSave ? ' loading' : '')}>
       <Container>
         {(!loading.profile && profile.username)
           ? <>
-          <div className={'infor-title'}>Hồ sơ của tôi</div>
+          <div className={classes['infor-title']}>Hồ sơ của tôi</div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className='infor-content flex'>
-              <div className='content-all'>
-                <div className='item'>
-                  <div className='item-title'>Tên đăng nhập :</div>
+            <div className={classes['infor-content'] + ' flex'}>
+              <div className={classes['content-all']}>
+                <div className={classes.item}>
+                  <div className={classes['item-title']}>Tên đăng nhập :</div>
                   <TextField
                     disabled
                     id='outlined-disabled'
                     defaultValue={profile.username}
-                    className='item-content'
+                    className={classes['item-content']}
                   />
                 </div>
-                <div className='item'>
-                  <div className='item-title'>Họ và tên :</div>
+                <div className={classes.item}>
+                  <div className={classes['item-title']}>Họ và tên :</div>
                   <Controller name='fullname' control={control}
                     render={({
                       field: { onChange, onBlur, value }
@@ -76,13 +113,13 @@ function UserInfor() {
                         {...register('fullname')}
                         onBlur={onBlur}
                         onChange={onChange}
-                        className='item-content'
+                        className={classes['item-content']}
                     />
                     )}
                   />
                 </div>
-                <div className='item'>
-                  <div className='item-title'>Email :</div>
+                <div className={classes.item}>
+                  <div className={classes['item-title']}>Email :</div>
                   <Controller name='email' control={control}
                     render={({
                       field: { onChange, onBlur, value }
@@ -95,7 +132,108 @@ function UserInfor() {
                         helperText={errors.email?.message}
                         onBlur={onBlur}
                         onChange={onChange}
-                        className='item-content'
+                        className={classes['item-content']}
+                    />
+                    )}
+                  />
+                </div>
+                <div className={classes.item}>
+                  <div className={classes['item-title']}>Tỉnh/Thành Phố :</div>
+                  <Controller name='province' control={control} defaultValue=''
+                    render={({
+                      field
+                    }) => (
+                    <FormControl fullWidth className={classes['item-content']} >
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          error={!!errors.province}
+                          {...field}
+                          onChange={handleChangeProvince}
+                        >
+                          {province.length > 0
+                            ? province.map(item => (
+                            <MenuItem key={item.province_id} value={item.province_name}>{item.province_name}</MenuItem>
+                            ))
+                            : <MenuItem value="">
+                            <em>Tỉnh/Thành phố</em>
+                          </MenuItem>
+                          }
+                        </Select>
+                        {errors.province && <FormHelperText>{errors.province?.message}</FormHelperText>}
+                      </FormControl>
+                    )}
+                />
+                </div>
+                <div className={classes.item}>
+                  <div className={classes['item-title']}>Quận/Huyện :</div>
+                  <Controller name='province' control={control} defaultValue=''
+                    render={({
+                      field
+                    }) => (
+                    <FormControl fullWidth className={classes['item-content']} >
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        {...field}
+                        error={!!errors.district}
+                        onChange={handleChangeDistrict}
+                      >
+                        {district.length > 0
+                          ? district.map(item => (
+                          <MenuItem key={item.district_id} value={item.district_name}>{item.district_name}</MenuItem>
+                          ))
+                          : <MenuItem value="">
+                          <em>Quận huyện</em>
+                        </MenuItem>
+                        }
+                      </Select>
+                      {errors.district && <FormHelperText>{errors.district?.message}</FormHelperText>}
+                      </FormControl>
+                    )}
+                />
+                </div>
+                <div className={classes.item}>
+                  <div className={classes['item-title']}>Phường/Xã :</div>
+                  <Controller name='province' control={control} defaultValue=''
+                    render={({
+                      field
+                    }) => (
+                    <FormControl fullWidth className={classes['item-content']} >
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        {...field}
+                        error={!!errors.ward}
+                      >
+                        {ward.length > 0
+                          ? ward.map(item => (
+                          <MenuItem key={item.ward_id} value={item.ward_name}>{item.ward_name}</MenuItem>
+                          ))
+                          : <MenuItem value="">
+                          <em>Phường/Xã</em>
+                        </MenuItem>
+                        }
+                      </Select>
+                      {errors.ward && <FormHelperText>{errors.ward?.message}</FormHelperText>}
+                      </FormControl>
+                    )}
+                />
+                </div>
+                <div className={classes.item}>
+                  <div className={classes['item-title']}>Địa chỉ :</div>
+                  <Controller name='address' control={control}
+                    render={({
+                      field: { onChange, onBlur }
+                    }) => (
+                      <TextField
+                        variant='outlined'
+                        {...register('address')}
+                        error={!!errors.address}
+                        helperText={errors.address?.message}
+                        onBlur={onBlur}
+                        onChange={onChange}
+                        className={classes['item-content']}
                     />
                     )}
                   />
@@ -147,12 +285,6 @@ function UserInfor() {
                           control={<Radio />}
                           label="Nữ"
                         />
-                        {/* <FormControlLabel
-                          className="item-radio"
-                          value="other"
-                          control={<Radio />}
-                          label="Khác"
-                        /> */}
                       </RadioGroup>
                     )}
                   />
@@ -177,9 +309,9 @@ function UserInfor() {
                   />
                 </div>
               </div>
-              <hr className='hight-line content-line'></hr>
-              <div className='content-avt'>
-                <img src={profile.avatar} alt='Avatar' className='img-avt' />
+              <hr className={classes['hight-line'] + ' ' + classes['content-line']}></hr>
+              <div className={classes['content-avt']}>
+                <img src={profile.avatar} alt='Avatar' className={classes['img-avt']} />
                 <Button variant='outlined'>Chọn ảnh</Button>
               </div>
             </div>
