@@ -31,7 +31,7 @@ export interface IProfileStore {
   address: string
   phoneNumber: string
   description: string
-  // logo: any
+  logo: any
   // banner: any
 }
 
@@ -56,6 +56,9 @@ function ProfileStore() {
   const [district, setDistrict] = useState<IDistrict[]>([]);
   const [ward, setWard] = useState<IWard[]>([]);
   const [loadingPage, setLoadingPage] = useState(false);
+  const [image, setImage] = useState<string>(shop.logo);
+  const [file, setFile] = useState<any>();
+  const inputFile = React.useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setValue('email', shop.email);
@@ -65,6 +68,18 @@ function ProfileStore() {
     setValue('phoneNumber', shop.phoneNumber);
     setDefaultValue(setProvince, setDistrict, setWard, setLoadingPage, setValue, shop);
   }, [shop]);
+
+  const handleImageUpload = (e: any) => {
+    const selectedFile = e.target.files[0]; // Lấy file đầu tiên được chọn
+    setFile(selectedFile);
+    const imageUrl = URL.createObjectURL(selectedFile); // Tạo đường dẫn URL cho file ảnh
+    setImage(imageUrl);
+  };
+  const handleButtonClick = () => {
+    if (inputFile.current) {
+      inputFile.current.click();
+    }
+  };
   const handleChangeProvince = (event: SelectChangeEvent) => {
     clearErrors('province');
     setValue('district', '');
@@ -92,8 +107,12 @@ function ProfileStore() {
     return district[id].district_id;
   };
   const onSubmit: SubmitHandler<IProfileStore> = async (_data: IProfileStore) => {
+    const params: IProfileStore = {
+      ..._data,
+      logo: file
+    };
     setLoadingPage(true);
-    const data = await editShop(_data);
+    const data = await editShop(params);
     console.log(data);
     setLoadingPage(false);
     if (data.success) {
@@ -287,8 +306,15 @@ function ProfileStore() {
             <hr />
             <div className={classes.right}>
               <div className={classes['avt-box']}>
-                <img src={shop.logo || defaultAvt} alt="Avatar" className={classes.avt} />
-                <Button variant='outlined' className={classes.btn}>Thay ảnh</Button>
+                <img src={image || shop.logo || defaultAvt} alt="Avatar" className={classes.avt} />
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  ref={inputFile}
+                  style={{ display: 'none' }}
+                />
+                <Button variant='outlined' className={classes.btn} onClick={handleButtonClick}>Thay ảnh</Button>
               </div>
             </div>
           </div>

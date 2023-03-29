@@ -16,7 +16,11 @@ export const editShop = async (params: IProfileStore) => {
   try {
     const url = 'shops/my-shop';
     console.log(params);
-    const response = await axiosClient.patch(url, params);
+    const response = await axiosClient.patch(url, params, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
     return response.data;
   } catch (err) {
     return err;

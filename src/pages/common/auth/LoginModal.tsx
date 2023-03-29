@@ -12,7 +12,7 @@ import TextField from '@mui/material/TextField';
 import classes from './LoginModal.module.scss';
 import './customMUI.scss';
 import { IDataLogin, IDataResgister } from '../../../interface/auth';
-import { loginAccount, registerAccount } from '../../../api/service/auth-service';
+import { loginAccount, loginSocial, registerAccount } from '../../../api/service/auth-service';
 import { showToastMessage } from '../../../untils/showToast';
 import Toast from '../../../components/Toast';
 import { typeToast } from '../../../interface/globalType';
@@ -62,7 +62,9 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
   const handleClickHidePassword = () => {
     setIsShow(isShow => !isShow);
   };
-
+  const handleLoginSocial = async () => {
+    await loginSocial();
+  };
   const onSubmit: SubmitHandler<ILoginFormValue> = async (_data: ILoginFormValue) => {
     if (isSignIn) {
       const params: IDataLogin = {
@@ -107,11 +109,11 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
       <CloseIcon className={classes.closeBtn} onClick={onClose} />
       <h1 className={classes.title}>{isSignIn ? 'Đăng nhập' : 'Đăng Ký'}</h1>
       <div className={classes['social-container']}>
-        <a className='social'>
+        <a className='social' >
           <FontAwesomeIcon icon={faFacebookF} />
         </a>
         <a className='social'>
-          <FontAwesomeIcon icon={faGooglePlusG} />
+          <FontAwesomeIcon icon={faGooglePlusG} onClick={async () => await handleLoginSocial()}/>
         </a>
         <a className='social'>
           <FontAwesomeIcon icon={faLinkedinIn} />

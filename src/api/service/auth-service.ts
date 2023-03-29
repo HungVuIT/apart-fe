@@ -24,10 +24,10 @@ export const registerAccount = async (params: IDataResgister) => {
     return err;
   }
 };
-export const loginFB = async () => {
+export const loginSocial = async () => {
   try {
-    const url = 'auth/sign-up';
-    const response = await axiosClient.post(url);
+    const url = 'auth/google';
+    const response = await axiosClient.get(url);
     return response.data;
   } catch (err) {
     return err;
