@@ -16,7 +16,12 @@ export const getUserInfo = async () => {
 export const editUserInfor = async (params: IEditProfile) => {
   try {
     const url = 'users/me';
-    const response = await axiosClient.patch(url, { ...params });
+    console.log('params', params);
+    const response = await axiosClient.patch(url, params, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
     return response.data;
   } catch (err) {
     return err;

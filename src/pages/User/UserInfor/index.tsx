@@ -23,7 +23,9 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import { IDistrict, IProvince, IWard } from '../../Vendor/RegisterShop/type';
-import { fetchDistrict, fetchWard } from '../../Vendor/RegisterShop/fetch';
+import { fetchDistrict, fetchProvince, fetchWard } from '../../Vendor/RegisterShop/fetch';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { getProfile } from '../../../redux/user/userThunk';
 
 const schema = yup.object().shape({
   email: yup.string().email('Email không hợp lệ').required('Vui lòng nhập email'),
@@ -36,14 +38,37 @@ function UserInfor() {
   });
   const inputFile = React.useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<string>(profile.avatar);
-  const [src, setSrc] = useState<string>('');
+  const [file, setFile] = useState<any>();
   const [province, setProvince] = useState<IProvince[]>([]);
   const [district, setDistrict] = useState<IDistrict[]>([]);
   const [ward, setWard] = useState<IWard[]>([]);
-  const [loadingSave, setLoadingSave] = useState(false);
+  const [loadingPage, setLoadingPage] = useState(false);
 
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    getAllAddress();
+  }, [profile]);
+  const getAllAddress = async () => {
+    setLoadingPage(true);
+    const provinces = await fetchProvince(setProvince);
+    if (profile.province) {
+      setValue('province', profile.province);
+      const idProvince = getIdProvince(profile.province, provinces);
+      if (idProvince) {
+        const districts = await fetchDistrict(idProvince, setDistrict);
+        if (profile.district) {
+          setValue('district', profile.district);
+          const idDistrict = getIdDistrict(profile.district, districts);
+          idDistrict && await fetchWard(idDistrict, setWard);
+          profile.ward && setValue('ward', profile.ward);
+        }
+      }
+    }
+    setLoadingPage(false);
+  };
   const handleImageUpload = (e: any) => {
     const selectedFile = e.target.files[0]; // Lấy file đầu tiên được chọn
+    setFile(selectedFile);
     const imageUrl = URL.createObjectURL(selectedFile); // Tạo đường dẫn URL cho file ảnh
     setImage(imageUrl);
   };
@@ -55,7 +80,7 @@ function UserInfor() {
     const selectedProvince = event.target.value;
     setValue('province', selectedProvince);
     const id = getIdProvince(selectedProvince);
-    fetchDistrict(id, setDistrict);
+    id && fetchDistrict(id, setDistrict);
   };
   const handleChangeDistrict = (event: SelectChangeEvent) => {
     clearErrors('district');
@@ -63,15 +88,17 @@ function UserInfor() {
     const selectedDistrict = event.target.value;
     setValue('district', selectedDistrict);
     const id = getIdDistrict(selectedDistrict);
-    fetchWard(id, setWard);
+    id && fetchWard(id, setWard);
   };
-  const getIdProvince = (name: string) => {
-    const id = province.findIndex(item => item.province_name === name);
-    return province[id].province_id;
+  const getIdProvince = (name: string, _province?: IProvince[]) => {
+    const newProvince = _province || province;
+    const id = newProvince.findIndex(item => item.province_name === name);
+    return id > 0 ? newProvince[id].province_id : null;
   };
-  const getIdDistrict = (name: string) => {
-    const id = district.findIndex(item => item.district_name === name);
-    return district[id].district_id;
+  const getIdDistrict = (name: string, _district?: IDistrict[]) => {
+    const newDistrict = _district || district;
+    const id = newDistrict.findIndex(item => item.district_name === name);
+    return id > 0 ? newDistrict[id].district_id : null;
   };
   const handleButtonClick = () => {
     if (inputFile.current) {
@@ -83,24 +110,29 @@ function UserInfor() {
     const _fullname = value.fullname?.split(' ');
     const lastName = _fullname?.pop() || null;
     const firstName = _fullname?.join(' ') || null;
+    const avatar = file;
+    console.log(avatar);
     const params: IEditProfile = {
       ...value,
+      avatar,
       lastName,
       firstName
     };
-    setLoadingSave(true);
+    console.log(params);
+    setLoadingPage(true);
     const data = await editUserInfor(params);
-    setLoadingSave(false);
+    setLoadingPage(false);
     if (data.success) {
+      dispatch(getProfile());
       toast('Chỉnh sửa hồ sơ thành công');
     } else {
-      toast('Chỉnh sửa hồ sơ thất bại');
+      toast.error('Chỉnh sửa hồ sơ thất bại');
     }
   };
   return (
-    <div className={'wrapper ' + classes['user-infor'] + (loadingSave ? ' loading' : '')}>
+    <div className={'wrapper ' + classes['user-infor']}>
       <Container>
-        {(!loading.profile && profile.username)
+        {(!loading.profile && !loadingPage && profile.username)
           ? <>
           <div className={classes['infor-title']}>Hồ sơ của tôi</div>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -153,7 +185,7 @@ function UserInfor() {
                 </div>
                 <div className={classes.item}>
                   <div className={classes['item-title']}>Tỉnh/Thành Phố :</div>
-                  <Controller name='province' control={control} defaultValue=''
+                  <Controller name='province' control={control}
                     render={({
                       field
                     }) => (
@@ -181,7 +213,7 @@ function UserInfor() {
                 </div>
                 <div className={classes.item}>
                   <div className={classes['item-title']}>Quận/Huyện :</div>
-                  <Controller name='province' control={control} defaultValue=''
+                  <Controller name='district' control={control} defaultValue=''
                     render={({
                       field
                     }) => (
@@ -209,7 +241,7 @@ function UserInfor() {
                 </div>
                 <div className={classes.item}>
                   <div className={classes['item-title']}>Phường/Xã :</div>
-                  <Controller name='province' control={control} defaultValue=''
+                  <Controller name='ward' control={control} defaultValue=''
                     render={({
                       field
                     }) => (
@@ -243,6 +275,7 @@ function UserInfor() {
                       <TextField
                         variant='outlined'
                         {...register('address')}
+                        defaultValue={profile.address || ''}
                         error={!!errors.address}
                         helperText={errors.address?.message}
                         onBlur={onBlur}
@@ -325,7 +358,7 @@ function UserInfor() {
               </div>
               <hr className={classes['hight-line'] + ' ' + classes['content-line']}></hr>
               <div className={classes['content-avt']}>
-                <img src={image} alt='Avatar' className={classes['img-avt']} />
+                <img src={image || profile.avatar} alt='Avatar' className={classes['img-avt']} />
                 <input
                   type="file"
                   accept="image/*"

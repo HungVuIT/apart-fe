@@ -39,7 +39,11 @@ export interface IEditProfile {
   phoneNumber: string | null
   gender: string | null
   birthDay: string | null
-  avatar: string
+  avatar: any
+  province: string
+  district: string
+  ward: string
+  address: string
 }
 export interface ICart {
   id: number
