@@ -1,6 +1,8 @@
+import { IWatch } from './../watch/watchType';
 export interface IStateCommon {
   shopList: IShop[]
   search: string
+  searchLst: IWatch[]
   loading: boolean
   error: string
 }

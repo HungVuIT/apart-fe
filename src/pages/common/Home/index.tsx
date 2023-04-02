@@ -10,13 +10,16 @@ import { MyGlobalContext } from '../../../store/context/MyglobalContext';
 import { getListProduct } from '../../../api/service/home-service';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { getListOfWatch, getListSaleOfWatch } from '../../../redux/watch/watchThunk';
+import { setSearch } from '../../../redux/common/commonSlice';
 function Home() {
   const { isLoading } = useContext(MyGlobalContext);
   const dispatch = useAppDispatch();
   const { saleWatchList } = useAppSelector(state => state.watch);
+  const { search } = useAppSelector(state => state.common);
   React.useEffect(() => {
     dispatch(getListSaleOfWatch());
     dispatch(getListOfWatch());
+    dispatch(setSearch(''));
   }, []);
   return (
     <>

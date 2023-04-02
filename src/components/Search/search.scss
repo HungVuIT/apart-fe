@@ -5,6 +5,9 @@
 }
 .search .search-input {
   width: 80%;
+  & legend {
+    width: 90px;
+  }
   @include responsive_max425 {
     width: 70%;
   }

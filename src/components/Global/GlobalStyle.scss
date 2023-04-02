@@ -24,3 +24,8 @@
 .Toastify__toast-body {
   font-size: 14px;
 }
+.dialog-product-lst {
+  & .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+    width: 80%;
+  }
+}

@@ -6,6 +6,7 @@ const commonSlice = createSlice({
   initialState: {
     shopList: initShopList,
     loading: false,
+    searchLst: [],
     search: '',
     error: ''
   },
@@ -17,4 +18,5 @@ const commonSlice = createSlice({
   extraReducers: extraReducersCommon
 });
 const { reducer: commonReducer } = commonSlice;
+export const { setSearch } = commonSlice.actions;
 export default commonReducer;

@@ -14,11 +14,33 @@ export const getListOfShop = createAsyncThunk(
     }
   }
 );
-
+export const searchWatchByName = createAsyncThunk(
+  'watch/search',
+  async (search: string) => {
+    try {
+      const url = search ? `/watchs/list?search=${search}` : '/watchs/list';
+      const response = await axiosClient.get(url);
+      return response.data.data;
+    } catch (error) {
+      throw new Error(String(error));
+    }
+  }
+);
 export const extraReducersCommon = (
   builder: ActionReducerMapBuilder<IStateCommon>
 ) => {
   builder
+    .addCase(searchWatchByName.pending, (state, action) => {
+      state.loading = true;
+    })
+    .addCase(searchWatchByName.rejected, (state, action) => {
+      state.error = action.error as string;
+      state.loading = false;
+    })
+    .addCase(searchWatchByName.fulfilled, (state, action) => {
+      state.loading = false;
+      state.searchLst = action.payload;
+    })
     .addCase(getListOfShop.pending, (state, action) => {
       state.loading = true;
     })

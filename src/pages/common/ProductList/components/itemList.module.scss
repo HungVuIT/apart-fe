@@ -1,12 +1,17 @@
 @import '../../../../components/Global/foundation/mixin';
 .grid {
-  width: 75%;
+  width: 100%;
   display: grid;
   box-shadow: 0px 3px 1px -2px RGB(0 0 0/20%), 0px 2px 2px 0px RGB(0 0 0/14%), 0px 1px 5px 0px RGB(0 0 0/12%);
 
   grid-template-columns: repeat(4, 1fr);
   @include responsive_max1366 {
-    width: 80%;
+    width: 100%;
     grid-template-columns: repeat(3, 1fr);
   }
+}
+.nodata {
+  display: flex;
+  width: 200px;
+  margin: 20px;
 }
