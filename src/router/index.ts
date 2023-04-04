@@ -13,6 +13,7 @@ import NewWatch from '../pages/Vendor/NewWatch';
 import OrderManager from '../pages/Vendor/OrderManager';
 import ProfileStore from '../pages/Vendor/ProfileStore';
 import Payment from '../pages/User/Payment';
+import LoadingPage from '../components/LoadingPage';
 
 const mainRouter = [
   {
@@ -87,4 +88,11 @@ const vendorRouter = [
     Layout: true
   }
 ];
-export { mainRouter, adminRouter, vendorRouter, userRouter };
+const authRouter = [
+  {
+    path: '/oauth2',
+    component: LoadingPage,
+    Layout: true
+  }
+];
+export { mainRouter, adminRouter, vendorRouter, userRouter, authRouter };

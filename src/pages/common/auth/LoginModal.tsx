@@ -21,6 +21,7 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { setAccessToken } from '../../../untils/localStorage';
+import { REACT_APP_API_URL } from '../../../interface/enum';
 interface IProps {
   isLogin: boolean
   onClose: () => void
@@ -61,9 +62,6 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
   };
   const handleClickHidePassword = () => {
     setIsShow(isShow => !isShow);
-  };
-  const handleLoginSocial = async () => {
-    await loginSocial();
   };
   const onSubmit: SubmitHandler<ILoginFormValue> = async (_data: ILoginFormValue) => {
     if (isSignIn) {
@@ -112,10 +110,10 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
         <a className='social' >
           <FontAwesomeIcon icon={faFacebookF} />
         </a>
-        <a className='social'>
-          <FontAwesomeIcon icon={faGooglePlusG} onClick={async () => await handleLoginSocial()}/>
+        <a href={`${REACT_APP_API_URL}auth/google`} className='social'>
+          <FontAwesomeIcon icon={faGooglePlusG} />
         </a>
-        <a className='social'>
+        <a href={`${REACT_APP_API_URL}auth/facebook`} className='social'>
           <FontAwesomeIcon icon={faLinkedinIn} />
         </a>
       </div>

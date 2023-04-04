@@ -1,7 +1,7 @@
 import Layout from 'antd/es/layout/layout';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { adminRouter, mainRouter, userRouter, vendorRouter } from '.';
+import { adminRouter, authRouter, mainRouter, userRouter, vendorRouter } from '.';
 import { DefaultLayout, VendorLayout } from '../components/Layout';
 import DashboardLayout from '../components/Layout/DashboardLayout';
 
@@ -56,6 +56,18 @@ function MainRouter (): JSX.Element {
               <DashboardLayout>
                 <Page />
               </DashboardLayout>
+            }
+          />
+        );
+      })}
+      {authRouter.map((route, index) => {
+        const Page = route.component;
+        return (
+          <Route
+            key={index}
+            path={route.path}
+            element={
+                <Page />
             }
           />
         );
