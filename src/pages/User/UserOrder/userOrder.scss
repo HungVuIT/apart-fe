@@ -20,37 +20,6 @@
       margin: 10px 0;
       box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     }
-    & .OI-header {
-      width: 100%;
-      height: 40px;
-      background-color: #dee2e6;
-      display: flex;
-      position: relative;
-      & .OI-shop {
-        display: flex;
-        & .OI-shop-img {
-          width: 20px;
-          height: 20px;
-          margin: auto 10px;
-          border-radius: 50%;
-        }
-        & .OI-shop-name {
-          font-size: 12px;
-          margin: auto 0;
-        }
-        & .OI-shop-chat {
-          margin: auto 5px;
-          color: #4263eb;
-        }
-      }
-      & .OI-code {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        font-size: 12px;
-        font-weight: 500;
-      }
-    }
     & .OI-body {
       width: 100%;
       display: flex;
@@ -58,36 +27,42 @@
         width: 20%;
       }
       & .OI-name {
-        text-align: center;
-        & .OI-name-avt {
-          width: 80px;
-          height: 80px;
-          margin-top: 10px;
-          margin-bottom: 5px;
-        }
+        width: 10%;
         & .OI-name-text {
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           font-size: 16px;
-          word-break: break-word;
         }
       }
       & .OI-total {
+        width: 25%;
         text-align: center;
         & .OI-amount {
-          margin-top: 40px;
-          font-size: 18px;
-        }
-        & .OI-note {
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           font-size: 14px;
         }
-
       }
       & .OI-status, & .OI-ship {
-        padding-top: 40px;
-        text-align: center;
-        font-size: 16px;
-        font-weight: 600;
+        width: 20%;
+        & span {
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 14px;
+          font-weight: 600;
+        }
+      }
+      & .OI-status{
+        width: 25%;
       }
       & .OI-manipulation {
+        width: 20%;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -103,4 +78,13 @@
       }
     }
   }
+}
+.nodata {
+  display: flex;
+  height: 200px;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+}
+.dialog-order {
 }

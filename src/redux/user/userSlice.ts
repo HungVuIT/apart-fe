@@ -1,4 +1,4 @@
-import { IStateUser, initCartItemPayment } from './../../interface/user/interface';
+import { IStateUser, initCartItemPayment, initOrderList } from './../../interface/user/interface';
 import { extraReducersUser } from './userThunk';
 import { initUserInfo, initCart } from '../../interface/user/interface';
 import { createSlice } from '@reduxjs/toolkit';
@@ -9,9 +9,11 @@ const userSlice = createSlice({
     profile: initUserInfo,
     cart: initCart,
     payment: initCartItemPayment,
+    orderList: [],
     loading: {
       cart: false,
-      profile: false
+      profile: false,
+      order: false
     },
     error: ''
   },

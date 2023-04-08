@@ -40,3 +40,13 @@ export const checkOut = async (params: ICheckOut, dispatch?: any) => {
     return err;
   }
 };
+export const DetailsOrder = async (id: number) => {
+  try {
+    const url = `order/order-detail/${id}`;
+    const response = await axiosClient.get(url);
+    console.log(response.data);
+    return response.data.data;
+  } catch (err) {
+    return err;
+  }
+};

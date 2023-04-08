@@ -13,3 +13,17 @@ export const commentOnWatch = async (params: IDataComment) => {
     return err;
   }
 };
+export const addNewProduct = async (params: FormData) => {
+  try {
+    const url = 'watchs/new';
+    console.log(params);
+    const response = await axiosClient.post(url, params, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};

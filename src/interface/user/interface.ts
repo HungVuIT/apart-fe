@@ -58,12 +58,36 @@ export interface ICart {
 interface ILoadingUser {
   cart: boolean
   profile: boolean
+  order: boolean
 }
+export interface IOrder {
+  id: number
+  createdAt: string
+  updatedAt: string
+  status: string
+  total: number
+  paymentMethod: string
+  UID: number
+  Note: any
+  isActive: boolean
+}
+export const initOrderList: IOrder = {
+  id: 0,
+  createdAt: '',
+  updatedAt: '',
+  status: '',
+  total: 0,
+  paymentMethod: '',
+  UID: 0,
+  Note: null,
+  isActive: true
+};
 export interface IStateUser {
   profile: IUserInfo
   error: string
   loading: ILoadingUser
   cart: ICart[]
+  orderList: IOrder[]
   payment: ICartItemPayment
 }
 export interface ICartItemPayment {

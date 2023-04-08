@@ -3,7 +3,7 @@ import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosClient from '../../api/axiosClient';
 
 export const getProfile = createAsyncThunk(
-  'profile/get',
+  'user/profile/get',
   async () => {
     try {
       const url = 'users/me';
@@ -15,10 +15,22 @@ export const getProfile = createAsyncThunk(
   }
 );
 export const getCart = createAsyncThunk(
-  'cart/get',
+  'user/cart/get',
   async () => {
     try {
       const url = 'cart';
+      const response = await axiosClient.get(url);
+      return response.data.data;
+    } catch (error) {
+      throw new Error(String(error));
+    }
+  }
+);
+export const getOrderList = createAsyncThunk(
+  'user/order/get',
+  async () => {
+    try {
+      const url = 'order';
       const response = await axiosClient.get(url);
       return response.data.data;
     } catch (error) {
@@ -40,6 +52,17 @@ export const extraReducersUser = (
     .addCase(getProfile.fulfilled, (state, action) => {
       state.loading.profile = false;
       state.profile = action.payload;
+    })
+    .addCase(getOrderList.pending, (state, action) => {
+      state.loading.order = true;
+    })
+    .addCase(getOrderList.rejected, (state, action) => {
+      state.error = action.error as string;
+      state.loading.order = false;
+    })
+    .addCase(getOrderList.fulfilled, (state, action) => {
+      state.loading.order = false;
+      state.orderList = action.payload;
     })
     .addCase(getCart.pending, (state, action) => {
       state.loading.cart = true;

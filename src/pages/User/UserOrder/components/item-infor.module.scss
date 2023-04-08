@@ -1,0 +1,8 @@
+.wrapper {
+  width: 90%;
+  min-width: 60vw;
+  min-height: 50vh;
+  & .group {
+    padding: 10px;
+  }
+}
