@@ -13,6 +13,7 @@ import axiosClient from '../../../../api/axiosClient';
 import { getCart } from '../../../../redux/user/userThunk';
 import { MyGlobalContext } from '../../../../store/context/MyglobalContext';
 import { getAccessToken } from '../../../../untils/localStorage';
+import { formatMoney } from '../../../../untils/formartMoney';
 interface IProps {
   id: number | undefined
 }
@@ -62,29 +63,16 @@ function MainContent({ id }: IProps) {
                 ))
             }
           </Carousel>
-
-          {/* <div className='flex sub-list-img'>
-          {items.map((item, i) => (
-            <button
-              key={i}
-              className='btn-img'
-              onClick={() => {
-                setIndex(i);
-              }}
-              style={{ background: i === index ? '#ccc' : '#fff' }
-            }
-            >
-              <img key={i} src={item} alt='' className='product-img-sub' />
-            </button>
-          ))}
-        </div> */}
         </div>
         <div className='product-info'>
           <div className='info-title'>{watch.name}</div>
           <div className='info-product-title'>Thông tin sản phẩm</div>
           <div className='info-rating'>
-            <Rating name='read-only' value={watch.rating.score} readOnly className='rate-star' />
-            <span className='numOfVoter'>{watch.rating.score || 5} sao trên 1256 đánh giá</span>
+            <Rating name="half-rating-read" value={watch.rating.score || 5} precision={0.5} readOnly className='rate-star' />
+            <span className='numOfVoter'>{watch.rating.score || 5} sao trên {watch.rating.list.length || 0} đánh giá</span>
+          </div>
+          <div className="info-price">
+            <div className='price'>{formatMoney.format(watch.price)}</div>
           </div>
           <div className='info-describe'>
             <span>{watch.content}</span>

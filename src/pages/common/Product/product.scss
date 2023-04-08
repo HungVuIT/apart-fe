@@ -51,22 +51,52 @@
       text-align: center;
       font-weight: 700;
       font-size: 20px;
+      @include responsive_min1366 {
+        font-size: 30px;
+      }
     }
     & .info-product-title {
       width: 100%;
       text-align: center;
       font-weight: 500;
       font-size: 16px;
+      @include responsive_min1366 {
+        font-size: 20px;
+      }
+    }
+    & .info-price {
+      text-align: center;
+      height: 50px;
+      margin: 10px 15%;
+      background-color: #ced4da;
+      & .price {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 700;
+        @include responsive_min1366 {
+          font-size: 20px;
+        }
+      }
     }
     & .info-rating {
       width: 100%;
       text-align: center;
-      // & .rate-star {
-      //   color: black;
-      // }
+      margin-left: -100px;
       & .numOfVoter {
+        position: absolute;
         margin-left: 20px;
         font-size: 12px;
+      }
+      @include responsive_min1366 {
+        & .numOfVoter {
+          font-size: 20px;
+        }
+        & span {
+          font-size: 30px;
+        }
       }
     }
     & .info-describe {

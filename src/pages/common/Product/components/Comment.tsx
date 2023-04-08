@@ -67,7 +67,7 @@ function Comment({ id }: IProps): JSX.Element {
                         onChange={(e) => setValue(e.target.value)}
                     />
                   </div>
-                  <Button variant="contained" className='rate-submit' onClick={handleClick}>Bình luận</Button>
+                  <Button variant="contained" className='rate-submit' onClick={handleClick}>Gửi</Button>
                 </div>
                 {comment.map((cmt: IComment) => (
                   <React.Fragment key={cmt.id}>

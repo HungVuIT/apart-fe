@@ -83,7 +83,7 @@ function RatingBox({ id }: IProps): JSX.Element {
                       />
                     </div>
                   </div>
-                  <Button variant="contained" className='rate-submit' onClick={handleClick}>Đánh giá</Button>
+                  <Button variant="contained" className='rate-submit' onClick={handleClick}>Gửi</Button>
                 </div>
                 {rating.list.map((rate: any) => (
                   <React.Fragment key={rate.id}>
