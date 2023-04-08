@@ -8,6 +8,7 @@ const vendorSlice = createSlice({
   initialState: {
     shop: initShop,
     loading: false,
+    lstProduct: [],
     error: ''
   },
   reducers: {},

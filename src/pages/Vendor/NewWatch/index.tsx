@@ -86,19 +86,18 @@ function NewWatch() {
     const newLstFile = lstFile.filter(file => !!file);
     const params = new FormData();
     Object.entries(_data).forEach(([key, value]) => {
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      console.log(`${key}: ${value}`);
+      params.append(key, value);
     });
-    // const params: FormData = {
-    //   ..._data
-    // };
-    // const res = await addNewProduct(params);
-    // if (res.success) {
-    //   toast.success('Thêm sản phẩm thành công');
-    //   navigate('/shop/manager/watch');
-    // } else {
-    //   toast.error('Thêm sản phẩm không thành công');
-    // }
+    newLstFile.forEach(file => {
+      params.append('image', file);
+    });
+    const res = await addNewProduct(params);
+    if (res.success) {
+      toast.success('Thêm sản phẩm thành công');
+      navigate('/shop/manager/watch');
+    } else {
+      toast.error('Thêm sản phẩm không thành công');
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.wrapper + ' new-watch'}>
@@ -461,7 +460,7 @@ function NewWatch() {
               <div className={classes.itemGroup}>
                 <div className={classes['itemGroup-title']}>Giới tính</div>
                 <div className={classes['itemGroup-content']}>
-                  <Controller name='gender' control={control}
+                  <Controller name='gender' control={control} defaultValue='none'
                     render={({
                       field: { onBlur, value, name, ref },
                       fieldState: { invalid, isTouched, isDirty, error },
