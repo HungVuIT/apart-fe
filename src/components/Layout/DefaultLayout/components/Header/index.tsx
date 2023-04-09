@@ -69,7 +69,7 @@ function Header() {
                 cursor: 'pointer'
               }}
             >
-              D&H
+              ChronoCorner
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} className='nav-btn-item'>
               {items.map((item) => (

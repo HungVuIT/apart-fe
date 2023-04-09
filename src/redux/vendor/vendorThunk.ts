@@ -14,11 +14,34 @@ export const getProfileShop = createAsyncThunk(
     }
   }
 );
+export const getListProductOfShop = createAsyncThunk(
+  'shop/listwatch/get',
+  async (id: number) => {
+    try {
+      const url = `watchs/list?shopId=${id}`;
+      const response = await axiosClient.get(url);
+      return response.data.data;
+    } catch (error) {
+      throw new Error(String(error));
+    }
+  }
+);
 
 export const extraReducersVendor = (
   builder: ActionReducerMapBuilder<IStateVendor>
 ) => {
   builder
+    .addCase(getListProductOfShop.pending, (state, action) => {
+      state.loading = true;
+    })
+    .addCase(getListProductOfShop.rejected, (state, action) => {
+      state.error = action.error as string;
+      state.loading = false;
+    })
+    .addCase(getListProductOfShop.fulfilled, (state, action) => {
+      state.loading = false;
+      state.lstProduct = action.payload;
+    })
     .addCase(getProfileShop.pending, (state, action) => {
       state.loading = true;
     })

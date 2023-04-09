@@ -26,7 +26,7 @@ function Item ({ watch }: IProps): JSX.Element {
       </div>
       <div className="item-trademark">{watch.name}</div>
       <div className='rating__wrapper'>
-        <Rating className='item-rating' name="read-only" value={watch.rating || 2} readOnly />
+        <Rating className='item-rating' name="read-only" value={watch.rating?.score || 2} readOnly />
       </div>
       <div className="item-price">{formatMoney.format(watch.price)}</div>
     </div>

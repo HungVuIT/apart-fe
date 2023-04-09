@@ -7,28 +7,46 @@ import { ToastContainer, toast } from 'react-toastify';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { IComment } from '../../../../interface/watch/watchType';
-import { getCommentById } from '../../../../redux/product/productThunk';
+import { IComment, IRating } from '../../../../interface/watch/watchType';
+import { getRatingById } from '../../../../redux/product/productThunk';
+import moment from 'moment';
+import { ratingOnWatch } from '../../../../api/service/product-service';
 
 interface IProps {
   id: number | undefined
 }
 function RatingBox({ id }: IProps): JSX.Element {
-  const { register, control, handleSubmit, getValues, clearErrors, formState: { errors } } = useForm<IComment>({
-  });
-  const [isShow, setIsShow] = React.useState(false);
-  const [value, setValue] = React.useState<number | null>(2);
+  const [value, setValue] = React.useState<string>('');
+  const [score, setScore] = React.useState<number>(0);
   const dispatch = useAppDispatch();
-  const { comment } = useAppSelector(state => state.productNow);
+  const { rating, watch } = useAppSelector(state => state.productNow);
   useEffect(() => {
-    id && dispatch(getCommentById(id));
+    id && dispatch(getRatingById(id));
   }, []);
-  const handleClick = () => {
-    setIsShow(!isShow);
-  };
-  const onSubmit: SubmitHandler<IComment> = async () => {
-  };
+  const inforNameAndDate = (rate: any) => {
+    const dateObj = moment.utc(rate.createdAt);
 
+    const formattedDate = dateObj.format('[Ngày] DD [tháng] M [năm] YYYY');
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    return `${rate.user.firstName} ${rate.user.lastName} ${rate.UID} ${formattedDate}`;
+  };
+  const handleClick = async () => {
+    const data: any = {
+      content: value,
+      score,
+      targetID: watch.id
+    };
+    const res = await ratingOnWatch(data);
+    console.log(res);
+    if (res.success) {
+      setValue('');
+      setScore(0);
+      id && dispatch(getRatingById(id));
+      toast('Bạn vừa đánh giá thành công');
+    } else {
+      toast.error('Đánh giá không thành công');
+    }
+  };
   return (
     <Container >
       <div className="describe__wrapper">
@@ -44,46 +62,40 @@ function RatingBox({ id }: IProps): JSX.Element {
             <Typography component={'span'} variant={'body2'}>
               <div className="comments">
                 <div className='comments-header'>
-                  <Rating name="half-rating-read" value={4.5} precision={0.5} readOnly className='rate-star' />
-                  <span className="rate-tite"><i>Dựa trên 100 đánh giá</i></span>
-                  <Button variant="contained" className='rate-btn' onClick={handleClick}>Viết đánh giá</Button>
+                  <Rating name="half-rating-read" value={rating.score || 5} precision={0.5} readOnly className='rate-star' />
+                  <span className="rate-tite"><i>Dựa trên {rating.list.length} đánh giá</i></span>
                 </div>
-                <form onSubmit={handleSubmit(onSubmit)} className={'form-comment' + (isShow ? ' active' : '')}>
-                  <div className="line"></div>
-                  <div className="form-title">Đánh giá của bạn</div>
+                <div className={'form-comment active'}>
                   <div className="form-input">
-                    {/* <TextField id="outlined-basic" label="Tên hoặc nickname của bạn" variant="outlined" /> */}
-                  </div>
-                  <div className="form-input">
-                    <TextField id="outlined-basic" label="Email của bạn" variant="outlined" />
-                  </div>
-                  <div className="form-rate">
-                    <div className="rate-title">Đánh giá</div>
-                    <Rating
-                      name="simple-controlled"
-                      value={value}
-                      onChange={(event, newValue) => {
-                        setValue(newValue);
-                      }}
+                    <TextField
+                        label='Nội dung'
+                        variant='outlined'
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
                     />
+                    <div className="rate-box">
+                      <Rating
+                        name="simple-controlled"
+                        value={score}
+                        onChange={(event, newValue) => {
+                          setScore(newValue || 0);
+                        }}
+                      />
+                    </div>
                   </div>
-                  <div className="form-input">
-                    <TextField id="outlined-basic" label="Tiêu đề" variant="outlined" />
-                  </div>
-                  <div className="form-input">
-                    <div className="form-title">Chi tiết đánh giá</div>
-                    <TextField className='input-detail' id="outlined-basic" variant="outlined" placeholder='Vui lòng nhập chi tiết đánh giá ở đây'/>
-                  </div>
-                  <Button variant="contained" className='rate-submit' onClick={handleClick}>Gửi đánh giá</Button>
-                </form>
-                <div className="line"></div>
-                <div className="comment-item">
-                  <Rating name="half-rating-read" value={4.5} precision={0.5} readOnly className='item-star' />
-                  <div className="item-title">Đồng hồ đẹp</div>
-                  <div className="item-date"><i>Dũng Lê ngày 18 tháng 5 năm 2022</i></div>
-                  <div className="item-content">Đồng hồ rất đẹp, đóng gói và vận chuyển rất cẩn thận</div>
-                  <Button variant="text" className='item-btn'>Báo cáo đánh giá không phù hợp</Button>
+                  <Button variant="contained" className='rate-submit' onClick={handleClick}>Đánh giá</Button>
                 </div>
+                {rating.list.map((rate: any) => (
+                  <React.Fragment key={rate.id}>
+                    <hr/>
+                    <div className="comment-item">
+                      <div className="item-date"><i>{inforNameAndDate(rate)}</i></div>
+                      <Rating name="half-rating-read" value={rate.score} precision={0.5} readOnly className='rate-star' />
+                      <div className="item-content">{rate.content || ''}</div>
+                      <Button variant="text" className='item-btn'>Báo cáo đánh giá không phù hợp</Button>
+                    </div>
+                  </React.Fragment>
+                ))}
 
               </div>
             </Typography>

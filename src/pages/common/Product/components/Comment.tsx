@@ -37,11 +37,12 @@ function Comment({ id }: IProps): JSX.Element {
       toast.error('Bình luận không thành công');
     }
   };
-  const handleDate = (cmt: IComment) => {
+  const inforNameAndDate = (cmt: IComment) => {
     const dateObj = moment.utc(cmt.createdAt);
 
     const formattedDate = dateObj.format('[Ngày] DD [tháng] M [năm] YYYY');
-    return `${cmt.UID} ${formattedDate}`;
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    return `${cmt.user.firstName} ${cmt.user.lastName} ${cmt.UID} ${formattedDate}`;
   };
   return (
     <Container >
@@ -72,7 +73,7 @@ function Comment({ id }: IProps): JSX.Element {
                   <React.Fragment key={cmt.id}>
                     <hr/>
                     <div className="comment-item">
-                      <div className="item-date"><i>{handleDate(cmt)}</i></div>
+                      <div className="item-date"><i>{inforNameAndDate(cmt)}</i></div>
                       <div className="item-content">{cmt.content}</div>
                       <Button variant="text" className='item-btn'>Báo cáo đánh giá không phù hợp</Button>
                     </div>

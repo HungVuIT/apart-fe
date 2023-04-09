@@ -1,3 +1,5 @@
+@import '../../../components/Global/foundation/mixin';
+
 .wrapper {
   display: flex;
   margin: 100px 3% 50px 3%;
@@ -62,6 +64,13 @@
       font-size: 14px;
       width: 100%;
       margin: 10px 0;
+      @include responsive_max1200 {
+        font-size: 12px;
+      }
+      @include responsive_max992 {
+        display: block;
+        font-size: 14px;
+      }
       & .priceTitle {
         width: 50%;
         text-align: left;

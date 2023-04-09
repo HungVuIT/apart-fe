@@ -66,7 +66,7 @@ export default function MenuButton() {
       onKeyDown={toggleDrawer(false)}
       className="menu-box"
     >
-      <div className="logo">D&H</div>
+      <div className="logo">ChronoCorner</div>
       <Divider />
       <List>
         {menuItemList.map((item) => (
@@ -80,7 +80,7 @@ export default function MenuButton() {
           </ListItem>
         ))}
       </List>
-      <div className="bku"><i>BKU@2022 D&H Team</i></div>
+      <div className="bku"><i>BKU@2022 ChronoCorner Team</i></div>
     </Box>
   );
 

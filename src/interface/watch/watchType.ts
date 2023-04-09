@@ -1,3 +1,4 @@
+import { IUserInfo } from '../user/interface';
 import { initShop, IShop } from './../common/interface';
 export interface IWatch {
   id: number
@@ -33,7 +34,11 @@ export interface IWatch {
   madeBy?: string
   warranty?: string
   sale_off?: number
-  rating: number
+  rating: IRating
+}
+export interface IRating {
+  score: any
+  list: any[]
 }
 interface ILoadingWatch {
   watch: boolean
@@ -63,7 +68,10 @@ export const initWatch: IWatch = {
   image: [],
   isActive: true,
   sale_off: 0,
-  rating: 5
+  rating: {
+    score: 5,
+    list: []
+  }
 };
 export interface IComment {
   id: string
@@ -72,10 +80,12 @@ export interface IComment {
   UID: string
   WID: string
   content: string
+  user: IUserInfo
 }
 export interface IStateProduct {
   watch: IWatch
   comment: IComment[]
+  rating: IRating
   shop: IShop
   loading: boolean
   error: string
@@ -83,6 +93,10 @@ export interface IStateProduct {
 export const initStateProduct: IStateProduct = {
   watch: initWatch,
   comment: [],
+  rating: {
+    score: 0,
+    list: []
+  },
   shop: initShop,
   loading: false,
   error: ''

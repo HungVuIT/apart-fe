@@ -14,7 +14,6 @@ import './customMui.scss';
 import { IDistrict, IProvince, IWard } from '../RegisterShop/type';
 import { fetchProvince, fetchDistrict, fetchWard } from '../RegisterShop/fetch';
 import { useAppSelector, useAppDispatch } from '../../../hooks/hooks';
-import { getProfileShop } from '../../../redux/vendor/vendorThunk';
 import Loading from '../../common/loading';
 import defaultAvt from '../../../assets/img/default-avt.png';
 import { setDefaultValue } from './setDefaultValue';

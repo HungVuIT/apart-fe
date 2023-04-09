@@ -31,7 +31,7 @@ function Product(): JSX.Element {
       <Describe id ={Number(productId)}/>
       <Comment id ={Number(productId)}/>
       <RatingBox id ={Number(productId)}/>
-      <SameProduct />
+      <SameProduct id ={Number(productId)}/>
     </div>
   );
 }

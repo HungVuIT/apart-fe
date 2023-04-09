@@ -6,7 +6,13 @@
   margin: 0 10px;
   cursor: pointer;
   &:hover {
+    border: 1px solid #74c0fc;
+    border-radius: 10px;
+    & .img__wrapper {
+      border-radius: 10px 10px 0 0;
+    }
     .category-img {
+      border-radius: 10px 10px 0 0;
       width: 200px;
       height: 200px;
     }
@@ -16,6 +22,7 @@
     height: 150px;
     &:hover {
       .category-img {
+        border-radius: 10px 10px 0 0;
         width: 150px;
         height: 150px;
       }
@@ -31,6 +38,7 @@
     margin: 0 2px;
     &:hover {
       .category-img {
+        border-radius: 10px 10px 0 0;
         width: 80px;
         height: 80px;
       }

@@ -7,6 +7,10 @@ const productSlice = createSlice({
   initialState: {
     watch: initWatch,
     comment: [],
+    rating: {
+      score: 0,
+      list: []
+    },
     shop: initShop,
     loading: false,
     error: ''

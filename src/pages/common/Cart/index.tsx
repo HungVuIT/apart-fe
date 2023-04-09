@@ -230,17 +230,17 @@ function Cart() {
            <h1 className={classes.title}>Tóm tắt đơn hàng</h1>
            <hr color="#ced4da" />
            <div className={classes['price-wrapper']}>
-             <div className={classes.priceTitle}>Tạm tính</div>
+             <div className={classes.priceTitle}>Tạm tính:</div>
              <div className={classes.price}>{formatMoney.format(caculatorTotalPayment())}</div>
            </div>
            <hr color="#ced4da" />
            <div className={classes['price-wrapper']}>
-             <div className={classes.priceTitle}>Giảm giá tiền hàng</div>
+             <div className={classes.priceTitle}>Giảm giá tiền hàng:</div>
              <div className={classes.price}>0</div>
            </div>
            <hr color="#ced4da" />
            <div className={classes['price-wrapper']}>
-             <div className={classes.priceTitle}>Tổng tiền hàng</div>
+             <div className={classes.priceTitle}>Tổng tiền hàng:</div>
              <div className={classes.price}>{formatMoney.format(caculatorTotalPayment())}</div>
            </div>
            <hr color="#ced4da" />

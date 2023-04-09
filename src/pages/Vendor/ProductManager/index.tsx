@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import classes from './product-manager.module.scss';
 import Tabs from '@mui/material/Tabs';
@@ -18,6 +19,7 @@ import './customMui.scss';
 import { debounce } from 'lodash';
 import SearchProduct from './components/SearchProduct';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
@@ -40,6 +42,7 @@ function ProductManager() {
   const [value, setValue] = React.useState(0);
   const [searchValue, setSearchValue] = useState('');
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  const { lstProduct } = useAppSelector(state => state.vendor);
   const navigate = useNavigate();
   const caculatorWidth = (value: number) => {
     return (windowDimensions.width * 84 / 100) * (value / 100);
@@ -59,7 +62,7 @@ function ProductManager() {
       width: caculatorWidth(30),
       renderCell: (params) => (
         <div className={classes['watch-name']}>
-          <img src={params.row.image || defaultLogo} alt={params.row.name} className={classes.productAvt}/>
+          <img src={params.row.image[0] || defaultLogo} alt={params.row.name} className={classes.productAvt}/>
           <div className={classes.productName}>{params.row.name}</div>
         </div>
       )
@@ -89,7 +92,7 @@ function ProductManager() {
       width: caculatorWidth(20),
       renderCell: (params) => (
         <div className={classes['watch-status']}>
-          <span className={params.row.status === ProductStatus.ACTIVE ? classes.active : classes.deactive}>{params.row.status}</span>
+          <span className={params.row.isActive ? classes.active : classes.deactive}>{params.row.isActive ? `Đã bán ${params.row.saled} sản phẩm` : 'Tạm ngưng'}</span>
         </div>
       )
     },
@@ -104,40 +107,6 @@ function ProductManager() {
       )
     }
   ];
-  const rows = [
-    {
-      id: 1,
-      image: defaultLogo,
-      name: 'abcs1',
-      price: 1212412,
-      quantity: 1,
-      status: ProductStatus.ACTIVE
-    },
-    {
-      id: 2,
-      image: defaultLogo,
-      name: 'abcs2',
-      price: 1212412,
-      quantity: 1,
-      status: ProductStatus.ACTIVE
-    },
-    {
-      id: 3,
-      image: defaultLogo,
-      name: 'abcsc3',
-      price: 1212412,
-      quantity: 1,
-      status: ProductStatus.OUT
-    },
-    {
-      id: 4,
-      image: defaultLogo,
-      name: 'abcsc4',
-      price: 1212412,
-      quantity: 1,
-      status: ProductStatus.INFRINGE
-    }
-  ];
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -148,13 +117,10 @@ function ProductManager() {
         result = lst;
         break;
       case 1:
-        result = lst.filter((item: any) => item.status === ProductStatus.ACTIVE);
+        result = lst.filter((item: any) => item.isActive);
         break;
       case 2:
-        result = lst.filter((item: any) => item.status === ProductStatus.OUT);
-        break;
-      case 3:
-        result = lst.filter((item: any) => item.status === ProductStatus.INFRINGE);
+        result = lst.filter((item: any) => !item.isActive);
         break;
       default:
         result = [];
@@ -163,10 +129,11 @@ function ProductManager() {
     return result;
   };
   const productRender = useMemo(() => {
-    const searchRender = [...rows].filter((product: any) => product.name ? product.name.toLowerCase().includes(searchValue.toLowerCase()) : '');
+    const searchRender = [...lstProduct].filter((product: any) => product.name ? product.name.toLowerCase().includes(searchValue.toLowerCase()) : '');
     const valueRender = handleChangeValue(searchRender);
     return valueRender;
-  }, [searchValue, value]);
+  }, [searchValue, value, lstProduct]);
+  console.log(lstProduct);
   return (
     <div className={classes.wrapper + ' pm-mui'}>
       <div className={classes.title}>Quản lý sản phẩm</div>
@@ -183,7 +150,6 @@ function ProductManager() {
               <Tab label="Tất cả" {...a11yProps(0)} />
               <Tab label="Đang hoạt động" {...a11yProps(1)} />
               <Tab label="Hết hàng" {...a11yProps(2)} />
-              <Tab label="Vi phạm" {...a11yProps(3)} />
             </Tabs>
           </Box>
           <Box sx={{ height: 400, minHeight: 400, width: '100%' }} >

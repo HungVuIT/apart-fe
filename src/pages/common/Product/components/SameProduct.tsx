@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '../../../../components/Container';
 import Carousel from 'react-material-ui-carousel';
 import itempng from '../../../../assets/img/item.png';
 import item2png from '../../../../assets/img/logo.png';
 import item3png from '../../../../assets/img/dientu-category.png';
 import Item from '../../../../components/Item';
-function SameProduct(): JSX.Element {
+import { getRecommendProduct } from '../../../../api/service/product-service';
+import { IWatch } from '../../../../interface/watch/watchType';
+function SameProduct({ id }: any): JSX.Element {
   const [index, setIndex] = React.useState(0);
   const items = [itempng, item2png, item3png, item2png, itempng, item3png, item3png, item2png, item3png];
+  const [lst, setLst] = useState([]);
+  useEffect(() => {
+    id && getRecommendProduct(id, setLst);
+  }, [id]);
+  console.log(lst);
   return (
     <Container>
       <div className='Same-product__wrapper'>
@@ -18,6 +25,9 @@ function SameProduct(): JSX.Element {
             prev={() => setIndex(index === 0 ? items.length - 4 : index - 1)}
           >
             <div className='flex flex-center'>
+              {lst.map((watch: IWatch) => (
+                <Item key={watch.id} watch={watch} />
+              ))}
               {/* <Item id={1} tradeMark='product' linkImg={items[index]} rating={4} price={100000} />
               <Item id={1} tradeMark='product' linkImg={items[index + 1]} rating={4} price={100000} />
               <Item id={1} tradeMark='product' linkImg={items[index + 2]} rating={4} price={100000} />

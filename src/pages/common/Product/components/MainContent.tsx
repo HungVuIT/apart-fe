@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import Container from '../../../../components/Container';
@@ -53,9 +53,13 @@ function MainContent({ id }: IProps) {
             prev={(prev) => setIndex(prev || 0)}
           >
             {
-              items.map((item, i) => (
-                <img key={i} src={item} alt='' className='product-img' />
-              ))
+              watch.image.length > 0
+                ? watch.image.map((item, i) => (
+                  <img key={i} src={item} alt='' className='product-img' />
+                ))
+                : items.map((item, i) => (
+                  <img key={i} src={item} alt='' className='product-img' />
+                ))
             }
           </Carousel>
 
@@ -79,8 +83,8 @@ function MainContent({ id }: IProps) {
           <div className='info-title'>{watch.name}</div>
           <div className='info-product-title'>Thông tin sản phẩm</div>
           <div className='info-rating'>
-            <Rating name='read-only' value={watch.rating} readOnly className='rate-star' />
-            <span className='numOfVoter'>{watch.rating || 0} sao trên 1256 đánh giá</span>
+            <Rating name='read-only' value={watch.rating.score} readOnly className='rate-star' />
+            <span className='numOfVoter'>{watch.rating.score || 5} sao trên 1256 đánh giá</span>
           </div>
           <div className='info-describe'>
             <span>{watch.content}</span>

@@ -23,8 +23,8 @@ import MailIcon from '@mui/icons-material/Mail';
 import { menuVendor } from './definitionMenu';
 import { useNavigate } from 'react-router-dom';
 import { IMenuVendorItem } from './type';
-import { useAppDispatch } from '../../../hooks/hooks';
-import { getProfileShop } from '../../../redux/vendor/vendorThunk';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { getListProductOfShop, getProfileShop } from '../../../redux/vendor/vendorThunk';
 
 const drawerWidth = 240;
 
@@ -103,10 +103,15 @@ export default function VendorLayout({ children }: IPropsChildren) {
   const [menuRender, setMenuRender] = React.useState([...menuVendor]);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
+  const { shop } = useAppSelector(state => state.vendor);
   React.useEffect(() => {
     dispatch(getProfileShop());
   }, []);
+  React.useEffect(() => {
+    if (shop.id) {
+      dispatch(getListProductOfShop(shop.id));
+    }
+  }, [shop]);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -129,7 +134,7 @@ export default function VendorLayout({ children }: IPropsChildren) {
             backgroundColor: '#99e9f2'
           }}
         >
-          {open && <h1 className={classes.shopName}>D&H Shop</h1>}
+          {open && <h1 className={classes.shopName} style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>ChronoCorner Shop</h1>}
           {open
             ? <>
             <IconButton

@@ -15,6 +15,18 @@ export const getCommentById = createAsyncThunk(
     }
   }
 );
+export const getRatingById = createAsyncThunk(
+  'Rating/get/id',
+  async (id: number) => {
+    try {
+      const url = `rating/watch/${id}`;
+      const response = await axiosClient.get(url);
+      return response.data.data;
+    } catch (error) {
+      throw new Error(String(error));
+    }
+  }
+);
 export const getShopById = createAsyncThunk(
   'shop/get/id',
   async (id: number) => {
@@ -71,5 +83,16 @@ export const extraReducersProduct = (
     .addCase(getCommentById.fulfilled, (state, action) => {
       state.loading = true;
       state.comment = action.payload;
+    })
+    .addCase(getRatingById.pending, (state, action) => {
+      state.loading = true;
+    })
+    .addCase(getRatingById.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error as string;
+    })
+    .addCase(getRatingById.fulfilled, (state, action) => {
+      state.loading = true;
+      state.rating = action.payload;
     });
 };

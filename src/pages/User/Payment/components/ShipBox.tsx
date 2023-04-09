@@ -20,7 +20,7 @@ function ShipBox({ handleBack, handleNext, setPaymentDetails, paymentDetails }: 
     const params: ICheckOut = {
       ...paymentDetails.infor,
       deliveryOption: value,
-      paymentMethod: 'offline'
+      paymentMethod: 'online'
     };
     const data = checkOut(params, dispatch);
   }, []);
@@ -28,7 +28,7 @@ function ShipBox({ handleBack, handleNext, setPaymentDetails, paymentDetails }: 
     const params: ICheckOut = {
       ...paymentDetails.infor,
       deliveryOption: event.target.value,
-      paymentMethod: 'offline'
+      paymentMethod: 'online'
     };
     setValue((event.target as HTMLInputElement).value);
     const data = await checkOut(params);

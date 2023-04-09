@@ -21,11 +21,14 @@
   height: 75px;
 }
 .header__layout .header__logo {
- max-width: 20%;
-  width: 142px;
+  max-width: 20%;
+  width: 170px;
   font-family: 'Caramel', cursive;
   color: var(--text-color);
   font-size: 40px; 
+  @include responsive_max992 {
+    max-width: 100%;
+  }
 }
 .header__layout .css-1t6c9ts {
   @include responsive_max992 {

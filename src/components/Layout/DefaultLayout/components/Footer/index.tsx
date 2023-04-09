@@ -5,12 +5,12 @@ function Footer(): JSX.Element {
   return (
     <footer className="footer">
       <div className="footer__addr">
-        <h1 className="footer__logo">D&H</h1>
+        <h1 className="footer__logo">ChronoCorner</h1>
 
         <h2>Contact</h2>
 
         <address >
-          BKU@2022 D&H Team <br/>
+          BKU@2022 ChronoCorner Team <br/>
 
             <a className="footer__btn" href="mailto:dung.le1305@hcmut.edu.vn">Email Us</a>
         </address>

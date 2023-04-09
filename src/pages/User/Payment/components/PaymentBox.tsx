@@ -43,7 +43,7 @@ function PaymentBox({ handleBack, setPaymentDetails, paymentDetails }: IPropsPay
         navigate('/');
       } else if (data.success && value === 'online') {
         toast.success('Đang chuyển sang trang thanh toán online');
-        navigate(data.data.href);
+        window.location.href = data.data.href;
       } else {
         const mes: string = data.data.message ? data.data.message : '';
         toast.error(`Thanh toán lỗi: ${mes}`);

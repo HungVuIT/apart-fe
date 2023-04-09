@@ -11,6 +11,7 @@ import { getListProduct } from '../../../api/service/home-service';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { getListOfWatch, getListSaleOfWatch } from '../../../redux/watch/watchThunk';
 import { setSearch } from '../../../redux/common/commonSlice';
+// import { Carousel } from 'react-bootstrap';
 function Home() {
   const { isLoading } = useContext(MyGlobalContext);
   const dispatch = useAppDispatch();

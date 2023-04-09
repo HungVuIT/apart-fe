@@ -40,7 +40,7 @@ export default function Payment () {
   return (
     <div className={classes.wrapper} >
       <Box sx={{ width: '100%' }} className={classes['box-input']}>
-        <div className={classes.logo}>D&H</div>
+        <div className={classes.logo}>ChronoCorner</div>
         <Stepper activeStep={activeStep} className={classes.stepper}>
           {steps.map((label, index) => {
             const stepProps: { completed?: boolean } = {};

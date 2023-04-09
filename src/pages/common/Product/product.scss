@@ -239,6 +239,9 @@
       }
       & .form-input {
         margin: 10px 0;
+        & label {
+          font-size: 16px;
+        }
         .css-14lo706 {
           min-width: 60px !important;
         }
@@ -313,5 +316,15 @@
   }
   & .css-ohwg9z {
     min-height: 350px;
+  }
+}
+.rate-box {
+  display: flex;
+  margin: 20px 0;
+  & span {
+    font-size: 30px;
+    &:hover {
+      font-size: 40px;
+    }
   }
 }
