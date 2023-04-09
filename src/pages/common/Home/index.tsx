@@ -10,10 +10,11 @@ import { MyGlobalContext } from '../../../store/context/MyglobalContext';
 import { getListProduct } from '../../../api/service/home-service';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { getListOfWatch, getListSaleOfWatch } from '../../../redux/watch/watchThunk';
+import Carousel from 'react-material-ui-carousel';
 import { setSearch } from '../../../redux/common/commonSlice';
-// import { Carousel } from 'react-bootstrap';
 function Home() {
   const { isLoading } = useContext(MyGlobalContext);
+  const [index, setIndex] = React.useState(0);
   const dispatch = useAppDispatch();
   const { saleWatchList } = useAppSelector(state => state.watch);
   const { search } = useAppSelector(state => state.common);
@@ -26,9 +27,16 @@ function Home() {
     <>
       <>
         <Container>
-          <div className="banner">
+          <Carousel
+            animation='slide'
+            duration={1000}
+            className='banner'
+          >
             <img src={banner} alt="banner" className='img-banner'/>
-          </div>
+            <img src={'https://i.pinimg.com/originals/60/c1/69/60c16934a30f33cbc8c459a21b501c34.jpg'} alt="banner" className='img-banner'/>
+            <img src={'https://img.pikbest.com/origin/06/43/34/24HpIkbEsTVvU.jpg!w700wp'} alt="banner" className='img-banner'/>
+            <img src={'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/a0c9b737352801.573d3df29868a.jpg'} alt="banner" className='img-banner'/>
+          </Carousel>
         </Container>
         <Container>
           <div className="search__wrapper">

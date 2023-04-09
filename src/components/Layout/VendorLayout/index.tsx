@@ -21,11 +21,11 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { menuVendor } from './definitionMenu';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { IMenuVendorItem } from './type';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { getListProductOfShop, getProfileShop } from '../../../redux/vendor/vendorThunk';
-
+import './customMui.scss';
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -104,6 +104,11 @@ export default function VendorLayout({ children }: IPropsChildren) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { shop } = useAppSelector(state => state.vendor);
+  const location = useLocation();
+  React.useEffect(() => {
+    const newMenu = menuVendor.map(item => item.link === location.pathname ? ({ ...item, active: true }) : item);
+    setMenuRender(newMenu);
+  }, []);
   React.useEffect(() => {
     dispatch(getProfileShop());
   }, []);
@@ -128,20 +133,22 @@ export default function VendorLayout({ children }: IPropsChildren) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} >
         <DrawerHeader
           sx={{
-            backgroundColor: '#99e9f2'
+            backgroundColor: '#212529',
+            color: '#f8f9fa'
           }}
         >
-          {open && <h1 className={classes.shopName} style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>ChronoCorner Shop</h1>}
+          {open && <h1 className={classes.shopName} style={{ cursor: 'pointer' }} onClick={() => navigate('/')}><i>{shop.name}</i></h1>}
           {open
             ? <>
             <IconButton
               onClick={handleDrawerClose}>
                 <ChevronLeftIcon
                   sx={{
-                    fontSize: '25px'
+                    fontSize: '25px',
+                    color: '#f8f9fa'
                   }}
                   />
               </IconButton>
@@ -172,8 +179,7 @@ export default function VendorLayout({ children }: IPropsChildren) {
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
-                  color: item.active ? '#3bc9db' : '#343a40',
-                  border: item.active ? '1px solid #3bc9db' : 'none',
+                  backgroundColor: item.active ? '#343541' : '#202123',
                   px: 2.5
                 }}
               >
@@ -187,7 +193,7 @@ export default function VendorLayout({ children }: IPropsChildren) {
                   <item.icon
                     sx={{
                       fontSize: '25px',
-                      color: item.active ? '#3bc9db' : '#343a40'
+                      color: '#f8f9fa'
                     }}
                   />
                 </ListItemIcon>

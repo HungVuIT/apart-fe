@@ -20,6 +20,10 @@ import { debounce } from 'lodash';
 import SearchProduct from './components/SearchProduct';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import Loading from '../../common/loading';
+import { delProductByShop } from '../../../api/service/product-service';
+import { ToastContainer, toast } from 'react-toastify';
+
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
@@ -42,7 +46,7 @@ function ProductManager() {
   const [value, setValue] = React.useState(0);
   const [searchValue, setSearchValue] = useState('');
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
-  const { lstProduct } = useAppSelector(state => state.vendor);
+  const { lstProduct, loading, shop } = useAppSelector(state => state.vendor);
   const navigate = useNavigate();
   const caculatorWidth = (value: number) => {
     return (windowDimensions.width * 84 / 100) * (value / 100);
@@ -101,12 +105,23 @@ function ProductManager() {
       type: 'actions',
       width: caculatorWidth(5),
       renderCell: (params) => (
-        <div className={classes['watch-total']}>
+        <div className={classes['watch-action']}>
           <Button>Sửa</Button>
+          <Button className={classes.del} onClick={async () => await handleDelProduct(params.row.id)}>Xóa</Button>
         </div>
       )
     }
   ];
+  const handleDelProduct = async (id: number) => {
+    const res = await delProductByShop(id);
+    console.log(res);
+    if (res.success) {
+      toast.success('Đã xóa sản phẩm');
+    } else {
+      const mes: string = res.data?.message ? res.data.message : '';
+      toast.error(`Xóa sản phẩm thất bại! ${mes}`);
+    }
+  };
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -133,7 +148,6 @@ function ProductManager() {
     const valueRender = handleChangeValue(searchRender);
     return valueRender;
   }, [searchValue, value, lstProduct]);
-  console.log(lstProduct);
   return (
     <div className={classes.wrapper + ' pm-mui'}>
       <div className={classes.title}>Quản lý sản phẩm</div>
@@ -153,19 +167,27 @@ function ProductManager() {
             </Tabs>
           </Box>
           <Box sx={{ height: 400, minHeight: 400, width: '100%' }} >
-            {productRender.length > 0
-              ? <DataGrid
-              className={classes.list}
-              rows={productRender} columns={columns}
-              experimentalFeatures={{ newEditingApi: false }}
-              disableColumnMenu
-              hideFooterPagination
-              hideFooterSelectedRowCount
-            />
-              : <div className={classes.nodata}>Không có sản phẩm</div>
+            {
+              (loading.product || !shop.id)
+                ? <Loading _type={'ball'} />
+                : (
+                    productRender.length > 0
+                      ? <DataGrid
+                      className={classes.list}
+                      rows={productRender} columns={columns}
+                      experimentalFeatures={{ newEditingApi: false }}
+                      disableColumnMenu
+                      hideFooterPagination
+                      hideFooterSelectedRowCount
+                    />
+                      : <div className={classes.nodata}>Không có sản phẩm</div>
+                  )
+            }
+            {
             }
           </Box>
         </Box>
+        <ToastContainer autoClose={1000} position='bottom-right' />
     </div>
   );
 }

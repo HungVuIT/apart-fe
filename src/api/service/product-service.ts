@@ -49,3 +49,12 @@ export const getRecommendProduct = async (id: number, setLst: any) => {
     return err;
   }
 };
+export const delProductByShop = async (id: number) => {
+  try {
+    const url = `watchs/id/${id}`;
+    const response = await axiosClient.delete(url);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};

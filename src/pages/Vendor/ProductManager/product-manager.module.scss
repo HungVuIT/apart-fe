@@ -80,6 +80,13 @@
         color: #495057;
       }
     }
+    & .watch-action {
+      display: flex;
+      flex-direction: column;
+      & .del {
+        color: #fa5252;
+      }
+    }
   }
 }
 .nodata {

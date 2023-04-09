@@ -13,22 +13,15 @@ export const menuVendor: IMenuVendorItem[] = [
   },
   {
     id: 2,
-    name: 'Xem phản hồi',
-    link: '/shop/manager/watch',
-    icon: ReviewsIcon,
-    active: false
-  },
-  {
-    id: 3,
     name: 'Quản lý đơn hàng',
     link: '/shop/manager/order',
     icon: ReceiptLongIcon,
     active: false
   },
   {
-    id: 4,
+    id: 3,
     name: 'Hồ sơ cửa hàng',
-    link: '/shop/profile',
+    link: '/shop/manager/profile',
     icon: StoreIcon,
     active: false
   }

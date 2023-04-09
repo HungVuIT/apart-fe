@@ -32,25 +32,25 @@ export const extraReducersVendor = (
 ) => {
   builder
     .addCase(getListProductOfShop.pending, (state, action) => {
-      state.loading = true;
+      state.loading.product = true;
     })
     .addCase(getListProductOfShop.rejected, (state, action) => {
       state.error = action.error as string;
-      state.loading = false;
+      state.loading.product = false;
     })
     .addCase(getListProductOfShop.fulfilled, (state, action) => {
-      state.loading = false;
+      state.loading.product = false;
       state.lstProduct = action.payload;
     })
     .addCase(getProfileShop.pending, (state, action) => {
-      state.loading = true;
+      state.loading.profile = true;
     })
     .addCase(getProfileShop.rejected, (state, action) => {
       state.error = action.error as string;
-      state.loading = false;
+      state.loading.profile = false;
     })
     .addCase(getProfileShop.fulfilled, (state, action) => {
-      state.loading = false;
+      state.loading.profile = false;
       state.shop = action.payload;
     });
 };

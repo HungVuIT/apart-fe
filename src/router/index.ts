@@ -83,7 +83,7 @@ const vendorRouter = [
     Layout: false
   },
   {
-    path: '/shop/profile',
+    path: '/shop/manager/profile',
     component: ProfileStore,
     Layout: true
   }

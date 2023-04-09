@@ -123,7 +123,7 @@ function ProfileStore() {
   };
   return (
     <>
-      {(loading || loadingPage)
+      {(loading.profile || loadingPage)
         ? <div className={classes.loading}>
           <Loading _type={'balls'} />
         </div>
