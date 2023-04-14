@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import Container from '../../../../components/Container';
@@ -10,30 +10,59 @@ import item2png from '../../../../assets/img/logo.png';
 import item3png from '../../../../assets/img/dientu-category.png';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import axiosClient from '../../../../api/axiosClient';
-import { getCart } from '../../../../redux/user/userThunk';
+import { getCart, getFavoriteList } from '../../../../redux/user/userThunk';
 import { MyGlobalContext } from '../../../../store/context/MyglobalContext';
 import { getAccessToken } from '../../../../untils/localStorage';
 import { formatMoney } from '../../../../untils/formartMoney';
+import { addFavoriteList, addItemToCart, removeItemFavorite } from '../../../../api/service/user-service';
+import { IFavorite } from '../../../../interface/user/interface';
+import { toast, ToastContainer } from 'react-toastify';
+import { removeFavoriteItem } from '../../../../redux/user/userSlice';
 interface IProps {
   id: number | undefined
 }
 function MainContent({ id }: IProps) {
   const [index, setIndex] = React.useState(0);
+  const [isActive, setIsActive] = useState(false);
   const { watch } = useAppSelector(state => state.productNow);
+  const { favoriteList } = useAppSelector(state => state.user);
   const dispatch = useAppDispatch();
   const items = [itempng, item2png, item3png];
   const { setIsOpenLogin, setIsLogin } = useContext(MyGlobalContext);
+  useEffect(() => {
+    checkItemInFavorite();
+  }, []);
   const handleLogin = () => {
     setIsOpenLogin(true);
     setIsLogin(true);
   };
-  const addItemToCart = async (itemId: number) => {
-    try {
-      const url = 'cart/item';
-      const response = await axiosClient.post(url, { itemId });
-      return response.data;
-    } catch (err) {
-      return err;
+  const checkItemInFavorite = () => {
+    const item = favoriteList.find((item: IFavorite) => item.watch.id === id);
+    console.log(item);
+    item ? setIsActive(false) : setIsActive(true);
+    return item;
+  };
+  const handleAddToFavorite = async () => {
+    if (getAccessToken()) {
+      console.log(checkItemInFavorite());
+      if (checkItemInFavorite()) {
+        const item: any = checkItemInFavorite();
+        const data = id ? await removeItemFavorite(item.id) : null;
+        if (data && data.success && id) {
+          dispatch(removeFavoriteItem(id));
+          dispatch(getFavoriteList());
+        } else {
+          toast.error('Chức năng đang không hoạt động vui lòng thử lại sau');
+        }
+      } else {
+        const data = id ? await addFavoriteList(id) : null;
+        dispatch(getFavoriteList());
+        if (!data && !data.success) {
+          toast.error('Chức năng đang không hoạt động vui lòng thử lại sau');
+        }
+      }
+    } else {
+      handleLogin();
     }
   };
   const handleAddToCart = async () => {
@@ -44,6 +73,7 @@ function MainContent({ id }: IProps) {
       handleLogin();
     }
   };
+  console.log(isActive);
   return (
     <Container>
       <div className='product-box'>
@@ -68,17 +98,24 @@ function MainContent({ id }: IProps) {
           <div className='info-title'>{watch.name}</div>
           <div className='info-product-title'>Thông tin sản phẩm</div>
           <div className='info-rating'>
-            <Rating name="half-rating-read" value={watch.rating.score || 5} precision={0.5} readOnly className='rate-star' />
-            <span className='numOfVoter'>{watch.rating.score || 5} sao trên {watch.rating.list.length || 0} đánh giá</span>
+            <div className='rating'>{watch.rating.score || 5}<Rating name="half-rating-read" value={watch.rating.score || 5} precision={0.5} readOnly className='rate-star' /></div>
+            <hr className={'hight-line content-line'}></hr>
+            <span className='numOfVoter'>{watch.rating.list.length || 0} đánh giá</span>
+            <hr className={'hight-line content-line'}></hr>
+            <span className='numOfVoter'>{watch.saled || 0} đã bán</span>
           </div>
-          <div className="info-price">
+          <div className={'info-price' + (watch.sale_off ? ' sale-off' : '')}>
             <div className='price'>{formatMoney.format(watch.price)}</div>
+            {!!watch.sale_off && <div className='sale'>{formatMoney.format(watch.price)}</div>}
+            {!!watch.sale_off && <div className='discount'>
+              <span>{watch.sale_off}80 giảm</span>
+            </div>}
           </div>
           <div className='info-describe'>
             <span>{watch.content}</span>
           </div>
           <div className='product-btns'>
-            <button className='icon-tym active'>
+            <button className={'icon-tym' + (isActive ? ' red' : '')} onClick={handleAddToFavorite}>
               <FontAwesomeIcon icon={faHeart} />
             </button>
             <button className='icon-cart' onClick={handleAddToCart}>
@@ -86,6 +123,7 @@ function MainContent({ id }: IProps) {
             </button>
           </div>
         </div>
+      <ToastContainer autoClose={1000} position='bottom-right'/>
       </div>
     </Container>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '../../../components/Container';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -7,9 +7,9 @@ import './userOrder.scss';
 import TabPanel from './components/TabPanel';
 import OrderItem from './components/OrderItem';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { getOrderList } from '../../../redux/user/userThunk';
 import Loading from '../../common/loading';
 import { IOrder } from '../../../interface/user/interface';
+import { getOrderList } from '../../../api/service/user-service';
 
 function a11yProps(index: number) {
   return {
@@ -30,10 +30,10 @@ const statusMap: StatusMap = {
 };
 function UserOrder() {
   const [value, setValue] = React.useState(0);
-  const { loading, orderList } = useAppSelector(state => state.user);
-  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
+  const [orderList, setOrderList] = useState([]);
   useEffect(() => {
-    dispatch(getOrderList());
+    getOrderList(setOrderList, setLoading);
   }, []);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -45,7 +45,7 @@ function UserOrder() {
   return (
     <div className="user-order__wrapper mg-top-100">
       {
-        loading.order
+        loading
           ? <Loading _type={'ball'} />
           : (
             <Container>

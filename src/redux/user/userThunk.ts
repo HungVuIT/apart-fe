@@ -26,11 +26,11 @@ export const getCart = createAsyncThunk(
     }
   }
 );
-export const getOrderList = createAsyncThunk(
-  'user/order/get',
+export const getFavoriteList = createAsyncThunk(
+  'user/favorite/get',
   async () => {
     try {
-      const url = 'order';
+      const url = 'favorite';
       const response = await axiosClient.get(url);
       return response.data.data;
     } catch (error) {
@@ -38,6 +38,7 @@ export const getOrderList = createAsyncThunk(
     }
   }
 );
+
 export const extraReducersUser = (
   builder: ActionReducerMapBuilder<IStateUser>
 ) => {
@@ -53,16 +54,16 @@ export const extraReducersUser = (
       state.loading.profile = false;
       state.profile = action.payload;
     })
-    .addCase(getOrderList.pending, (state, action) => {
-      state.loading.order = true;
+    .addCase(getFavoriteList.pending, (state, action) => {
+      state.loading.favorite = true;
     })
-    .addCase(getOrderList.rejected, (state, action) => {
+    .addCase(getFavoriteList.rejected, (state, action) => {
       state.error = action.error as string;
-      state.loading.order = false;
+      state.loading.favorite = false;
     })
-    .addCase(getOrderList.fulfilled, (state, action) => {
-      state.loading.order = false;
-      state.orderList = action.payload;
+    .addCase(getFavoriteList.fulfilled, (state, action) => {
+      state.loading.favorite = false;
+      state.favoriteList = action.payload;
     })
     .addCase(getCart.pending, (state, action) => {
       state.loading.cart = true;

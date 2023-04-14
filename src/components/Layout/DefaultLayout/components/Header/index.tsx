@@ -17,7 +17,7 @@ import { MyGlobalContext } from '../../../../../store/context/MyglobalContext';
 import Dialog from '@mui/material/Dialog';
 import './header.scss';
 import LoginModal from '../../../../../pages/common/auth/LoginModal';
-import { getCart, getProfile } from '../../../../../redux/user/userThunk';
+import { getCart, getFavoriteList, getProfile } from '../../../../../redux/user/userThunk';
 import { useAppDispatch } from '../../../../../hooks/hooks';
 import AccountMenu from '../AccountMenu';
 import { getListOfShop } from '../../../../../redux/common/commonThunk';
@@ -35,6 +35,7 @@ function Header() {
     if (getAccessToken()) {
       dispatch(getProfile());
       dispatch(getCart());
+      dispatch(getFavoriteList());
     }
   }, [getAccessToken(), dispatch]);
   React.useEffect(() => {

@@ -1,4 +1,4 @@
-import { IStateUser, initCartItemPayment, initOrderList } from './../../interface/user/interface';
+import { IFavorite, IStateUser, initCartItemPayment, initOrderList } from './../../interface/user/interface';
 import { extraReducersUser } from './userThunk';
 import { initUserInfo, initCart } from '../../interface/user/interface';
 import { createSlice } from '@reduxjs/toolkit';
@@ -10,10 +10,12 @@ const userSlice = createSlice({
     cart: initCart,
     payment: initCartItemPayment,
     orderList: [],
+    favoriteList: [],
     loading: {
       cart: false,
       profile: false,
-      order: false
+      order: false,
+      favorite: false
     },
     error: ''
   },
@@ -21,6 +23,10 @@ const userSlice = createSlice({
     removeItemCart: (state, action) => {
       const removeItem = state.cart.filter((item) => item.id !== action.payload);
       state.cart = removeItem;
+    },
+    removeFavoriteItem: (state, action) => {
+      const removeItem = state.favoriteList.filter((item: IFavorite) => item.id !== action.payload);
+      state.favoriteList = removeItem;
     },
     changeQuantity: (state, action) => {
       const index = state.cart.findIndex((item) => item.id === action.payload.id);
@@ -42,5 +48,5 @@ const userSlice = createSlice({
   extraReducers: extraReducersUser
 });
 const { reducer: userReducer } = userSlice;
-export const { removeItemCart, changeQuantity, setPayment, setShipPrice } = userSlice.actions;
+export const { removeItemCart, changeQuantity, setPayment, setShipPrice, removeFavoriteItem } = userSlice.actions;
 export default userReducer;

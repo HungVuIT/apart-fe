@@ -59,6 +59,7 @@ interface ILoadingUser {
   cart: boolean
   profile: boolean
   order: boolean
+  favorite: boolean
 }
 export interface IOrder {
   id: number
@@ -88,7 +89,17 @@ export interface IStateUser {
   loading: ILoadingUser
   cart: ICart[]
   orderList: IOrder[]
+  favoriteList: IFavorite[]
   payment: ICartItemPayment
+}
+export interface IFavorite {
+  id: number
+  createdAt: string
+  updatedAt: string
+  UID: number
+  WID: number
+  isActive: boolean
+  watch: IWatch
 }
 export interface ICartItemPayment {
   items: ICart[]

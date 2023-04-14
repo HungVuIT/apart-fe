@@ -9,3 +9,12 @@
     margin-top: 20px;
   }
 }
+.nodata {
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 500;
+  font-style: italic;
+}
