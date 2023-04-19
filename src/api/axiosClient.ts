@@ -1,6 +1,6 @@
 import axios from 'axios';
 import queryString from 'query-string';
-import { getAccessToken } from '../untils/localStorage';
+import { getAccessToken, getRefreshToken, removeAccessToken, removeRefreshToken, setAccessToken } from '../untils/localStorage';
 
 const REACT_APP_API_URL = 'https://dhwatch.onrender.com/api/';
 
@@ -33,6 +33,16 @@ axiosClient.interceptors.response.use((response) => {
   return response;
 }, (error) => {
   // Handle errors
+  const originalRequest = error.config;
+  if (error.response.status === 401 && !originalRequest._retry) {
+    if (getRefreshToken()) {
+      const newToken = getRefreshToken();
+      newToken && setAccessToken(newToken);
+      removeRefreshToken();
+    } else {
+      removeAccessToken();
+    }
+  }
   if (error.response.data) {
     return error.response;
   } else {

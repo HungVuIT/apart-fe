@@ -13,11 +13,8 @@ import { getListOfWatch, getListSaleOfWatch } from '../../../redux/watch/watchTh
 import Carousel from 'react-material-ui-carousel';
 import { setSearch } from '../../../redux/common/commonSlice';
 function Home() {
-  const { isLoading } = useContext(MyGlobalContext);
-  const [index, setIndex] = React.useState(0);
   const dispatch = useAppDispatch();
   const { saleWatchList } = useAppSelector(state => state.watch);
-  const { search } = useAppSelector(state => state.common);
   React.useEffect(() => {
     dispatch(getListSaleOfWatch());
     dispatch(getListOfWatch());

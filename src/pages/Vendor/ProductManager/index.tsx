@@ -144,7 +144,7 @@ function ProductManager() {
     return result;
   };
   const productRender = useMemo(() => {
-    const searchRender = [...lstProduct].filter((product: any) => product.name ? product.name.toLowerCase().includes(searchValue.toLowerCase()) : '');
+    const searchRender = lstProduct?.length ? [...lstProduct].filter((product: any) => product.name ? product.name.toLowerCase().includes(searchValue.toLowerCase()) : '') : [];
     const valueRender = handleChangeValue(searchRender);
     return valueRender;
   }, [searchValue, value, lstProduct]);

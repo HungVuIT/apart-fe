@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { IShop } from '../../../interface/common/interface';
 import { ICart } from '../../../interface/user/interface';
@@ -145,7 +145,34 @@ function Cart() {
   };
 
   // các hàm xử lý
-  const handleChangeQuantity = (id: number, type: TypeChangeQuantity) => {
+  // const handleChangeQuantity = (id: number, type: TypeChangeQuantity) => {
+  //   const newCart = [...cart];
+  //   const itemIndex = newCart.findIndex((item) => item.id === id);
+  //   let newItem;
+  //   if (itemIndex !== -1 && itemIndex < newCart.length) {
+  //     newItem = type === TypeChangeQuantity.PLUS
+  //       ? newCart[itemIndex] = {
+  //         ...newCart[itemIndex],
+  //         quantity: newCart[itemIndex].quantity + 1
+  //       }
+  //       : newCart[itemIndex].quantity > 1
+  //         ? newCart[itemIndex] = {
+  //           ...newCart[itemIndex],
+  //           quantity: newCart[itemIndex].quantity - 1
+  //         }
+  //         : null;
+  //   }
+  //   if (newItem) {
+  //     const quantity = newItem.quantity;
+  //     dispatch(changeQuantity({ id, quantity }));
+  //     changeQuantityApi({ cartId: id, quantity });
+  //   } else {
+  //     removeItemFromCart(id);
+  //     dispatch(removeItemCart(id));
+  //   }
+  // };
+
+  const handleChangeQuantity = useCallback((id: number, type: TypeChangeQuantity) => {
     const newCart = [...cart];
     const itemIndex = newCart.findIndex((item) => item.id === id);
     let newItem;
@@ -170,7 +197,7 @@ function Cart() {
       removeItemFromCart(id);
       dispatch(removeItemCart(id));
     }
-  };
+  }, [cart, dispatch, changeQuantityApi, removeItemFromCart]);
 
   const caculatorTotalPayment = () => {
     let totalPrice = 0;
@@ -180,9 +207,12 @@ function Cart() {
     return totalPrice;
   };
 
-  const handleRemoveItemFromCart = (id: number) => {
+  // const handleRemoveItemFromCart = (id: number) => {
+  //   removeItemFromCart(id);
+  // };
+  const handleRemoveItemFromCart = useCallback((id: number) => {
     removeItemFromCart(id);
-  };
+  }, [removeItemFromCart]);
   const handlePayment = () => {
     dispatch(setPayment(cart));
     navigate('/payment');

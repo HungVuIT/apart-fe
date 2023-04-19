@@ -20,6 +20,8 @@ import { setDefaultValue } from './setDefaultValue';
 import { editShop } from '../../../api/service/shop-service';
 import { ToastContainer, toast } from 'react-toastify';
 import { IShop } from '../../../interface/common/interface';
+import AddIcon from '@mui/icons-material/Add';
+
 export interface IProfileStore {
   email: string
   name: string
@@ -31,7 +33,7 @@ export interface IProfileStore {
   phoneNumber: string
   description: string
   logo: any
-  // banner: any
+  banner: any
 }
 
 const schema = yup.object().shape({
@@ -56,8 +58,11 @@ function ProfileStore() {
   const [ward, setWard] = useState<IWard[]>([]);
   const [loadingPage, setLoadingPage] = useState(false);
   const [image, setImage] = useState<string>(shop.logo);
+  const [banner, setBanner] = useState<string>(shop.banner || '');
   const [file, setFile] = useState<any>();
+  const [fileBanner, setFileBanner] = useState<any>();
   const inputFile = React.useRef<HTMLInputElement>(null);
+  const inputBanner = React.useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setValue('email', shop.email);
@@ -77,6 +82,17 @@ function ProfileStore() {
   const handleButtonClick = () => {
     if (inputFile.current) {
       inputFile.current.click();
+    }
+  };
+  const handleBannerUpload = (e: any) => {
+    const selectedFile = e.target.files[0]; // Lấy file đầu tiên được chọn
+    setFileBanner(selectedFile);
+    const imageUrl = URL.createObjectURL(selectedFile); // Tạo đường dẫn URL cho file ảnh
+    setBanner(imageUrl);
+  };
+  const handleButtonClickBanner = () => {
+    if (inputBanner.current) {
+      inputBanner.current.click();
     }
   };
   const handleChangeProvince = (event: SelectChangeEvent) => {
@@ -105,10 +121,12 @@ function ProfileStore() {
     const id = district.findIndex(item => item.district_name === name);
     return district[id].district_id;
   };
+  console.log(banner);
   const onSubmit: SubmitHandler<IProfileStore> = async (_data: IProfileStore) => {
     const params: IProfileStore = {
       ..._data,
-      logo: file
+      logo: file,
+      banner: fileBanner
     };
     setLoadingPage(true);
     const data = await editShop(params);
@@ -314,6 +332,22 @@ function ProfileStore() {
                   style={{ display: 'none' }}
                 />
                 <Button variant='outlined' className={classes.btn} onClick={handleButtonClick}>Thay ảnh</Button>
+              </div>
+              <div className={classes['banner-box']}>
+                <h1 className={classes.title}>Banner</h1>
+                <div className={classes.banner}>
+                  <div className={classes['item-img']} onClick={handleButtonClickBanner}>
+                    {(banner || shop.banner) && <img src={shop.banner || banner} alt='Avatar' className={classes['img-avt']}/>}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleBannerUpload}
+                      ref={inputBanner}
+                      style={{ display: 'none' }}
+                    />
+                    {!(banner || shop.banner) && <AddIcon className={classes['img-icon']}/>}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

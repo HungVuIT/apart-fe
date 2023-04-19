@@ -1,81 +1,35 @@
 @import '../Global/foundation/mixin';
 .category__wrapper {
-  width: 140px;
-  height: 180px;
+  width: 100%;
+  min-height: calc(80vw/5);
+  max-height: 200px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
-  margin: 0 10px;
+  border-radius: 10px;
   cursor: pointer;
   &:hover {
     border: 1px solid #74c0fc;
-    border-radius: 10px;
-    & .img__wrapper {
-      border-radius: 10px 10px 0 0;
-    }
-    .category-img {
-      border-radius: 10px 10px 0 0;
-      width: 200px;
-      height: 200px;
-    }
-  }
-  @include responsive_max1200 {
-    width: 100px;
-    height: 150px;
-    &:hover {
-      .category-img {
-        border-radius: 10px 10px 0 0;
-        width: 150px;
-        height: 150px;
-      }
-    }
-  }
-  @include responsive_max992 {
-    width: 80px;
-    height: 100px;
-  }
-  @include responsive_max425 {
-    width: 50px;
-    height: 70px;
-    margin: 0 2px;
-    &:hover {
-      .category-img {
-        border-radius: 10px 10px 0 0;
-        width: 80px;
-        height: 80px;
-      }
-    }
   }
 }
 .img__wrapper {
-  width: 138px;
-  height: 130px;
-  border-bottom: 1px solid black;
+  border-radius: 10px 10px 0 0;
+  width: 100%;
+  height: calc(80vw/6);
   overflow: hidden;
-  @include responsive_max1200 {
-    width: 98px;
-    height: 100px;
-  }
-  @include responsive_max992 {
-    width: 78px;
-    height: 70px;
-  }
-  @include responsive_max425 {
-    width: 48px;
-    height: 50px;
-  }
 }
 .category-img {
+  border-radius: 10px 10px 0 0;
   width: 100%;
-  height: 100%;
-  transition: width 2s, height 2s;
+  height: calc(80vw/6);
 }
 .category-text {
   text-align: center;
-  font-weight: 700;
+  padding: 5px 0;
+  font-weight: 500;
   font-size: 20px;
   @include responsive_max992 {
     font-size: 16px;
   }
   @include responsive_max425 {
-    font-size: 12px;
+    font-size: 10px;
   }
 }

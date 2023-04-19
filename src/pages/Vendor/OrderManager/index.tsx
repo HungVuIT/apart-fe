@@ -168,7 +168,7 @@ function OrderManager() {
     return result;
   };
   const productRender = useMemo(() => {
-    const searchRender = [...rows].filter((item: any) => item.id ? item.id.toLowerCase().includes(searchValue.toLowerCase()) : '');
+    const searchRender = rows?.length > 0 ? [...rows].filter((item: any) => item.id ? item.id.toLowerCase().includes(searchValue.toLowerCase()) : '') : [];
     const valueRender = handleChangeValue(searchRender);
     return valueRender;
   }, [searchValue, value]);

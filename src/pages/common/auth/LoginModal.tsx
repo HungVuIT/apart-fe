@@ -75,6 +75,7 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
       if (data.success) {
         resetForm();
         showToastMessage(<Toast title='Đăng nhập thành công' message={data.message} />, typeToast.SUCCESS);
+        window.location.reload();
       } else {
         showToastMessage(<Toast title='Đăng nhập thất bại!' message={data.message} />, typeToast.ERROR);
       }
@@ -181,7 +182,7 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
           {isSignIn ? ' Đăng ký ngay' : ' Trở về đăng nhập'}
         </span>
       </p>
-      <ToastContainer />
+      <ToastContainer autoClose={1000} position='bottom-right' />
     </form>
   );
 };
