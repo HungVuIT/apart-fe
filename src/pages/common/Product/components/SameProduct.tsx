@@ -19,21 +19,23 @@ function SameProduct({ id }: any): JSX.Element {
     <Container>
       <div className='Same-product__wrapper'>
         <div className='title text-center'>Sản phẩm tương tự</div>
-        <Carousel
-            index={index}
-            next={() => setIndex(index === items.length - 4 ? 0 : index + 1)}
-            prev={() => setIndex(index === 0 ? items.length - 4 : index - 1)}
-          >
-            <div className='flex flex-center'>
-              {lst.map((watch: IWatch) => (
-                <Item key={watch.id} watch={watch} />
-              ))}
-              {/* <Item id={1} tradeMark='product' linkImg={items[index]} rating={4} price={100000} />
-              <Item id={1} tradeMark='product' linkImg={items[index + 1]} rating={4} price={100000} />
-              <Item id={1} tradeMark='product' linkImg={items[index + 2]} rating={4} price={100000} />
-              <Item id={1} tradeMark='product' linkImg={items[index + 3]} rating={4} price={100000} /> */}
-            </div>
-          </Carousel>
+        {
+          lst.length
+            ? <Carousel
+              index={index}
+              next={() => setIndex(index === items.length - 4 ? 0 : index + 1)}
+              prev={() => setIndex(index === 0 ? items.length - 4 : index - 1)}
+            >
+              <div className='flex flex-center'>
+                {
+                  lst.map((watch: IWatch) => (
+                    <Item key={watch.id} watch={watch} />
+                  ))
+                }
+              </div>
+            </Carousel>
+            : <div className='flex flex-center' style={{ height: '100px' }}>Không có sản phẩm tương tự</div>
+        }
       </div>
     </Container>
   );

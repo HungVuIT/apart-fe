@@ -14,6 +14,7 @@ import OrderManager from '../pages/Vendor/OrderManager';
 import ProfileStore from '../pages/Vendor/ProfileStore';
 import Payment from '../pages/User/Payment';
 import LoadingPage from '../components/LoadingPage';
+import StorePage from '../pages/Vendor/StorePage';
 
 const mainRouter = [
   {
@@ -27,6 +28,10 @@ const mainRouter = [
   {
     path: '/product/:productId',
     component: Product
+  },
+  {
+    path: '/shop/:shopId',
+    component: StorePage
   }
 ];
 const userRouter = [

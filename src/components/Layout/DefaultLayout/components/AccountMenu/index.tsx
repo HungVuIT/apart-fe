@@ -20,16 +20,25 @@ import classes from './menu.module.scss';
 import { removeAccessToken, removeRefreshToken } from '../../../../../untils/localStorage';
 import { useNavigate } from 'react-router-dom';
 import { MenuItemName } from '../../../../../interface/enum';
-import { useAppSelector } from '../../../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { ROLE } from '../../../../../interface/user/enum';
+import MuseumIcon from '@mui/icons-material/Museum';
+import { getProfileShop } from '../../../../../redux/vendor/vendorThunk';
 function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const { profile, cart } = useAppSelector((state) => state.user);
+  const { shop } = useAppSelector((state) => state.vendor);
+  const dispatch = useAppDispatch();
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  React.useEffect(() => {
+    if (!shop.id) {
+      dispatch(getProfileShop());
+    }
+  }, []);
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -45,6 +54,9 @@ function AccountMenu() {
         break;
       case MenuItemName.PROFILE:
         navigate('/user/profile');
+        break;
+      case MenuItemName.MANAGER:
+        shop.id && navigate(`/shop/${shop.id}`);
         break;
       case MenuItemName.FAVEORITE_LIST:
         navigate('/user/favorite-list');
@@ -120,30 +132,37 @@ function AccountMenu() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         {
+          profile.role === ROLE.VENDOR && shop.id && (
+            <MenuItem onClick={() => handleClickMenu(MenuItemName.MANAGER)} className={classes.menuItem}>
+              <MuseumIcon className={classes.icon}/> {MenuItemName.MANAGER}
+            </MenuItem>
+          )
+        }
+        {
           profile.role === ROLE.VENDOR
             ? <MenuItem onClick={() => handleClickMenu(MenuItemName.SHOP)} className={classes.menuItem}>
-              <StorefrontIcon className={classes.icon}/> Shop của tôi
+              <StorefrontIcon className={classes.icon}/>  {MenuItemName.SHOP}
             </MenuItem>
             : <MenuItem onClick={() => handleClickMenu(MenuItemName.CREATE)} className={classes.menuItem}>
-              <AddBusinessIcon className={classes.icon}/> Đăng ký trở thành người bán
+              <AddBusinessIcon className={classes.icon}/> {MenuItemName.CREATE}
             </MenuItem>
         }
         <MenuItem onClick={() => handleClickMenu(MenuItemName.PROFILE)} className={classes.menuItem}>
-          <AccountCircleIcon className={classes.icon}/> Hồ Sơ
+          <AccountCircleIcon className={classes.icon}/> {MenuItemName.PROFILE}
         </MenuItem>
         <MenuItem onClick={() => handleClickMenu(MenuItemName.FAVEORITE_LIST)} className={classes.menuItem}>
-          <FavoriteIcon className={classes.icon}/> Sản phẩm yêu thích
+          <FavoriteIcon className={classes.icon}/> {MenuItemName.FAVEORITE_LIST}
         </MenuItem>
         <MenuItem onClick={() => handleClickMenu(MenuItemName.ORDER)} className={classes.menuItem}>
-          <ViewListIcon className={classes.icon}/> Đơn mua
+          <ViewListIcon className={classes.icon}/> {MenuItemName.ORDER}
         </MenuItem>
         <MenuItem onClick={() => handleClickMenu(MenuItemName.NOTIFICATION)} className={classes.menuItem}>
           <CircleNotificationsIcon className={classes.icon}/>
-          Thông báo
+          {MenuItemName.NOTIFICATION}
         </MenuItem>
         <MenuItem onClick={() => handleClickMenu(MenuItemName.LOGOUT)} className={classes.menuItem} >
           <Logout className={classes.icon} />
-          Đăng xuất
+          {MenuItemName.LOGOUT}
         </MenuItem>
       </Menu>
     </React.Fragment>
