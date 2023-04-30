@@ -18,6 +18,7 @@ const steps = ['Thông tin', 'Vận chuyển', 'Thanh toán'];
 export default function Payment () {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
+  const [loading, setLoading] = React.useState(false);
   const [paymentDetails, setPaymentDetails] = React.useState(initPaymentDetail);
   const { payment } = useAppSelector(state => state.user);
   const navigate = useNavigate();
@@ -36,7 +37,6 @@ export default function Payment () {
   const handleReset = () => {
     setActiveStep(0);
   };
-  console.log(paymentDetails);
   return (
     <div className={classes.wrapper} >
       <Box sx={{ width: '100%' }} className={classes['box-input']}>
@@ -47,8 +47,6 @@ export default function Payment () {
             const labelProps: {
               optional?: React.ReactNode
             } = {};
-            console.log(stepProps);
-            console.log(label);
             return (
               <Step key={label} {...stepProps} >
                 <StepLabel {...labelProps}>{label}</StepLabel>

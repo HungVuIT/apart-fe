@@ -26,7 +26,6 @@ function PaymentBox({ handleBack, setPaymentDetails, paymentDetails }: IPropsPay
     return res;
   };
   const handleFinish = async () => {
-    console.log(value);
     if (value) {
       setPaymentDetails(prev => ({
         ...prev,

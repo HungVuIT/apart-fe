@@ -35,7 +35,7 @@ function AccountMenu() {
     setAnchorEl(event.currentTarget);
   };
   React.useEffect(() => {
-    if (!shop.id) {
+    if (profile.role === ROLE.VENDOR && !shop.id) {
       dispatch(getProfileShop());
     }
   }, []);
@@ -56,7 +56,7 @@ function AccountMenu() {
         navigate('/user/profile');
         break;
       case MenuItemName.MANAGER:
-        shop.id && navigate(`/shop/${shop.id}`);
+        navigate('/shop/manager/watch');
         break;
       case MenuItemName.FAVEORITE_LIST:
         navigate('/user/favorite-list');
@@ -68,7 +68,7 @@ function AccountMenu() {
         navigate('/shop/register');
         break;
       case MenuItemName.SHOP:
-        navigate('/shop/manager/watch');
+        shop.id && navigate(`/shop/${shop.id}`);
         break;
     }
   };
@@ -132,7 +132,7 @@ function AccountMenu() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         {
-          profile.role === ROLE.VENDOR && shop.id && (
+          (profile.role === ROLE.VENDOR && !!shop.id) && (
             <MenuItem onClick={() => handleClickMenu(MenuItemName.MANAGER)} className={classes.menuItem}>
               <MuseumIcon className={classes.icon}/> {MenuItemName.MANAGER}
             </MenuItem>

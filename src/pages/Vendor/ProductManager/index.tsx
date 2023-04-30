@@ -96,7 +96,7 @@ function ProductManager() {
       width: caculatorWidth(20),
       renderCell: (params) => (
         <div className={classes['watch-status']}>
-          <span className={params.row.isActive ? classes.active : classes.deactive}>{params.row.isActive ? `Đã bán ${params.row.saled} sản phẩm` : 'Tạm ngưng'}</span>
+          <span className={(params.row.isActive && (params.row.quantity > 0)) ? classes.active : classes.deactive}>{getStatusProduct(params.row)}</span>
         </div>
       )
     },
@@ -121,6 +121,10 @@ function ProductManager() {
       const mes: string = res.data?.message ? res.data.message : '';
       toast.error(`Xóa sản phẩm thất bại! ${mes}`);
     }
+  };
+  const getStatusProduct = (row: any) => {
+    const res = !row.isActive ? 'Dừng hoạt động' : (row.quantity > 0 ? 'Đang họat động' : 'Hết hàng');
+    return res;
   };
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);

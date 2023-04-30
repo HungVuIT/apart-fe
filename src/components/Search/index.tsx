@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './search.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { setSearch } from '../../redux/common/commonSlice';
@@ -11,17 +11,21 @@ interface ISearch {
 }
 function Search ({ isReload }: ISearch): JSX.Element {
   const { search } = useAppSelector(state => state.common);
+  console.log(search);
   const dispatch = useAppDispatch();
-  const [value, setValue] = useState(search);
+  const [value, setValue] = useState(search || '');
   const navigate = useNavigate();
-
+  const { keyword } = useParams();
+  useEffect(() => {
+    keyword && setValue(keyword);
+  }, []);
   const handleClick = () => {
     const key = value || 'all';
     dispatch(setSearch(value));
     dispatch(searchWatchByName(value));
     !isReload && navigate(`/search/${key}`);
-    console.log(value);
   };
+  console.log(value);
   return (
     <div className="search">
       <TextField

@@ -11,7 +11,7 @@ import { useAppSelector } from '../../../hooks/hooks';
 import MobileTags from './components/MobileTags';
 function ProductList (): JSX.Element {
   const { searchLst } = useAppSelector(state => state.common);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
   const [isOpen, setIsOpen] = useState(false);
   React.useEffect(() => {
     function handleResize() {
@@ -24,6 +24,7 @@ function ProductList (): JSX.Element {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   });
+
   const handleCloseDialog = () => {
     setIsOpen(false);
   };

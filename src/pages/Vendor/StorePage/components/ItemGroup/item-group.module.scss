@@ -1,0 +1,20 @@
+@import '../../../../../components/Global/foundation/mixin';
+
+.wrapper {
+  padding: 10px;
+  & .title {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  & .groupItem {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    @include responsive_max992 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @include responsive_min1600 {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+}

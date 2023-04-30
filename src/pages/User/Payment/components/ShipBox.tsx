@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
 import { toast, ToastContainer } from 'react-toastify';
-import { checkOut } from '../../../../api/service/user-service';
+import { getShipFee } from '../../../../api/service/user-service';
 import { ICheckOut } from '../../../../interface/payment/interface';
 import { useAppDispatch } from '../../../../hooks/hooks';
 import { setShipPrice } from '../../../../redux/user/userSlice';
@@ -22,7 +22,7 @@ function ShipBox({ handleBack, handleNext, setPaymentDetails, paymentDetails }: 
       deliveryOption: value,
       paymentMethod: 'online'
     };
-    const data = checkOut(params, dispatch);
+    const data = getShipFee(params, dispatch);
   }, []);
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const params: ICheckOut = {
@@ -31,9 +31,8 @@ function ShipBox({ handleBack, handleNext, setPaymentDetails, paymentDetails }: 
       paymentMethod: 'online'
     };
     setValue((event.target as HTMLInputElement).value);
-    const data = await checkOut(params);
-    console.log(data.data.shipFee);
-    dispatch(setShipPrice(data.data.shipFee ? data.data.shipFee : 0));
+    const data = await getShipFee(params);
+    dispatch(setShipPrice(data?.data ? data.data : 0));
   };
   const handleContinue = () => {
     if (value) {
@@ -46,7 +45,6 @@ function ShipBox({ handleBack, handleNext, setPaymentDetails, paymentDetails }: 
       toast('Vui lòng chọn một phương thức vận chuyển');
     }
   };
-  console.log(value);
   return (
     <div className={classes.wrapper}>
       <div className={classes['box-infor']}>

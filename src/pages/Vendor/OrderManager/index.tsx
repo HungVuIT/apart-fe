@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import './customMui.scss';
 import { useNavigate } from 'react-router-dom';
 import SearchProduct from '../ProductManager/components/SearchProduct';
+import { getOrderListShop } from '../../../api/service/shop-service';
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
@@ -36,6 +37,8 @@ function OrderManager() {
   const [value, setValue] = React.useState(0);
   const [searchValue, setSearchValue] = useState('');
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  const [orderList, setOrderList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const caculatorWidth = (value: number) => {
     return (windowDimensions.width * 84 / 100) * (value / 100);
@@ -48,6 +51,10 @@ function OrderManager() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+  useEffect(() => {
+    getOrderListShop(setOrderList, setLoading);
+  }, []);
+  console.log(orderList);
   const columns: GridColDef[] = [
     {
       field: 'id',

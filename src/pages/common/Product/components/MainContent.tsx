@@ -39,7 +39,7 @@ function MainContent({ id }: IProps) {
   const checkItemInFavorite = () => {
     const item = favoriteList.find((item: IFavorite) => item.watch.id === id);
     console.log(item);
-    item ? setIsActive(false) : setIsActive(true);
+    item ? setIsActive(true) : setIsActive(false);
     return item;
   };
   const handleAddToFavorite = async () => {

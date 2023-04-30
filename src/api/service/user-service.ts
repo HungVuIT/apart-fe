@@ -1,5 +1,4 @@
 import { IEditProfile } from './../../interface/user/interface';
-import { IUserInfo } from '../../interface/user/interface';
 import axiosClient from '../axiosClient';
 import { ICheckOut } from '../../interface/payment/interface';
 import { setShipPrice } from '../../redux/user/userSlice';
@@ -40,6 +39,19 @@ export const checkOut = async (params: ICheckOut, dispatch?: any) => {
     return err;
   }
 };
+export const getShipFee = async (params: ICheckOut, dispatch?: any) => {
+  try {
+    const url = 'order/ship-fee';
+    const response = await axiosClient.post(url, { ...params });
+    const data = response.data.data;
+    if (dispatch) {
+      dispatch(setShipPrice(data || 0));
+    }
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
 export const DetailsOrder = async (id: number) => {
   try {
     const url = `order/order-detail/${id}`;
@@ -50,14 +62,14 @@ export const DetailsOrder = async (id: number) => {
     return err;
   }
 };
-export const getOrderList = async (setOderList: any, setLoading: any) => {
+export const getOrderList = async (setOrderList: any, setLoading: any) => {
   try {
-    const url = 'order';
+    const url = 'order/user';
     setLoading(true);
     const response = await axiosClient.get(url);
     console.log(response.data);
     if (response) {
-      setOderList(response.data.data);
+      setOrderList(response.data.data);
       setLoading(false);
     }
     return response.data.data;

@@ -84,7 +84,6 @@ function InforBox({ handleNext, setPaymentDetails, paymentDetails }: IPropsPayme
   };
   const onSubmit: SubmitHandler<IInforPayment> = async () => {
     const params = getValues();
-    console.log(params);
     setPaymentDetails(prv => ({
       ...prv,
       infor: params
