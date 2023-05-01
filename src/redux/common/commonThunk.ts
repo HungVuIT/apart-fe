@@ -1,6 +1,7 @@
 import { IStateCommon } from './../../interface/common/interface';
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosClient from '../../api/axiosClient';
+import axios from 'axios';
 
 export const getListOfShop = createAsyncThunk(
   'common/get/ShopList',
@@ -16,16 +17,30 @@ export const getListOfShop = createAsyncThunk(
 );
 export const searchWatchByName = createAsyncThunk(
   'watch/search',
-  async (search: string) => {
+  async (params: any) => {
     try {
-      const url = search ? `/watchs/list?search=${search}` : '/watchs/list';
-      const response = await axiosClient.get(url);
+      const url = 'watchs/list';
+      const response = await axiosClient.get(url, {
+        params
+      });
       return response.data.data;
     } catch (error) {
       throw new Error(String(error));
     }
   }
 );
+// export const fillterWatch = createAsyncThunk(
+//   'watch/search',
+//   async (params: any) => {
+//     try {
+//       const url = 'watchs/list';
+//       const response = await axiosClient.get(url, { ...params });
+//       return response.data.data;
+//     } catch (error) {
+//       throw new Error(String(error));
+//     }
+//   }
+// );
 export const extraReducersCommon = (
   builder: ActionReducerMapBuilder<IStateCommon>
 ) => {

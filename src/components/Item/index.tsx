@@ -21,8 +21,11 @@ function Item ({ watch }: IProps): JSX.Element {
   return (
     <div className="item__wrapper" onClick = {handleClick}>
       <div className='item-img__wrapper'>
-        <img src={watch.image[0] || defaultLogo} alt={watch.name} className="item-img" />
+        <img src={watch.image[0] || defaultLogo} alt={watch.name} className={'item-img' + (watch.quantity <= 0 ? ' out-of-stock' : '')} />
         <div className='item-shop-name'>{getShop(watch.SID, shopList)?.name}</div>
+        {watch.quantity <= 0 && (<div className='item-shop-out-of-stock'>
+          <i>Hết hàng</i>
+        </div>)}
       </div>
       <div className="item-trademark">{watch.name}</div>
       <div className='rating__wrapper'>

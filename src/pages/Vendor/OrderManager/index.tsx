@@ -13,6 +13,10 @@ import './customMui.scss';
 import { useNavigate } from 'react-router-dom';
 import SearchProduct from '../ProductManager/components/SearchProduct';
 import { getOrderListShop } from '../../../api/service/shop-service';
+import { IOrderShop } from '../../../interface/vendor/interface';
+import { confirmOrder } from '../../../api/service/vendor-service';
+import { ToastContainer, toast } from 'react-toastify';
+
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
@@ -26,13 +30,29 @@ function getWindowDimensions() {
     height
   };
 }
-enum ProductStatus {
-  CONFIRM = 'Chờ xác nhận',
-  PICKUP = 'Chờ lấy hàng',
-  DELIVERY = 'Đang giao',
-  DELIVERED = 'Đã giao',
-  CANCEL = 'Đơn đã hủy'
+interface IFilterMap {
+  [key: string]: number
 }
+interface StatusMap {
+  [key: string]: string
+}
+const filterMap: IFilterMap = {
+  created: 1,
+  confirm: 2,
+  delivering: 3,
+  delivered: 4,
+  done: 6,
+  cancel: 5
+};
+const statusList = ['created', 'confirm', 'delivering', 'delivered'];
+const statusMap: StatusMap = {
+  created: 'Chờ xác nhận',
+  confirm: 'Chờ lấy hàng',
+  delivering: 'Đang giao',
+  delivered: 'Đã giao',
+  cancel: 'Đơn hủy',
+  done: 'Đơn hoàn thành'
+};
 function OrderManager() {
   const [value, setValue] = React.useState(0);
   const [searchValue, setSearchValue] = useState('');
@@ -54,7 +74,6 @@ function OrderManager() {
   useEffect(() => {
     getOrderListShop(setOrderList, setLoading);
   }, []);
-  console.log(orderList);
   const columns: GridColDef[] = [
     {
       field: 'id',
@@ -69,7 +88,7 @@ function OrderManager() {
       headerName: 'Tổng tiền',
       width: caculatorWidth(20),
       renderCell: (params) => (
-        <div className={classes['order-price']}>{formatMoney.format(params.row.price)}</div>
+        <div className={classes['order-price']}>{formatMoney.format(params.row.total)}</div>
       )
     },
     {
@@ -78,16 +97,16 @@ function OrderManager() {
       type: 'actions',
       width: caculatorWidth(20),
       renderCell: (params) => (
-        <div className={classes.orderStatus}>{params.row.status}</div>
+        <div className={classes.orderStatus}>{statusMap[params.row.status]}</div>
       )
     },
     {
       field: 'address',
-      headerName: 'Địa chỉ giao',
+      headerName: 'Thanh toán',
       width: caculatorWidth(25),
       renderCell: (params) => (
         <div className={classes.orderShip}>
-          {params.row.deliveryAddress}
+          {params.row.paymentMethod === 'offline' ? 'Thanh toán khi nhận hàng' : 'Đã thanh toán'}
         </div>
       )
     },
@@ -99,86 +118,45 @@ function OrderManager() {
       renderCell: (params) => (
         <div className={classes.groupBtn}>
           <Button className={classes.info} variant='text'>Thông tin chi tết</Button>
-          {(params.row.status === ProductStatus.CONFIRM || params.row.status === ProductStatus.PICKUP) && <div className={classes.btnFlex}>
-            <Button className={classes.btn + ' ' + classes.save} variant='text'>Xác nhận</Button>
-            <Button className={classes.btn} variant='text'>Hủy</Button>
+          {(filterMap[params.row.status] !== 4 && filterMap[params.row.status] !== 5) && <div className={classes.btnFlex}>
+            <Button className={classes.btn + ' ' + classes.save} variant='text' onClick={async () => await handleClickConfirm(params.row.id, params.row.status)}>Xác nhận</Button>
+            <Button className={classes.btn} variant='text' onClick={async () => await handleClickCanCel(params.row.id)}>Hủy</Button>
           </div>}
         </div>
       )
     }
   ];
-  const rows = [
-    {
-      id: '1',
-      price: 1212412,
-      quantity: 1,
-      status: ProductStatus.CONFIRM,
-      deliveryAddress: '132/14 KTX khu B, Đông Hòa, Dĩ An, Bình Dương'
-    },
-    {
-      id: '2',
-      price: 1212413,
-      quantity: 1,
-      status: ProductStatus.PICKUP,
-      deliveryAddress: '132/14 KTX khu B, Đông Hòa, Dĩ An, Bình Dương'
-    },
-    {
-      id: '3',
-      price: 1212415,
-      quantity: 1,
-      status: ProductStatus.DELIVERED,
-      deliveryAddress: '132/14 KTX khu B, Đông Hòa, Dĩ An, Bình Dương'
-    },
-    {
-      id: '4',
-      price: 1212410,
-      quantity: 1,
-      status: ProductStatus.DELIVERY,
-      deliveryAddress: '132/14 KTX khu B, Đông Hòa, Dĩ An, Bình Dương'
-    },
-    {
-      id: '5',
-      price: 1212410,
-      quantity: 1,
-      status: ProductStatus.CANCEL,
-      deliveryAddress: '132/14 KTX khu B, Đông Hòa, Dĩ An, Bình Dương'
-    }
-  ];
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  const handleChangeValue = (lst: any) => {
-    let result;
-    switch (value) {
-      case 0:
-        result = lst;
-        break;
-      case 1:
-        result = lst.filter((item: any) => item.status === ProductStatus.CONFIRM);
-        break;
-      case 2:
-        result = lst.filter((item: any) => item.status === ProductStatus.PICKUP);
-        break;
-      case 3:
-        result = lst.filter((item: any) => item.status === ProductStatus.DELIVERY);
-        break;
-      case 4:
-        result = lst.filter((item: any) => item.status === ProductStatus.DELIVERED);
-        break;
-      case 5:
-        result = lst.filter((item: any) => item.status === ProductStatus.CANCEL);
-        break;
-      default:
-        result = [];
-        break;
+  const handleClickConfirm = async (_id: number, _status: string) => {
+    const res = await confirmOrder(_id, statusList[filterMap[_status]]);
+    if (res?.success) {
+      toast.success('Xác nhận thành công');
+      getOrderListShop(setOrderList, setLoading);
+    } else {
+      toast.error('Xác nhận không thành công');
     }
-    return result;
   };
+  const handleClickCanCel = async (_id: number) => {
+    const res = await confirmOrder(_id, 'cancel');
+    if (res?.success) {
+      toast.success('Hủy đơn thành công');
+      getOrderListShop(setOrderList, setLoading);
+    } else {
+      toast.error('Hủy đơn không thành công');
+    }
+  };
+  const handleChangeValue = (lst: any) => {
+    return value ? lst.filter((item: any) => value === filterMap[item.status]) : lst;
+  };
+  console.log(orderList);
   const productRender = useMemo(() => {
-    const searchRender = rows?.length > 0 ? [...rows].filter((item: any) => item.id ? item.id.toLowerCase().includes(searchValue.toLowerCase()) : '') : [];
+    const searchRender = orderList?.length > 0 ? orderList.filter((item: IOrderShop) => item.id ? item.id.toString().toLowerCase().includes(searchValue.toLowerCase()) : '') : [];
+    console.log(value);
     const valueRender = handleChangeValue(searchRender);
     return valueRender;
-  }, [searchValue, value]);
+  }, [searchValue, value, orderList]);
   return (
     <div className={classes.wrapper + ' pm-mui'}>
       <div className={classes.title}>Quản lý đơn hàng</div>
@@ -210,6 +188,7 @@ function OrderManager() {
             }
           </Box>
         </Box>
+      <ToastContainer autoClose={1000} position='bottom-right' />
     </div>
   );
 }

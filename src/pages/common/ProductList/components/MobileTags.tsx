@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './mobile-tags.module.scss';
 import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
@@ -8,96 +8,126 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
+import { Category } from '../../../../interface/common/interface';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
+import { searchWatchByName } from '../../../../redux/common/commonThunk';
 interface IFilter {
   brand: string[]
   gender: string
   price: string
 }
-function MobileTags() {
-  const brands = ['casio', 'rolex', 'seiko'];
-  const genders = ['Nam', 'Nữ'];
-  const prices = ['< 500.000 VND', '500.000-2.000.000 VND', '2.000.000-10.000.000 VND', '> 10.000.000 VND'];
-  const [state, setState] = React.useState<IFilter>({
-    brand: [],
-    gender: '',
-    price: ''
-  });
-
-  const handleChange = (type: string, value: string) => {
-    if (type === 'brand') {
-      setState(prv => ({
-        ...prv,
-        brand: prv.brand.includes(value) ? prv.brand.filter(v => v !== value) : [...prv.brand, value]
-      }));
-    } else if (type === 'gender') {
-      setState(prv => ({
-        ...prv,
-        gender: prv.gender !== value ? value : ''
-      }));
-    } else if (type === 'price') {
-      setState(prv => ({
-        ...prv,
-        price: prv.price !== value ? value : ''
-      }));
-    }
+interface IProps {
+  categories: Category[]
+  brands: any[]
+  categoryValue: any
+  setCategoryValue: any
+  brandValue: any
+  setBrandValue: any
+  priceValue: any
+  setPriceValue: any
+  handleCloseDialog: any
+}
+interface IPriceMap {
+  [key: string]: string
+}
+const priceMap: IPriceMap = {
+  '0:500000': '< 500.000 VND',
+  '500000:2000000': '500.000-2.000.000 VND',
+  '2000000:10000000': '2.000.000-10.000.000 VND',
+  '10000000:10000000000000': '> 10.000.000 VND'
+};
+function MobileTags({
+  categories,
+  brands,
+  categoryValue,
+  setCategoryValue,
+  brandValue,
+  setBrandValue,
+  priceValue,
+  setPriceValue,
+  handleCloseDialog
+}: IProps) {
+  const { search } = useAppSelector(state => state.common);
+  const dispatch = useAppDispatch();
+  const handleClick = () => {
+    dispatch(searchWatchByName({
+      search
+      // brand: brandValue,
+      // category: categoryValue,
+      // price: priceValue
+    }));
   };
-
-  const checkedBrand = (_name: string) => {
-    return state.brand.some(v => v === _name);
-  };
-  const checkedGender = (_name: string) => {
-    return state.gender === _name;
-  };
-  const checkedPrice = (_name: string) => {
-    return state.price === _name;
+  const handleClickCanCel = () => {
+    setBrandValue('');
+    setPriceValue('');
+    setCategoryValue('');
   };
   return (
     <div className={classes.wrapper}>
-      <h1 className={classes.title}>Thương Hiệu</h1>
-      <hr className={classes.line}/>
-      <FormControl sx={{ m: 3 }} component="fieldset" variant="standard" className={classes['form-control']}>
-        <FormGroup>
-          {brands.map((name, index) => (
-            <FormControlLabel className={classes.label} key={index}
-              control={
-                <Checkbox className={classes.checkbox} checked={checkedBrand(name)} onChange={(e) => handleChange('brand', e.target.name)} name={name} sx={{ fontSize: 24 }} />
-              }
-              label={name}
-           />
-          ))}
-        </FormGroup>
-      </FormControl>
-      <h1 className={classes.title}>Giới tính</h1>
+      {
+        categories.length > 0 && (
+          <>
+            <h1 className={classes.title}>Loại</h1>
+            <hr className={classes.line}/>
+            <FormControl sx={{ m: 3 }} component="fieldset" variant="standard" className={classes['form-control']}>
+              <FormGroup>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                name="radio-buttons-group"
+                className={classes.RadioGroup}
+                value={categoryValue}
+                onChange={(event) => setCategoryValue(event.target.value)}
+              >
+                {
+                  categories.map(value => <FormControlLabel key={value.id} value={value.name} control={<Radio />} label={value.name} />)
+                }
+              </RadioGroup>
+              </FormGroup>
+            </FormControl>
+          </>
+        )
+      }
+      {
+        brands.length > 0 && (
+          <>
+            <h1 className={classes.title}>Thương hiệu</h1>
+            <hr className={classes.line}/>
+            <FormControl sx={{ m: 3 }} component="fieldset" variant="standard" className={classes['form-control']}>
+              <FormGroup>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                name="radio-buttons-group"
+                className={classes.RadioGroup}
+                value={brandValue}
+                onChange={(event) => setBrandValue(event.target.value)}
+              >
+                {
+                  brands.map(value => <FormControlLabel key={value.id} value={value.name} control={<Radio />} label={value.name} />)
+                }
+              </RadioGroup>
+              </FormGroup>
+            </FormControl>
+          </>
+        )
+      }
+      <h1 className={classes.title}>Mức giá</h1>
       <hr className={classes.line}/>
       <FormControl sx={{ m: 3 }} component="fieldset" variant="standard" className={classes['form-control']}>
         <FormGroup>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="female"
           name="radio-buttons-group"
           className={classes.RadioGroup}
+          value={priceValue}
+          onChange={(event) => setPriceValue(event.target.value)}
         >
-          <FormControlLabel value="female" control={<Radio />} label="Nữ" />
-          <FormControlLabel value="male" control={<Radio />} label="Nam" />
+           {Object.entries(priceMap).map((value, index) => <FormControlLabel key={index} value={value[0]} control={<Radio />} label={value[1]} />)}
         </RadioGroup>
         </FormGroup>
       </FormControl>
-      <h1 className={classes.title}>Mức giá</h1>
-      <hr className={classes.line}/>
-      <FormControl sx={{ m: 3 }} component="fieldset" variant="standard" className={classes['form-control']}>
-        <FormGroup>
-          {prices.map((name, index) => (
-            <FormControlLabel className={classes.label} key={index}
-              control={
-                <Checkbox className={classes.checkbox} checked={checkedPrice(name)} onChange={(e) => handleChange('price', e.target.name)} name={name} sx={{ fontSize: 24 }} />
-              }
-              label={name}
-           />
-          ))}
-        </FormGroup>
-      </FormControl>
       <div className={classes.btn}>
-      <Button variant='outlined' className={classes.btnFilter}>Lọc</Button>
+        <Button variant='outlined' className={classes.btnFilter} onClick={handleClick}>Lọc</Button>
+        <Button variant='outlined' className={classes.btnFilter + ' ' + classes.clear} onClick={handleClickCanCel}>Hủy lựa chọn</Button>
       </div>
     </div>
   );

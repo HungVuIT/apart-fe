@@ -14,9 +14,7 @@ const axiosClient = axios.create({
     'Access-Control-Allow-Headers': 'Content-Type, Authorization'
   },
   withCredentials: true,
-  paramsSerializer: {
-    encode: (params) => queryString.stringify(params)
-  }
+  paramsSerializer: (params) => queryString.stringify(params)
 });
 axiosClient.interceptors.request.use(async (config) => {
 // Handle token here ...

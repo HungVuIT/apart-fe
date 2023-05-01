@@ -18,7 +18,7 @@ export const getListProductOfShop = createAsyncThunk(
   'shop/listwatch/get',
   async (id: number) => {
     try {
-      const url = `watchs/list?shopId=${id}`;
+      const url = `watchs/list?SID=${id}`;
       const response = await axiosClient.get(url);
       return response.data.data;
     } catch (error) {

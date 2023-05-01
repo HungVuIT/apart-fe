@@ -14,7 +14,6 @@ function SameProduct({ id }: any): JSX.Element {
   useEffect(() => {
     id && getRecommendProduct(id, setLst);
   }, [id]);
-  console.log(lst);
   return (
     <Container>
       <div className='Same-product__wrapper'>

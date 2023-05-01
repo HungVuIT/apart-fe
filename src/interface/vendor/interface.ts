@@ -10,3 +10,15 @@ export interface IStateVendor {
   lstProduct: any[]
   loading: ILoading
 }
+export interface IOrderShop {
+  id: number
+  SID: number
+  UID: number
+  createdAt: string
+  updatedAt: string
+  status: string
+  total: number
+  paymentMethod: string
+  Note: any
+  isActive: boolean
+}

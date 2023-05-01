@@ -95,3 +95,19 @@
     font-size: 6px;
   }
 }
+.item-shop-out-of-stock {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  font-size: 20px;
+  z-index: 99;
+}
+.out-of-stock {
+  opacity: 0.4;
+}

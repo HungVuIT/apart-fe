@@ -25,6 +25,14 @@ export interface IShop {
   UID: number
   isActive: boolean
 }
+export interface Category {
+  createdAt: string
+  description: string
+  id: number
+  image: any
+  name: string
+  updatedAt: string
+}
 export const initShop: IShop = {
   id: 0,
   createdAt: '',

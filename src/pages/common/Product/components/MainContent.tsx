@@ -75,7 +75,7 @@ function MainContent({ id }: IProps) {
   };
   console.log(isActive);
   return (
-    <Container>
+    <Container className='main-box'>
       <div className='product-box'>
         <div className='product-img__list'>
           <Carousel
@@ -118,10 +118,13 @@ function MainContent({ id }: IProps) {
             <button className={'icon-tym' + (isActive ? ' red' : '')} onClick={handleAddToFavorite}>
               <FontAwesomeIcon icon={faHeart} />
             </button>
-            <button className='icon-cart' onClick={handleAddToCart}>
+            {watch.quantity > 0 && (<button className='icon-cart' onClick={handleAddToCart}>
               <FontAwesomeIcon icon={faCartPlus} />
-            </button>
+            </button>)}
           </div>
+          {watch.quantity <= 0 && (
+            <div className='noti-out-of-stock'><i>Hết hàng</i></div>
+          )}
         </div>
       <ToastContainer autoClose={1000} position='bottom-right'/>
       </div>

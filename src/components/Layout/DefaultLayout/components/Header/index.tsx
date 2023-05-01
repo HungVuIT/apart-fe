@@ -18,9 +18,11 @@ import Dialog from '@mui/material/Dialog';
 import './header.scss';
 import LoginModal from '../../../../../pages/common/auth/LoginModal';
 import { getCart, getFavoriteList, getProfile } from '../../../../../redux/user/userThunk';
-import { useAppDispatch } from '../../../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import AccountMenu from '../AccountMenu';
 import { getListOfShop } from '../../../../../redux/common/commonThunk';
+import { ROLE } from '../../../../../interface/user/enum';
+import { getProfileShop } from '../../../../../redux/vendor/vendorThunk';
 const items = ['Đồng hồ', 'Best selling', 'Nam', 'Nữ', 'Smartwatch', 'Cặp đôi', 'Tin tức'];
 
 function Header() {
@@ -30,6 +32,7 @@ function Header() {
   const token = getAccessToken();
   const navigate = useNavigate();
   const { setNowUrl } = React.useContext(MyGlobalContext);
+  const { profile } = useAppSelector(state => state.user);
   const dispatch = useAppDispatch();
   React.useEffect(() => {
     if (getAccessToken()) {
@@ -41,6 +44,12 @@ function Header() {
   React.useEffect(() => {
     dispatch(getListOfShop());
   }, []);
+  React.useEffect(() => {
+    console.log('get');
+    if (profile.role === ROLE.VENDOR) {
+      dispatch(getProfileShop());
+    }
+  }, [profile.role]);
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };

@@ -11,21 +11,29 @@ interface ISearch {
 }
 function Search ({ isReload }: ISearch): JSX.Element {
   const { search } = useAppSelector(state => state.common);
-  console.log(search);
   const dispatch = useAppDispatch();
-  const [value, setValue] = useState(search || '');
+  const [value, setValue] = useState((search !== 'all' && !!search) ? search : '');
   const navigate = useNavigate();
   const { keyword } = useParams();
   useEffect(() => {
-    keyword && setValue(keyword);
+    setValue(keyword || '');
+    dispatch(setSearch(keyword || ''));
+    keyword !== 'all'
+      ? dispatch(searchWatchByName({
+        search: keyword
+      }))
+      : dispatch(searchWatchByName({ search: '' }));
   }, []);
   const handleClick = () => {
     const key = value || 'all';
-    dispatch(setSearch(value));
-    dispatch(searchWatchByName(value));
+    value !== 'all' && dispatch(setSearch(value));
+    value !== 'all'
+      ? dispatch(searchWatchByName({
+        search: value
+      }))
+      : dispatch(searchWatchByName({ search: '' }));
     !isReload && navigate(`/search/${key}`);
   };
-  console.log(value);
   return (
     <div className="search">
       <TextField
@@ -33,7 +41,7 @@ function Search ({ isReload }: ISearch): JSX.Element {
           id="outlined-basic"
           label="Tìm sản phẩm"
           variant="outlined"
-          value={value}
+          value={value !== 'all' ? value : ''}
           onChange={(e) => setValue(e.target.value)}
         />
       <Button className='search-btn' variant="contained" onClick={handleClick}>Tìm kiếm</Button>

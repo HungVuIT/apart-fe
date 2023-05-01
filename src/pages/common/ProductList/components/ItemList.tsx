@@ -7,7 +7,6 @@ interface IProps {
   lst: IWatch[]
 }
 function ItemList({ lst }: IProps) {
-  console.log(lst);
   const arr = Array.from({ length: 10 }, (_, i) => i + 1);
   return (
     <div className={classes.grid}>

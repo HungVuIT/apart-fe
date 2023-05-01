@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '../../../components/Container';
 import Search from '../../../components/Search';
 import banner from '../../../assets/img/productList-banner.png';
@@ -7,12 +7,31 @@ import ItemList from './components/ItemList';
 import Dialog from '@mui/material/Dialog';
 import Tags from './components/Tags';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import { useAppSelector } from '../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import MobileTags from './components/MobileTags';
+import { getBrandList, getCategoryList } from '../../../api/service/product-list-service';
+import { searchWatchByName } from '../../../redux/common/commonThunk';
+import { Category } from '../../../interface/common/interface';
 function ProductList (): JSX.Element {
-  const { searchLst } = useAppSelector(state => state.common);
+  const { searchLst, search } = useAppSelector(state => state.common);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
   const [isOpen, setIsOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [brands, setBrands] = useState([]);
+  const [categoryValue, setCategoryValue] = useState('');
+  const [brandValue, setBrandValue] = useState('');
+  const [priceValue, setPriceValue] = useState('');
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    getCategoryList(setCategories);
+    getBrandList(setBrands);
+  }, []);
+  console.log(search);
+  useEffect(() => {
+    dispatch(searchWatchByName({
+      search: search !== 'all' ? search : ''
+    }));
+  }, []);
   React.useEffect(() => {
     function handleResize() {
       if (window.innerWidth < 992) {
@@ -24,6 +43,7 @@ function ProductList (): JSX.Element {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   });
+  console.log(categoryValue, brandValue, priceValue);
 
   const handleCloseDialog = () => {
     setIsOpen(false);
@@ -50,7 +70,17 @@ function ProductList (): JSX.Element {
         <ItemList lst={searchLst}/>
       </div>
       <Dialog open={isOpen} onClose={handleCloseDialog} className='dialog-product-lst'>
-        <MobileTags />
+        <MobileTags
+          categories={categories}
+          brands={brands}
+          categoryValue={categoryValue}
+          setCategoryValue={setCategoryValue}
+          brandValue={brandValue}
+          setBrandValue={setBrandValue}
+          priceValue={priceValue}
+          setPriceValue={setPriceValue}
+          handleCloseDialog={handleCloseDialog}
+        />
       </Dialog>
     </div>
   );

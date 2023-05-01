@@ -30,15 +30,9 @@ function AccountMenu() {
   const navigate = useNavigate();
   const { profile, cart } = useAppSelector((state) => state.user);
   const { shop } = useAppSelector((state) => state.vendor);
-  const dispatch = useAppDispatch();
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  React.useEffect(() => {
-    if (profile.role === ROLE.VENDOR && !shop.id) {
-      dispatch(getProfileShop());
-    }
-  }, []);
   const handleClose = () => {
     setAnchorEl(null);
   };
