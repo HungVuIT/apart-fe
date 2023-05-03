@@ -1,6 +1,6 @@
 @import '../Global/foundation/mixin';
 .item__wrapper {
-  width: 170px;
+  width: auto;
   height: 300px;
   overflow: hidden;
   margin: 10px;
@@ -21,11 +21,18 @@
       bottom: 0;
       text-align: center;
       background-color: #ffe3e3;
+      font-size: 16px;
       transition: all 1s ease-in-out;
+      @include responsive_max992 {
+        font-size: 14px;
+      }
+      @include responsive_max768 {
+        font-size: 12px;
+      }
+      @include responsive_max425 {
+        font-size: 10px;
+      }
     }
-  }
-  @include responsive_min1366 {
-    width: 200px;
   }
   @include responsive_max992 {
     height: 260px;

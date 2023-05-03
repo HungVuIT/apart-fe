@@ -1,6 +1,7 @@
 @import '../Global/foundation/mixin';
 @import '../Global/foundation/variable';
 .search {
+  display: flex;
   width: 100%;
 }
 .search .search-input {
@@ -26,7 +27,7 @@
   font-size: 16px;
   margin-left: 4%;
   border: 1px solid #000000;
-  transition: all 1s ease-in-out;
+  transition: all 0.5s ease-in-out;
   &:hover {
     background-color: var(--default-btn-color);
     color: var(--default-btn-text);
@@ -35,11 +36,11 @@
     font-size: 14px;
   }
   @include responsive_max768 {
-    font-size: 14px;
+    font-size: 12px;
   }
   @include responsive_max425 {
     width: 10%;
-    font-size: 12px;
+    font-size: 10px;
     margin-left: 2%;
   }
 }

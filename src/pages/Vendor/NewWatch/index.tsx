@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Container from '../../../components/Container';
 import classes from './new-watch.module.scss';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
@@ -15,8 +15,11 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { ToastContainer, toast } from 'react-toastify';
 import { addNewProduct } from '../../../api/service/product-service';
-
+import { getBrandList, getCategoryList } from '../../../api/service/product-list-service';
+import { Category, IBrand } from '../../../interface/common/interface';
+import ClearIcon from '@mui/icons-material/Clear';
 interface IDataNewWatch {
+  CID: any[]
   createdAt: string
   updatedAt: string
   name: string
@@ -29,7 +32,7 @@ interface IDataNewWatch {
   materialCord: string
   glassSurface: string
   glassSize: string
-  brand: string
+  BID: number
   madeBy: string
   other: string
   warranty: string
@@ -52,6 +55,9 @@ function NewWatch() {
   });
   const [lstImg, setLstImg] = useState<any[]>([null, null, null, null, null, null]);
   const [lstFile, setLstFile] = useState<any[]>([null, null, null, null, null, null]);
+  const [brands, setBrands] = useState<IBrand[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [dataCategories, setDataCategories] = useState<string[]>([]);
   const refList = {
     ref1: useRef<HTMLInputElement>(null),
     ref2: useRef<HTMLInputElement>(null),
@@ -61,8 +67,11 @@ function NewWatch() {
     ref6: useRef<HTMLInputElement>(null)
   };
   const navigate = useNavigate();
+  useEffect(() => {
+    getBrandList(setBrands);
+    getCategoryList(setCategories);
+  }, []);
   const handleImageUpload = (e: any, index: number) => {
-    console.log('asdasd');
     const selectedFile = e.target.files[0]; // Lấy file đầu tiên được chọn
     const imageUrl = URL.createObjectURL(selectedFile); // Tạo đường dẫn URL cho file ảnh
     const files = [...lstFile];
@@ -82,7 +91,19 @@ function NewWatch() {
     const selectedGender = event.target.value;
     setValue('gender', selectedGender);
   };
+  const handeChangeBrand = (event: SelectChangeEvent) => {
+    const selectedBrand = event.target.value;
+    setValue('BID', +selectedBrand);
+  };
+  const handeChangeCategory = (event: SelectChangeEvent) => {
+    const selectCategory = event.target.value;
+    const check = dataCategories.includes(selectCategory);
+    !check && selectCategory && setDataCategories(prev => [...prev, selectCategory]);
+    console.log(selectCategory, check);
+  };
+  console.log(dataCategories);
   const onSubmit: SubmitHandler<IDataNewWatch> = async (_data: IDataNewWatch) => {
+    console.log(_data);
     const newLstFile = lstFile.filter(file => !!file);
     const params = new FormData();
     Object.entries(_data).forEach(([key, value]) => {
@@ -91,6 +112,7 @@ function NewWatch() {
     newLstFile.forEach(file => {
       params.append('image', file);
     });
+    dataCategories.forEach(data => params.append('CID', data));
     const res = await addNewProduct(params);
     if (res.success) {
       toast.success('Thêm sản phẩm thành công');
@@ -98,6 +120,14 @@ function NewWatch() {
     } else {
       toast.error('Thêm sản phẩm không thành công');
     }
+  };
+  const getValue = (value: number) => {
+    const item = categories.find(item => item.id === value);
+    return item?.name;
+  };
+  const removeCategory = (_value: string) => {
+    const newData = dataCategories.filter(value => value !== _value);
+    setDataCategories(newData);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.wrapper + ' new-watch'}>
@@ -299,26 +329,62 @@ function NewWatch() {
       <Container className={classes.container}>
         <>
           <div className={classes.title}>Thông tin chi tiết</div>
+          <div className={classes['categories-box']}>
+            <div className={classes['box-left']}>
+            <div className={classes.itemGroup}>
+              <div className={classes['itemGroup-title']}>Danh mục:</div>
+              <div className={classes['itemGroup-content']}>
+                    <FormControl fullWidth className={classes.select}>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      onChange={handeChangeCategory}
+                    >
+                      {
+                        categories.length > 0 && categories.map((item) => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)
+                      }
+                        <MenuItem value={''}>Không</MenuItem>
+                    </Select>
+                  </FormControl>
+              </div>
+            </div>
+            </div>
+            <div className={classes['box-right']}>
+              {
+                dataCategories.map(value => <div key={value} className={classes['right-item']}>
+                  <div className={classes.value}>{getValue(+value)}</div>
+                  <ClearIcon className={classes.icon} onClick={() => removeCategory(value)}/>
+                </div>)
+              }
+            </div>
+          </div>
           <div className={classes.group + ' group'}>
             <div className={classes.groupLeft}>
               <div className={classes.itemGroup}>
                 <div className={classes['itemGroup-title']}>Thương hiệu</div>
                 <div className={classes['itemGroup-content']}>
-                  <Controller name='brand' control={control}
+                  <Controller name='BID' control={control}
                     render={({
-                      field: { onChange, onBlur, value, name, ref },
+                      field: { onBlur, value, name, ref },
                       fieldState: { invalid, isTouched, isDirty, error },
                       formState
                     }) => (
-                      <TextField
-                        variant='outlined'
-                        {...register('brand')}
+                      <FormControl fullWidth className={classes.select}>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        error={!!errors.BID}
+                        defaultValue=''
                         onBlur={onBlur}
-                        onChange={onChange}
-                        error={!!errors.brand}
-                        helperText={errors.brand?.message}
-                        className={classes.input}
-                      />
+                        onChange={handeChangeBrand}
+                      >
+                        {
+                          brands.length > 0 && brands.map((item) => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)
+                        }
+                          <MenuItem value={''}>Không</MenuItem>
+                      </Select>
+                      {errors.gender && <FormHelperText>{errors.gender?.message}</FormHelperText>}
+                    </FormControl>
                     )}
                   />
                 </div>

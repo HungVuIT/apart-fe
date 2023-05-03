@@ -31,7 +31,7 @@ function MainContent({ id }: IProps) {
   const { setIsOpenLogin, setIsLogin } = useContext(MyGlobalContext);
   useEffect(() => {
     checkItemInFavorite();
-  }, []);
+  }, [favoriteList]);
   const handleLogin = () => {
     setIsOpenLogin(true);
     setIsLogin(true);
@@ -44,7 +44,6 @@ function MainContent({ id }: IProps) {
   };
   const handleAddToFavorite = async () => {
     if (getAccessToken()) {
-      console.log(checkItemInFavorite());
       if (checkItemInFavorite()) {
         const item: any = checkItemInFavorite();
         const data = id ? await removeItemFavorite(item.id) : null;

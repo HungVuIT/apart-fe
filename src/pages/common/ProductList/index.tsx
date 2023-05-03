@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Container from '../../../components/Container';
 import Search from '../../../components/Search';
 import banner from '../../../assets/img/productList-banner.png';
-import './productList.scss';
+import classes from './productList.module.scss';
 import ItemList from './components/ItemList';
 import Dialog from '@mui/material/Dialog';
 import Tags from './components/Tags';
@@ -12,6 +12,16 @@ import MobileTags from './components/MobileTags';
 import { getBrandList, getCategoryList } from '../../../api/service/product-list-service';
 import { searchWatchByName } from '../../../redux/common/commonThunk';
 import { Category } from '../../../interface/common/interface';
+import ReorderIcon from '@mui/icons-material/Reorder';
+export interface IFilterValue {
+  search: string
+  BID: any
+  CID: any
+  price: any
+  province: any
+  district: any
+  ward: any
+}
 function ProductList (): JSX.Element {
   const { searchLst, search } = useAppSelector(state => state.common);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
@@ -21,6 +31,15 @@ function ProductList (): JSX.Element {
   const [categoryValue, setCategoryValue] = useState('');
   const [brandValue, setBrandValue] = useState('');
   const [priceValue, setPriceValue] = useState('');
+  const [filterValue, setFilterValue] = useState<IFilterValue>({
+    search,
+    BID: null,
+    CID: null,
+    price: null,
+    province: null,
+    district: null,
+    ward: null
+  });
   const dispatch = useAppDispatch();
   useEffect(() => {
     getCategoryList(setCategories);
@@ -34,7 +53,7 @@ function ProductList (): JSX.Element {
   }, []);
   React.useEffect(() => {
     function handleResize() {
-      if (window.innerWidth < 992) {
+      if (window.innerWidth < 678) {
         setIsMobile(true);
       } else {
         setIsMobile(false);
@@ -43,33 +62,36 @@ function ProductList (): JSX.Element {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   });
-  console.log(categoryValue, brandValue, priceValue);
 
   const handleCloseDialog = () => {
     setIsOpen(false);
   };
+  console.log(filterValue);
   return (
-    <div className='product-list__wrapper'>
-      <Container >
-        <div className="banner">
-          <img src={banner} alt="banner" className='img-banner'/>
-        </div>
-      </Container>
-      <Container >
-        <div className="search__wrapper">
-          <Search isReload={false}/>
-        </div>
-      </Container>
-      <div className='tags-and-lst flex'>
-        {
-          isMobile
-            ? <FilterAltIcon className='filter-icon' onClick={() => setIsOpen(true)}/>
-            : <Tags />
-        }
-        {/* <Tags /> */}
-        <ItemList lst={searchLst}/>
+    <div className={classes['product-list__wrapper']}>
+      {
+          isMobile && <ReorderIcon className={classes['filter-icon'] + ' ' + ((!isOpen) ? classes.iconActive : classes.iconUnactive)} onClick={() => setIsOpen(prev => !prev)}/>
+      }
+      <div className={classes.box__tag + ' ' + ((isOpen || !isMobile) ? classes.active : classes.unactive) }>
+        <Tags filterValue={filterValue} setFilterValue={setFilterValue} handleCloseDialog={handleCloseDialog} check={isOpen && isMobile}/>
       </div>
-      <Dialog open={isOpen} onClose={handleCloseDialog} className='dialog-product-lst'>
+      <div className={classes.box__right}>
+        <Container className={classes.banner__wrapper}>
+          <div className={classes.banner}>
+            <img src={banner} alt="banner" className={classes['img-banner']}/>
+          </div>
+        </Container>
+        <Container className={classes['search-box']}>
+          <div className={classes.search__wrapper}>
+            <Search isReload={false}/>
+          </div>
+        </Container>
+        <div className={classes['tags-and-lst']}>
+          {/* <Tags /> */}
+          <ItemList lst={searchLst}/>
+        </div>
+      </div>
+      {/* <Dialog open={isOpen} onClose={handleCloseDialog} className={classes['dialog-product-lst']}>
         <MobileTags
           categories={categories}
           brands={brands}
@@ -81,7 +103,7 @@ function ProductList (): JSX.Element {
           setPriceValue={setPriceValue}
           handleCloseDialog={handleCloseDialog}
         />
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 }

@@ -23,6 +23,8 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import Loading from '../../common/loading';
 import { delProductByShop } from '../../../api/service/product-service';
 import { ToastContainer, toast } from 'react-toastify';
+import { Dialog } from '@mui/material';
+import SaleOff from './components/SaleOff';
 
 function a11yProps(index: number) {
   return {
@@ -44,6 +46,8 @@ enum ProductStatus {
 }
 function ProductManager() {
   const [value, setValue] = React.useState(0);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [productId, setProductId] = React.useState(0);
   const [searchValue, setSearchValue] = useState('');
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const { lstProduct, loading, shop } = useAppSelector(state => state.vendor);
@@ -83,7 +87,7 @@ function ProductManager() {
       field: 'quantity',
       headerName: 'Số lượng',
       type: 'actions',
-      width: caculatorWidth(23),
+      width: caculatorWidth(20),
       renderCell: (params) => (
         <div className={classes['watch-quantity']}>
           <span className={classes.watchQuantity}>{params.row.quantity}</span>
@@ -103,10 +107,14 @@ function ProductManager() {
     {
       field: 'actions',
       type: 'actions',
-      width: caculatorWidth(5),
+      width: caculatorWidth(10),
       renderCell: (params) => (
         <div className={classes['watch-action']}>
           <Button>Sửa</Button>
+          <Button onClick={() => {
+            setIsOpen(true);
+            setProductId(params.row.id);
+          }}>Thêm khuyến mãi</Button>
           <Button className={classes.del} onClick={async () => await handleDelProduct(params.row.id)}>Xóa</Button>
         </div>
       )
@@ -121,6 +129,9 @@ function ProductManager() {
       const mes: string = res.data?.message ? res.data.message : '';
       toast.error(`Xóa sản phẩm thất bại! ${mes}`);
     }
+  };
+  const handleClose = () => {
+    setIsOpen(false);
   };
   const getStatusProduct = (row: any) => {
     const res = !row.isActive ? 'Dừng hoạt động' : (row.quantity > 0 ? 'Đang họat động' : 'Hết hàng');
@@ -192,6 +203,9 @@ function ProductManager() {
           </Box>
         </Box>
         <ToastContainer autoClose={1000} position='bottom-right' />
+        <Dialog open={isOpen} onClose={handleClose} className='dialog-sale-off'>
+          <SaleOff id={productId}/>
+        </Dialog>
     </div>
   );
 }

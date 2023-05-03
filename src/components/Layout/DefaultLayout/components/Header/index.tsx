@@ -45,7 +45,6 @@ function Header() {
     dispatch(getListOfShop());
   }, []);
   React.useEffect(() => {
-    console.log('get');
     if (profile.role === ROLE.VENDOR) {
       dispatch(getProfileShop());
     }

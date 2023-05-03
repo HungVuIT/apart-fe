@@ -25,6 +25,9 @@
   @include responsive_min1600 {
     grid-template-columns: repeat(5, 1fr);
   }
+  @include responsive_max600 {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
 }
 .product-all {

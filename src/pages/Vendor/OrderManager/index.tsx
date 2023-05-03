@@ -171,7 +171,7 @@ function OrderManager() {
               <Tab label="Chờ lấy hàng" {...a11yProps(2)} />
               <Tab label="Đang giao" {...a11yProps(3)} />
               <Tab label="Đã giao" {...a11yProps(4)} />
-              <Tab label="Hủy đơn" {...a11yProps(5)} />
+              <Tab label="Đơn hủy" {...a11yProps(5)} />
             </Tabs>
           </Box>
           <Box sx={{ height: 400, minHeight: 400, width: '100%' }} >

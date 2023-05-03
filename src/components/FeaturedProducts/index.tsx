@@ -15,7 +15,9 @@ function FeaturedProducts ({ title, watchList }: IProps): JSX.Element {
   const [width, setWidth] = useState(window.innerWidth);
   useEffect(() => {
     function handleResize() {
-      if (window.innerWidth < 992) {
+      if (window.innerWidth < 600) {
+        setEle(2);
+      } else if (window.innerWidth < 992) {
         setEle(3);
       } else if (window.innerWidth < 1600) {
         setEle(4);

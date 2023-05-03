@@ -4,21 +4,25 @@ import avt from '../../../../assets/img/avtshop.png';
 import { useAppSelector } from '../../../../hooks/hooks';
 import moment from 'moment';
 import 'moment/locale/vi';
+import { useNavigate } from 'react-router-dom';
 interface IProps {
   id: number | undefined
 }
 function SubContent({ id }: IProps) {
   const { watch, shop } = useAppSelector(state => state.productNow);
-
+  const navigate = useNavigate();
   const caculatorDay = (_day: string) => {
     const date = new Date(_day);
     const formattedDate = moment(date, 'YYYYMMDD').locale('vi').fromNow();
     return formattedDate;
   };
+  const viewShop = () => {
+    navigate(`/shop/${shop.id}`);
+  };
   return (
     <Container >
       <div className="sub-content__wrapper">
-        <img src={shop.logo || avt} alt="" className="sub-img" />
+        <img src={shop.logo || avt} alt="" className="sub-img" onClick={viewShop}/>
         <hr className="line" />
         <div className="sub-info">
           <div className="info" style={{ width: '25%' }}>

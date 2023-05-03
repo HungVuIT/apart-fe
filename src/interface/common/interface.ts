@@ -33,6 +33,14 @@ export interface Category {
   name: string
   updatedAt: string
 }
+export interface IBrand {
+  createdAt: string
+  description: string
+  id: number
+  image: any
+  name: string
+  updatedAt: string
+}
 export const initShop: IShop = {
   id: 0,
   createdAt: '',

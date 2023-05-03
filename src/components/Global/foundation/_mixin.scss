@@ -5,6 +5,8 @@ $res_768 : "only screen and (min-width: 768px) and (max-width: 991px)";
 $res_992 : "only screen and (min-width: 992px) and (max-width: 1023px)";
 $res_1024 : "only screen and (min-width: 1024px) and (max-width: 1199px)";
 $res_M425 : "only screen and (max-width: 425px)";
+$res_M500 : "only screen and (max-width: 500px)";
+$res_M600 : "only screen and (max-width: 600px)";
 $res_M768 : "only screen and (max-width: 768px)";
 $res_M992 : "only screen and (max-width: 992px)";
 $res_M1024 : "only screen and (max-width: 1024px)";
@@ -94,6 +96,16 @@ $res_1200 : "only screen and (min-width: 1200px) and (max-width: 1999px)";
       @content;
   }
 }
+@mixin responsive_max600() {
+    @media #{$res_M600} {
+        @content;
+    }
+  }
+  @mixin responsive_max500() {
+    @media #{$res_M500} {
+        @content;
+    }
+  }
 @mixin responsive_max768() {
   @media #{$res_M768} {
       @content;

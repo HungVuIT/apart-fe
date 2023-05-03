@@ -11,11 +11,6 @@ import Button from '@mui/material/Button';
 import { Category } from '../../../../interface/common/interface';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { searchWatchByName } from '../../../../redux/common/commonThunk';
-interface IFilter {
-  brand: string[]
-  gender: string
-  price: string
-}
 interface IProps {
   categories: Category[]
   brands: any[]
@@ -34,7 +29,7 @@ const priceMap: IPriceMap = {
   '0:500000': '< 500.000 VND',
   '500000:2000000': '500.000-2.000.000 VND',
   '2000000:10000000': '2.000.000-10.000.000 VND',
-  '10000000:10000000000000': '> 10.000.000 VND'
+  '10000000:99999999': '> 10.000.000 VND'
 };
 function MobileTags({
   categories,
@@ -51,11 +46,12 @@ function MobileTags({
   const dispatch = useAppDispatch();
   const handleClick = () => {
     dispatch(searchWatchByName({
-      search
+      search: search !== 'all' ? search : '',
       // brand: brandValue,
       // category: categoryValue,
-      // price: priceValue
+      price: priceValue
     }));
+    handleCloseDialog();
   };
   const handleClickCanCel = () => {
     setBrandValue('');
@@ -67,7 +63,7 @@ function MobileTags({
       {
         categories.length > 0 && (
           <>
-            <h1 className={classes.title}>Loại</h1>
+            <h1 className={classes.title}>Danh mục</h1>
             <hr className={classes.line}/>
             <FormControl sx={{ m: 3 }} component="fieldset" variant="standard" className={classes['form-control']}>
               <FormGroup>
@@ -127,7 +123,7 @@ function MobileTags({
       </FormControl>
       <div className={classes.btn}>
         <Button variant='outlined' className={classes.btnFilter} onClick={handleClick}>Lọc</Button>
-        <Button variant='outlined' className={classes.btnFilter + ' ' + classes.clear} onClick={handleClickCanCel}>Hủy lựa chọn</Button>
+        <Button variant='outlined' className={classes.btnFilter + ' ' + classes.clear} onClick={handleClickCanCel}>Xóa bộ lọc</Button>
       </div>
     </div>
   );

@@ -16,7 +16,6 @@ export const createShop = async (params: IRegisterShop) => {
 export const editShop = async (params: IProfileStore) => {
   try {
     const url = 'shops/my-shop';
-    console.log(params);
     const response = await axiosClient.patch(url, params, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -29,12 +28,10 @@ export const editShop = async (params: IProfileStore) => {
 };
 export const getListWatchShop = async (params: any, setList: any) => {
   try {
-    const orderBy = params.title === ETitle.TOP ? 'saled.desc' : 'createdAt.desc';
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    const url = `watchs/list?orderBy=${orderBy}&shopId=${params.SID}`;
-    console.log(params);
-    const response = await axiosClient.get(url);
-    console.log(response.data);
+    const url = 'watchs/list';
+    const response = await axiosClient.get(url, {
+      params
+    });
     if (response?.data?.data) {
       setList(response.data.data);
     }
@@ -48,7 +45,6 @@ export const getOrderListShop = async (setOrderList: any, setLoading: any) => {
     const url = 'order/shop';
     setLoading(true);
     const response = await axiosClient.get(url);
-    console.log(response.data);
     if (response) {
       setOrderList(response.data.data);
       setLoading(false);
@@ -56,6 +52,28 @@ export const getOrderListShop = async (setOrderList: any, setLoading: any) => {
     return response.data.data;
   } catch (err) {
     setLoading(false);
+    return err;
+  }
+};
+export const getProfileShopById = async (id: string, setProfile: any) => {
+  try {
+    const url = `shops/id/${id}`;
+    const response = await axiosClient.get(url);
+    if (response?.data?.data) {
+      setProfile(response.data.data);
+    }
+    return response.data.data;
+  } catch (err) {
+    return err;
+  }
+};
+export const setSaleOfForProduct = async (body: any) => {
+  try {
+    const url = 'saleOff';
+    const response = await axiosClient.post(url, { ...body });
+    console.log(response);
+    return response.data.data;
+  } catch (err) {
     return err;
   }
 };
