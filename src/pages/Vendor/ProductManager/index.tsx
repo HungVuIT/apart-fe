@@ -47,7 +47,9 @@ enum ProductStatus {
 function ProductManager() {
   const [value, setValue] = React.useState(0);
   const [isOpen, setIsOpen] = React.useState(false);
+  const [checkSaleOff, setCheckSaleOff] = React.useState(false);
   const [productId, setProductId] = React.useState(0);
+  const [saleOffId, setSaleOffId] = React.useState(null);
   const [searchValue, setSearchValue] = useState('');
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const { lstProduct, loading, shop } = useAppSelector(state => state.vendor);
@@ -80,7 +82,10 @@ function ProductManager() {
       headerName: 'Đơn giá',
       width: caculatorWidth(20),
       renderCell: (params) => (
-        <div className={classes['watch-price']}>{formatMoney.format(params.row.price)}</div>
+        <div className={classes['price-box']}>
+          <div className={classes['watch-price'] + ' ' + (params.row.sale_off ? classes['old-price'] : '')}>{formatMoney.format(params.row.price)}</div>
+          {params.row.sale_off && <div className={classes['watch-price']}>{formatMoney.format(params.row.sale_off.amount)}</div>}
+        </div>
       )
     },
     {
@@ -114,6 +119,8 @@ function ProductManager() {
           <Button onClick={() => {
             setIsOpen(true);
             setProductId(params.row.id);
+            params.row.sale_off ? setCheckSaleOff(true) : setCheckSaleOff(false);
+            params.row.sale_off ? setSaleOffId(params.row.sale_off.id) : setSaleOffId(null);
           }}>Thêm khuyến mãi</Button>
           <Button className={classes.del} onClick={async () => await handleDelProduct(params.row.id)}>Xóa</Button>
         </div>
@@ -204,7 +211,7 @@ function ProductManager() {
         </Box>
         <ToastContainer autoClose={1000} position='bottom-right' />
         <Dialog open={isOpen} onClose={handleClose} className='dialog-sale-off'>
-          <SaleOff id={productId}/>
+          <SaleOff id={productId} handleClose={handleClose} checkSaleOff={checkSaleOff} saleOffId={saleOffId}/>
         </Dialog>
     </div>
   );

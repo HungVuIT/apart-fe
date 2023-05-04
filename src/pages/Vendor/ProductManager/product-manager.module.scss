@@ -41,10 +41,18 @@
         font-size: 14px;
       }
     }
-    & .watch-price {
+    & .price-box {
       width: 100%;
       text-align: center;
-      font-size: 12px;
+        & .watch-price {
+          display: block;
+          width: 100%;
+          text-align: center;
+          font-size: 12px;
+        }
+        & .old-price {
+          text-decoration: line-through;
+        }
     }
     & .watch-quantity {
       width: 100%;
