@@ -18,6 +18,7 @@ import { addFavoriteList, addItemToCart, removeItemFavorite } from '../../../../
 import { IFavorite } from '../../../../interface/user/interface';
 import { toast, ToastContainer } from 'react-toastify';
 import { removeFavoriteItem } from '../../../../redux/user/userSlice';
+import dayjs from 'dayjs';
 interface IProps {
   id: number | undefined
 }
@@ -73,6 +74,12 @@ function MainContent({ id }: IProps) {
     }
   };
   console.log(isActive);
+  const getSaleOffPercent = () => {
+    return ((watch.sale_off.amount / watch.price) * 100).toFixed(2);
+  };
+  const getEndDateSaleOff = () => {
+    return dayjs(watch.sale_off.end).format('DD/MM/YYYY');
+  };
   return (
     <Container className='main-box'>
       <div className='product-box'>
@@ -104,11 +111,18 @@ function MainContent({ id }: IProps) {
             <span className='numOfVoter'>{watch.saled || 0} đã bán</span>
           </div>
           <div className={'info-price' + (watch.sale_off ? ' sale-off' : '')}>
-            <div className='price'>{formatMoney.format(watch.price)}</div>
-            {!!watch.sale_off && <div className='sale'>{formatMoney.format(watch.price)}</div>}
-            {!!watch.sale_off && <div className='discount'>
-              <span>{watch.sale_off}80 giảm</span>
-            </div>}
+            <div className='price-box'>
+              <div className='price'>{formatMoney.format(watch.price)}</div>
+              {!!watch.sale_off && <div className='sale'>{formatMoney.format(watch.sale_off.amount)}</div>}
+              {!!watch.sale_off && <div className='discount'>
+                <span>{getSaleOffPercent() + ' %'}</span>
+              </div>}
+            </div>
+            {
+              watch.sale_off && <div className='sale-off__date'>
+              {'Kết thúc vào ngày ' + getEndDateSaleOff()}
+            </div>
+            }
           </div>
           <div className='info-describe'>
             <span>{watch.content}</span>

@@ -8,6 +8,8 @@ import dayjs from 'dayjs';
 import Button from '@mui/material/Button';
 import { setSaleOfForProduct, updateSaleOfForProduct } from '../../../../api/service/shop-service';
 import { toast, ToastContainer } from 'react-toastify';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
+import { getListProductOfShop } from '../../../../redux/vendor/vendorThunk';
 
 interface IProps {
   id: any
@@ -19,8 +21,8 @@ function SaleOff({ id, handleClose, checkSaleOff, saleOffId }: IProps) {
   const [price, setPrice] = useState<any>('');
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
-  console.log(dayjs(startDate).format('YYYY-MM-DD'));
-  console.log(dayjs(endDate).format('YYYY-MM-DD'));
+  const { shop } = useAppSelector(state => state.vendor);
+  const dispatch = useAppDispatch();
   const handleSubmit = async () => {
     const data = {
       amount: price,
@@ -38,8 +40,10 @@ function SaleOff({ id, handleClose, checkSaleOff, saleOffId }: IProps) {
     } else {
       res = await setSaleOfForProduct(data);
     }
-    if (res.data.success) {
+    console.log(res.success);
+    if (res.success) {
       toast.success('Thêm khuyến mãi thành công');
+      dispatch(getListProductOfShop(shop.id));
       handleClose();
     } else {
       toast.error('Thêm khuyến mãi thất bại');

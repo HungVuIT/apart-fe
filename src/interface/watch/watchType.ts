@@ -33,9 +33,12 @@ export interface IWatch {
   image: string[]
   madeBy?: string
   warranty?: string
-  sale_off?: number
+  sale_off?: any
   rating: IRating
 }
+// export interface ISale_off {
+
+// }
 export interface IRating {
   score: any
   list: any[]
