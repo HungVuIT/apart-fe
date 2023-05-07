@@ -11,6 +11,8 @@ import { IComment, IRating } from '../../../../interface/watch/watchType';
 import { getRatingById } from '../../../../redux/product/productThunk';
 import moment from 'moment';
 import { ratingOnWatch } from '../../../../api/service/product-service';
+import ItemRating from './ItemRating';
+import RichText from '../../../../components/RichText';
 
 interface IProps {
   id: number | undefined
@@ -23,13 +25,6 @@ function RatingBox({ id }: IProps): JSX.Element {
   useEffect(() => {
     id && dispatch(getRatingById(id));
   }, []);
-  const inforNameAndDate = (rate: any) => {
-    const dateObj = moment.utc(rate.createdAt);
-
-    const formattedDate = dateObj.format('[Ngày] DD [tháng] M [năm] YYYY');
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    return `${rate.user.firstName} ${rate.user.lastName} ${rate.UID} ${formattedDate}`;
-  };
   const handleClick = async () => {
     const data: any = {
       content: value,
@@ -37,7 +32,6 @@ function RatingBox({ id }: IProps): JSX.Element {
       targetID: watch.id
     };
     const res = await ratingOnWatch(data);
-    console.log(res);
     if (res.success) {
       setValue('');
       setScore(0);
@@ -46,6 +40,9 @@ function RatingBox({ id }: IProps): JSX.Element {
     } else {
       toast.error('Đánh giá không thành công');
     }
+  };
+  const handleOnChange = (_value: any) => {
+    setValue(_value);
   };
   return (
     <Container >
@@ -67,12 +64,7 @@ function RatingBox({ id }: IProps): JSX.Element {
                 </div>
                 <div className={'form-comment active'}>
                   <div className="form-input">
-                    <TextField
-                        label='Nội dung'
-                        variant='outlined'
-                        value={value}
-                        onChange={(e) => setValue(e.target.value)}
-                    />
+                    <RichText value={value} onChange={handleOnChange} />
                     <div className="rate-box">
                       <Rating
                         name="simple-controlled"
@@ -88,12 +80,7 @@ function RatingBox({ id }: IProps): JSX.Element {
                 {rating.list.map((rate: any) => (
                   <React.Fragment key={rate.id}>
                     <hr/>
-                    <div className="comment-item">
-                      <div className="item-date"><i>{inforNameAndDate(rate)}</i></div>
-                      <Rating name="half-rating-read" value={rate.score} precision={0.5} readOnly className='rate-star' />
-                      <div className="item-content">{rate.content || ''}</div>
-                      <Button variant="text" className='item-btn'>Báo cáo đánh giá không phù hợp</Button>
-                    </div>
+                    <ItemRating rate={rate} />
                   </React.Fragment>
                 ))}
 

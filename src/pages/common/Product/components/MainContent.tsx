@@ -29,6 +29,8 @@ function MainContent({ id }: IProps) {
   const dispatch = useAppDispatch();
   const items = [itempng, item2png, item3png];
   const { setIsOpenLogin, setIsLogin } = useContext(MyGlobalContext);
+  const myHtmlElement = document.createElement('div');
+  myHtmlElement.innerHTML = watch.content ? watch.content : '';
   useEffect(() => {
     checkItemInFavorite();
   }, [favoriteList]);
@@ -110,8 +112,7 @@ function MainContent({ id }: IProps) {
               <span>{watch.sale_off}80 giảm</span>
             </div>}
           </div>
-          <div className='info-describe'>
-            <span>{watch.content}</span>
+          <div className='info-describe' dangerouslySetInnerHTML={{ __html: myHtmlElement.outerHTML }}>
           </div>
           <div className='product-btns'>
             <button className={'icon-tym' + (isActive ? ' red' : '')} onClick={handleAddToFavorite}>

@@ -1,4 +1,3 @@
-import Layout from 'antd/es/layout/layout';
 import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { adminRouter, authRouter, mainRouter, userRouter, vendorRouter } from '.';

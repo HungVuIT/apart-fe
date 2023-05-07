@@ -8,6 +8,8 @@ interface IProps {
 }
 function DescribeDetail({ id }: IProps) {
   const { watch } = useAppSelector(state => state.productNow);
+  const myHtmlElement = document.createElement('div');
+  myHtmlElement.innerHTML = watch.description ? watch.description : '';
   return (
     <Container >
       <div className="describe__wrapper">
@@ -21,8 +23,7 @@ function DescribeDetail({ id }: IProps) {
           </AccordionSummary>
           <AccordionDetails>
             <Typography component={'span'} variant={'body2'}>
-              <div className="infor-details">
-                {watch.description}
+              <div className="infor-details" dangerouslySetInnerHTML={{ __html: myHtmlElement.outerHTML }}>
               </div>
             </Typography>
           </AccordionDetails>

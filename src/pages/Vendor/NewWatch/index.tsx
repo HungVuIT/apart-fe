@@ -18,6 +18,7 @@ import { addNewProduct } from '../../../api/service/product-service';
 import { getBrandList, getCategoryList } from '../../../api/service/product-list-service';
 import { Category, IBrand } from '../../../interface/common/interface';
 import ClearIcon from '@mui/icons-material/Clear';
+import RichText from '../../../components/RichText';
 interface IDataNewWatch {
   CID: any[]
   createdAt: string
@@ -44,8 +45,8 @@ interface IDataNewWatch {
 }
 const schema = yup.object().shape({
   name: yup.string().required('Vui lòng nhập tên sản phẩm'),
-  price: yup.number().required('Vui lòng nhập đơn giá'),
-  quantity: yup.number().required('Vui lòng nhập số lượng sản phẩm'),
+  price: yup.number().typeError('Vui lòng nhập đơn giá').required('Vui lòng nhập đơn giá'),
+  quantity: yup.number().typeError('Vui lòng nhập số lượng sản phẩm').required('Vui lòng nhập số lượng sản phẩm'),
   content: yup.string().required('Vui lòng nhập mô tả ngắn'),
   description: yup.string().required('Vui lòng nhập mô tả chi tiết')
 });
@@ -58,6 +59,8 @@ function NewWatch() {
   const [brands, setBrands] = useState<IBrand[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [dataCategories, setDataCategories] = useState<string[]>([]);
+  const [des, setDes] = useState('');
+  console.log(errors);
   const refList = {
     ref1: useRef<HTMLInputElement>(null),
     ref2: useRef<HTMLInputElement>(null),
@@ -273,7 +276,7 @@ function NewWatch() {
               />
             </div>
           </div>
-          <div className={classes.item + ' ' + classes.mutil}>
+          <div className={classes.item + ' ' + classes.description}>
             <div className={classes['item-title']}>*Nội dung</div>
             <div className={classes['item-content']}>
               <Controller name='content' control={control}
@@ -282,23 +285,13 @@ function NewWatch() {
                   fieldState: { invalid, isTouched, isDirty, error },
                   formState
                 }) => (
-                  <TextField
-                    variant='outlined'
-                    {...register('content')}
-                    onBlur={onBlur}
-                    onChange={onChange}
-                    placeholder='Nhập nội dung mô tả ngắn về sản phẩm'
-                    multiline
-                    rows={6}
-                    error={!!errors.content}
-                    helperText={errors.content?.message}
-                    className={classes.input}
-                  />
+                  <RichText value={value} onChange={onChange} noImage={true} />
                 )}
               />
+              {!!errors.description && <FormHelperText>{errors.description?.message}</FormHelperText>}
             </div>
           </div>
-          <div className={classes.item + ' ' + classes.mutil}>
+          <div className={classes.item + ' ' + classes.description}>
             <div className={classes['item-title']}>*Mô tả sản phẩm</div>
             <div className={classes['item-content']}>
               <Controller name='description' control={control}
@@ -307,20 +300,10 @@ function NewWatch() {
                   fieldState: { invalid, isTouched, isDirty, error },
                   formState
                 }) => (
-                  <TextField
-                    variant='outlined'
-                    {...register('description')}
-                    onBlur={onBlur}
-                    onChange={onChange}
-                    placeholder='Nhập mô tả chi tiết về sản phẩm'
-                    multiline
-                    rows={6}
-                    error={!!errors.description}
-                    helperText={errors.description?.message}
-                    className={classes.input}
-                  />
+                  <RichText value={value} onChange={onChange} />
                 )}
-              />
+                />
+                {!!errors.description && <FormHelperText>{errors.description?.message}</FormHelperText>}
             </div>
           </div>
 

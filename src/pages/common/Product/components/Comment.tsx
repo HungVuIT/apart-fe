@@ -4,14 +4,11 @@ import Container from '../../../../components/Container';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { ToastContainer, toast } from 'react-toastify';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { IComment } from '../../../../interface/watch/watchType';
 import { getCommentById } from '../../../../redux/product/productThunk';
-import moment from 'moment';
-import axiosClient from '../../../../api/axiosClient';
 import { commentOnWatch, IDataComment } from '../../../../api/service/product-service';
+import ItemComment from './ItemComment';
+import RichText from '../../../../components/RichText';
 
 interface IProps {
   id: number | undefined
@@ -20,6 +17,7 @@ function Comment({ id }: IProps): JSX.Element {
   const [value, setValue] = React.useState<string>('');
   const dispatch = useAppDispatch();
   const { comment, watch } = useAppSelector(state => state.productNow);
+
   useEffect(() => {
     id && dispatch(getCommentById(id));
   }, []);
@@ -37,12 +35,8 @@ function Comment({ id }: IProps): JSX.Element {
       toast.error('Bình luận không thành công');
     }
   };
-  const inforNameAndDate = (cmt: IComment) => {
-    const dateObj = moment.utc(cmt.createdAt);
-
-    const formattedDate = dateObj.format('[Ngày] DD [tháng] M [năm] YYYY');
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    return `${cmt.user.firstName} ${cmt.user.lastName} ${cmt.UID} ${formattedDate}`;
+  const handleOnChange = (_value: any) => {
+    setValue(_value);
   };
   return (
     <Container >
@@ -60,23 +54,14 @@ function Comment({ id }: IProps): JSX.Element {
               <div className="comments">
                 <div className={'form-comment active'}>
                   <div className="form-input">
-                    <TextField
-                        label='Nội dung'
-                        variant='outlined'
-                        value={value}
-                        onChange={(e) => setValue(e.target.value)}
-                    />
+                    <RichText value={value} onChange={handleOnChange} noImage={true}/>
                   </div>
                   <Button variant="contained" className='rate-submit' onClick={handleClick}>Gửi</Button>
                 </div>
                 {comment.map((cmt: IComment) => (
                   <React.Fragment key={cmt.id}>
                     <hr/>
-                    <div className="comment-item">
-                      <div className="item-date"><i>{inforNameAndDate(cmt)}</i></div>
-                      <div className="item-content">{cmt.content}</div>
-                      <Button variant="text" className='item-btn'>Báo cáo đánh giá không phù hợp</Button>
-                    </div>
+                    <ItemComment comment={cmt} />
                   </React.Fragment>
                 ))}
               </div>

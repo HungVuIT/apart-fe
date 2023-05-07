@@ -12,13 +12,13 @@ export interface IWatch {
   SID: number
 
   sku?: string
+  slug?: any
   content?: string
   description?: string
 
   quantity: number
   saled: number
   price: number
-  priceFloor: number
 
   gender: string
   materialCord?: string
@@ -35,6 +35,13 @@ export interface IWatch {
   warranty?: string
   sale_off?: number
   rating: IRating
+
+  status?: any
+  isOld?: any
+  include?: any
+  used?: any
+  prioritize?: any
+  shop?: IShop
 }
 export interface IRating {
   score: any
@@ -60,7 +67,6 @@ export const initWatch: IWatch = {
   quantity: 300,
   saled: 0,
   price: 2000000,
-  priceFloor: 1000000,
   gender: '',
   materialCord: '',
   glassSurface: '',
