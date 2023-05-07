@@ -84,36 +84,42 @@
     }
     & .sale-off{
       display: flex;
-      margin: 10px 5%;
-      & .price {
-        text-align: left;
-        font-size: 10px;
-        text-decoration: line-through;
-        color: #929292;
-        font-weight: 400;
-      }
-      & .sale {
-        height: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      & .price-box {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 16px;
-        margin-left: 10px;
-        font-weight: 700;
-      }
-      & .discount {
         height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        & span {
-          padding: 2px 10px;
-          text-align: center;
-          font-size: 14px;
+        & .price {
+          text-align: left;
+          font-size: 10px;
+          text-decoration: line-through;
+          color: #929292;
+          font-weight: 400;
+        }
+        & .sale {
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 16px;
           margin-left: 10px;
           font-weight: 700;
-          color: #ffff;
-          background-color: #ee4d2d;
+        }
+        & .discount {
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          & span {
+            padding: 2px 10px;
+            text-align: center;
+            font-size: 14px;
+            margin-left: 10px;
+            font-weight: 700;
+            color: #ffff;
+            background-color: #ee4d2d;
+          }
         }
       }
     }

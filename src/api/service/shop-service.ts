@@ -72,7 +72,7 @@ export const setSaleOfForProduct = async (body: any) => {
     const url = 'saleOff';
     const response = await axiosClient.post(url, { ...body });
     console.log(response);
-    return response.data.data;
+    return response.data;
   } catch (err) {
     return err;
   }
@@ -81,8 +81,7 @@ export const updateSaleOfForProduct = async (body: any) => {
   try {
     const url = 'saleOff';
     const response = await axiosClient.patch(url, { ...body });
-    console.log(response);
-    return response.data.data;
+    return response.data;
   } catch (err) {
     return err;
   }
