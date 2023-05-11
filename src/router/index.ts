@@ -15,6 +15,8 @@ import ProfileStore from '../pages/Vendor/ProfileStore';
 import Payment from '../pages/User/Payment';
 import LoadingPage from '../components/LoadingPage';
 import StorePage from '../pages/Vendor/StorePage';
+import NewsPage from '../pages/common/News';
+import NewsItem from '../pages/common/NewsItem';
 
 const mainRouter = [
   {
@@ -32,6 +34,14 @@ const mainRouter = [
   {
     path: '/shop/:shopId',
     component: StorePage
+  },
+  {
+    path: '/news',
+    component: NewsPage
+  },
+  {
+    path: '/news/:newsId',
+    component: NewsItem
   }
 ];
 const userRouter = [

@@ -33,6 +33,13 @@ export interface Category {
   name: string
   updatedAt: string
 }
+export interface INews {
+  id: number
+  createdAt: string
+  updatedAt: string
+  title: string
+  content: string
+}
 export interface IBrand {
   createdAt: string
   description: string

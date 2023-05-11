@@ -23,7 +23,7 @@ import AccountMenu from '../AccountMenu';
 import { getListOfShop } from '../../../../../redux/common/commonThunk';
 import { ROLE } from '../../../../../interface/user/enum';
 import { getProfileShop } from '../../../../../redux/vendor/vendorThunk';
-const items = ['Đồng hồ', 'Best selling', 'Nam', 'Nữ', 'Smartwatch', 'Cặp đôi', 'Tin tức'];
+const items = ['Trang chủ', 'Danh mục', 'Thương hiệu', 'Tin tức'];
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -63,6 +63,9 @@ function Header() {
   const handleCloseLogin = () => {
     !loading && setIsOpenLogin(false);
   };
+  const handleClickItem = (item: any) => {
+    item === 'Tin tức' && navigate('/news');
+  };
   return (
     <div className='header__layout'>
       <AppBar position="static" className='header__wrapper'>
@@ -86,6 +89,7 @@ function Header() {
                   key={item}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                   className='menu-item'
+                  onClick={() => handleClickItem(item)}
                 >
                   {item}
                 </Button>
