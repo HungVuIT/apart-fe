@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { adminRouter, authRouter, mainRouter, userRouter, vendorRouter } from '.';
+import { authRouter, mainRouter, userRouter, vendorRouter } from '.';
 import { DefaultLayout, VendorLayout } from '../components/Layout';
 import DashboardLayout from '../components/Layout/DashboardLayout';
 import { getAccessToken } from '../untils/localStorage';
@@ -84,20 +84,6 @@ function MainRouter (): JSX.Element {
                       <Navigate to="/" replace /> // Redirect to home if not logged in
                         )
                   )
-            }
-          />
-        );
-      })}
-      {adminRouter.map((route, index) => {
-        const Page = route.component;
-        return (
-          <Route
-            key={index}
-            path={route.path}
-            element={
-              <DashboardLayout>
-                <Page />
-              </DashboardLayout>
             }
           />
         );

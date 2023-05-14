@@ -36,6 +36,20 @@ export const addNewProduct = async (params: FormData) => {
     return err;
   }
 };
+export const editProduct = async (id: number, params: FormData) => {
+  try {
+    const url = `watchs/id/${id}`;
+    console.log(params);
+    const response = await axiosClient.patch(url, params, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
 export const getRecommendProduct = async (id: number, setLst: any) => {
   try {
     const url = `recommend/${id}`;
@@ -53,6 +67,19 @@ export const delProductByShop = async (id: number) => {
   try {
     const url = `watchs/id/${id}`;
     const response = await axiosClient.delete(url);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+export const getProductById = async (id: number, setProduct: any) => {
+  try {
+    const url = `watchs/id/${id}`;
+    const response = await axiosClient.get(url);
+    if (response?.data?.success) {
+      console.log(response.data.data);
+      setProduct(response.data.data);
+    }
     return response.data;
   } catch (err) {
     return err;

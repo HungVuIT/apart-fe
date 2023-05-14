@@ -1,24 +1,25 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Container from '../../../components/Container';
-import classes from './new-watch.module.scss';
+import classes from './edit-watch.module.scss';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import './customMui.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { ToastContainer, toast } from 'react-toastify';
-import { addNewProduct } from '../../../api/service/product-service';
+import { addNewProduct, editProduct, getProductById } from '../../../api/service/product-service';
 import { getBrandList, getCategoryList } from '../../../api/service/product-list-service';
 import { Category, IBrand } from '../../../interface/common/interface';
 import ClearIcon from '@mui/icons-material/Clear';
 import RichText from '../../../components/RichText';
+import { IWatch } from '../../../interface/watch/watchType';
 interface IDataNewWatch {
   CID: any[]
   createdAt: string
@@ -53,16 +54,18 @@ const schema = yup.object().shape({
   content: yup.string().required('Vui lòng nhập mô tả ngắn'),
   description: yup.string().required('Vui lòng nhập mô tả chi tiết')
 });
-function NewWatch() {
+function EditWatch() {
   const { register, setValue, control, watch, handleSubmit, clearErrors, formState: { errors } } = useForm<IDataNewWatch>({
     resolver: yupResolver(schema)
   });
+  const { watchId } = useParams();
   const [lstImg, setLstImg] = useState<any[]>([null, null, null, null, null, null]);
   const [lstFile, setLstFile] = useState<any[]>([null, null, null, null, null, null]);
   const [brands, setBrands] = useState<IBrand[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [dataCategories, setDataCategories] = useState<string[]>([]);
+  const [dataCategories, setDataCategories] = useState<any[]>([]);
   const [isOld, setIsOld] = useState(0);
+  const [product, setProduct] = useState<IWatch | null>(null);
   const refList = {
     ref1: useRef<HTMLInputElement>(null),
     ref2: useRef<HTMLInputElement>(null),
@@ -76,6 +79,49 @@ function NewWatch() {
     getBrandList(setBrands);
     getCategoryList(setCategories);
   }, []);
+  useEffect(() => {
+    console.log(watchId);
+    !!watchId && getProductById(+watchId, setProduct);
+  }, []);
+  useEffect(() => {
+    product?.id && setInitValueProduct();
+  }, [product]);
+  const setInitValueProduct = () => {
+    if (product) {
+      product?.createdAt && setValue('createdAt', product?.createdAt);
+      product?.updatedAt && setValue('updatedAt', product?.updatedAt);
+      product?.name && setValue('name', product?.name);
+      product?.description && setValue('description', product?.description);
+      product?.content && setValue('content', product?.content);
+      product?.quantity && setValue('quantity', product?.quantity);
+      product?.saled && setValue('saled', product?.saled);
+      product?.price && setValue('price', product?.price);
+      product?.gender && setValue('gender', product?.gender);
+      product?.materialCord && setValue('materialCord', product?.materialCord);
+      product?.glassSurface && setValue('glassSurface', product?.glassSurface);
+      product?.glassSize && setValue('glassSize', product?.glassSize);
+      product?.madeBy && setValue('madeBy', product?.madeBy);
+      product?.warranty && setValue('warranty', product?.warranty);
+      product?.status && setValue('status', product?.status);
+      product?.weight && setValue('weight', +product?.weight);
+      product?.height && setValue('height', +product?.height);
+      product?.width && setValue('width', +product?.width);
+      product?.length && setValue('length', +product?.length);
+      product?.include && setValue('include', product?.include);
+      product?.used && setValue('used', product?.used);
+      product?.isOld && setIsOld(product.isOld ? 1 : 0);
+      product?.CID && setDataCategories(product.CID);
+      // product.BID && setValue('BID', +product.BID);
+      const newImg = [...lstImg];
+      const newFile = [...lstFile];
+      product.image && product.image.forEach((value, index) => {
+        newImg[index] = value;
+        newFile[index] = true;
+      });
+      setLstImg(newImg);
+      setLstFile(newFile);
+    }
+  };
   const handleImageUpload = (e: any, index: number) => {
     const selectedFile = e.target.files[0]; // Lấy file đầu tiên được chọn
     const imageUrl = URL.createObjectURL(selectedFile); // Tạo đường dẫn URL cho file ảnh
@@ -108,19 +154,20 @@ function NewWatch() {
     const newLstFile = lstFile.filter(file => !!file);
     const params = new FormData();
     Object.entries(_data).forEach(([key, value]) => {
-      console.log(key, value);
       params.append(key, value);
     });
-    newLstFile.forEach(file => {
-      params.append('image', file);
+    newLstFile.forEach((file) => {
+      file !== true && params.append('image', file);
     });
     dataCategories.forEach(data => params.append('CID', data));
-    const res = await addNewProduct(params);
-    if (res.success) {
-      toast.success('Thêm sản phẩm thành công');
-      navigate('/shop/manager/watch');
-    } else {
-      toast.error('Thêm sản phẩm không thành công');
+    if (watchId) {
+      const res = await editProduct(+watchId, params);
+      if (res.success) {
+        toast.success('Thêm sản phẩm thành công');
+        navigate('/shop/manager/watch');
+      } else {
+        toast.error('Thêm sản phẩm không thành công');
+      }
     }
   };
   const getValue = (value: number) => {
@@ -131,6 +178,7 @@ function NewWatch() {
     const newData = dataCategories.filter(value => value !== _value);
     setDataCategories(newData);
   };
+  console.log('BID', watch('BID'));
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.wrapper + ' new-watch'}>
       <Container className={classes.container}>
@@ -566,8 +614,7 @@ function NewWatch() {
                           value={isOld}
                           onChange={(e) => {
                             setIsOld(+e.target.value);
-                            setValue('isOld', !!e.target.value);
-                            !e.target.value && setValue('used', '');
+                            // setValue('isOld', !!e.target.value);
                           }}
                         >
                             <MenuItem value={0}>Không</MenuItem>
@@ -709,11 +756,11 @@ function NewWatch() {
       </Container>
       <div className={classes.groupBtn}>
         <Button variant="outlined" className={classes.btn} onClick={() => navigate('/shop/manager/watch')}>Hủy</Button>
-        <Button type='submit' variant="contained" className={classes.btn + ' ' + classes.save}>Thêm sản phẩm</Button>
+        <Button type='submit' variant="contained" className={classes.btn + ' ' + classes.save}>Lưu</Button>
       </div>
       <ToastContainer autoClose={1000} position='bottom-right' />
     </form>
   );
 }
 
-export default NewWatch;
+export default EditWatch;

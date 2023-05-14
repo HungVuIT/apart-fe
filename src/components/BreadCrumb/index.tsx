@@ -5,13 +5,17 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import './breadCrumb.scss';
-
-function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
-  event.preventDefault();
-  console.info('You clicked a breadcrumb.');
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/hooks';
+interface IProps {
+  id?: number
 }
-
-export default function BreadCrumbComponent() {
+export default function BreadCrumbComponent({ id }: IProps) {
+  const { watch } = useAppSelector(state => state.productNow);
+  const navigate = useNavigate();
+  function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+    navigate('/');
+  }
   const breadcrumbs = [
     <Link underline="hover"
       key="1"
@@ -21,19 +25,10 @@ export default function BreadCrumbComponent() {
     >
       Trang chủ
     </Link>,
-    // <Link
-    //   underline="hover"
-    //   key="2"
-    //   color="inherit"
-    //   href="/material-ui/getting-started/installation/"
-    //   onClick={handleClick}
-    // >
-    //   Core
-    // </Link>,
     <Typography key="2" color="text.primary" sx={{
       fontSize: '14px'
     }}>
-      Sản phẩm
+      {watch.name}
     </Typography>
   ];
 

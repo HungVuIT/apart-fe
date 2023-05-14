@@ -38,14 +38,6 @@ function Home() {
         <Container>
           <div className="search__wrapper">
             <Search />
-            <div className="category__box">
-              <Category linkImg={menCategory} title='Nam' />
-              <Category linkImg={womenCategory} title='Nữ' />
-              <Category linkImg={coCategory} title='Cơ' />
-              <Category linkImg={dientuCategory} title='Điện tử' />
-              <Category linkImg={treemCategory} title='Trẻ em' />
-              <Category linkImg={capdoiCategory} title='Cặp đôi' />
-            </div>
           </div>
         </Container>
         <FeaturedProducts title='Top bán chạy' watchList={saleWatchList}/>

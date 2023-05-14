@@ -115,7 +115,7 @@ function ProductManager() {
       width: caculatorWidth(10),
       renderCell: (params) => (
         <div className={classes['watch-action']}>
-          <Button>Sửa</Button>
+          <Button onClick={() => navigate(`/shop/watch/edit/${params.row.id}`)}>Sửa</Button>
           <Button onClick={() => {
             setIsOpen(true);
             setProductId(params.row.id);

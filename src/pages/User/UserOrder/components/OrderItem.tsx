@@ -19,6 +19,7 @@ function OrderItem({ item }: IProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [lst, setLst] = useState([]);
+  console.log(item);
   const statusMap: StatusMap = {
     created: 'Chờ xác nhận',
     confirm: 'Chờ lấy hàng',

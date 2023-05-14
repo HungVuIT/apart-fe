@@ -456,3 +456,8 @@
 .main-box {
   position: relative;
 }
+.same-product {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}

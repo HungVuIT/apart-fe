@@ -87,4 +87,10 @@
   font-size: 16px;
 }
 .dialog-order {
+  & .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+    width: 800px;
+  }
+}
+.order__wrapper-user {
+  min-height: 500px;
 }

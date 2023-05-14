@@ -48,7 +48,7 @@ function UserOrder() {
         loading
           ? <Loading _type={'ball'} />
           : (
-            <Container>
+            <Container className='order__wrapper-user'>
               <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                   <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">

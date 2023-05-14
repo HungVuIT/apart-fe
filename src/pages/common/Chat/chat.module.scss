@@ -1,0 +1,16 @@
+.iconWrapper {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100px !important;
+  height: 50px !important;
+  background-color: #ff6b6b;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  .icon {
+    font-size: 30px !important;
+  }
+}

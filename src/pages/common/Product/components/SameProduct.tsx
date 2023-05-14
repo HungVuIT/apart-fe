@@ -25,10 +25,10 @@ function SameProduct({ id }: any): JSX.Element {
               next={() => setIndex(index === items.length - 4 ? 0 : index + 1)}
               prev={() => setIndex(index === 0 ? items.length - 4 : index - 1)}
             >
-              <div className='flex flex-center'>
+              <div className='same-product'>
                 {
-                  lst.map((watch: IWatch) => (
-                    <Item key={watch.id} watch={watch} />
+                  lst.map((watch: IWatch, index) => (
+                    index < 4 && <Item key={watch.id} watch={watch} />
                   ))
                 }
               </div>

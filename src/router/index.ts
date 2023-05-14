@@ -1,4 +1,3 @@
-import Dashboard from '../pages/admin/Dashboard';
 import FavoriteList from '../pages/User/FavoriteList';
 import Home from '../pages/common/Home';
 import Product from '../pages/common/Product';
@@ -17,6 +16,7 @@ import LoadingPage from '../components/LoadingPage';
 import StorePage from '../pages/Vendor/StorePage';
 import NewsPage from '../pages/common/News';
 import NewsItem from '../pages/common/NewsItem';
+import EditWatch from '../pages/Vendor/EditWatch';
 
 const mainRouter = [
   {
@@ -71,12 +71,6 @@ const userRouter = [
     component: Payment
   }
 ];
-const adminRouter = [
-  {
-    path: 'admin/dashboard',
-    component: Dashboard
-  }
-];
 const vendorRouter = [
   {
     path: '/shop/register',
@@ -98,6 +92,11 @@ const vendorRouter = [
     Layout: false
   },
   {
+    path: '/shop/watch/edit/:watchId',
+    component: EditWatch,
+    Layout: false
+  },
+  {
     path: '/shop/manager/profile',
     component: ProfileStore,
     Layout: true
@@ -110,4 +109,4 @@ const authRouter = [
     Layout: true
   }
 ];
-export { mainRouter, adminRouter, vendorRouter, userRouter, authRouter };
+export { mainRouter, vendorRouter, userRouter, authRouter };

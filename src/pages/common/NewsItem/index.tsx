@@ -12,10 +12,14 @@ function NewsItem() {
   }, [newsId]);
   const myHtmlElement = document.createElement('div');
   myHtmlElement.innerHTML = news ? news.content : '';
+  console.log(news);
   return (
     <div className={classes.wrapper}>
       <Container >
-        <div className={classes.news} dangerouslySetInnerHTML={{ __html: myHtmlElement.outerHTML }}>
+        <div className={classes.box}>
+          <h1 className={classes.title}>{news?.title}</h1>
+          <div className={classes.news} dangerouslySetInnerHTML={{ __html: myHtmlElement.outerHTML }}>
+          </div>
         </div>
       </Container>
     </div>

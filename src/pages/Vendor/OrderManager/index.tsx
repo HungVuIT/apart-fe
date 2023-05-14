@@ -16,6 +16,9 @@ import { getOrderListShop } from '../../../api/service/shop-service';
 import { IOrderShop } from '../../../interface/vendor/interface';
 import { confirmOrder } from '../../../api/service/vendor-service';
 import { ToastContainer, toast } from 'react-toastify';
+import { DetailsOrder } from '../../../api/service/user-service';
+import Dialog from '@mui/material/Dialog';
+import ItemInfo from '../../User/UserOrder/components/ItemInfo';
 
 function a11yProps(index: number) {
   return {
@@ -59,6 +62,9 @@ function OrderManager() {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [orderList, setOrderList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingItem, setLoadingItem] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [lst, setLst] = useState([]);
   const navigate = useNavigate();
   const caculatorWidth = (value: number) => {
     return (windowDimensions.width * 84 / 100) * (value / 100);
@@ -117,7 +123,7 @@ function OrderManager() {
       width: caculatorWidth(20),
       renderCell: (params) => (
         <div className={classes.groupBtn}>
-          <Button className={classes.info} variant='text'>Thông tin chi tết</Button>
+          <Button className={classes.info} variant='text' onClick={async () => await handleClickInfor(params.row.id)}>Thông tin chi tết</Button>
           {(filterMap[params.row.status] !== 4 && filterMap[params.row.status] !== 5) && <div className={classes.btnFlex}>
             <Button className={classes.btn + ' ' + classes.save} variant='text' onClick={async () => await handleClickConfirm(params.row.id, params.row.status)}>Xác nhận</Button>
             <Button className={classes.btn} variant='text' onClick={async () => await handleClickCanCel(params.row.id)}>Hủy</Button>
@@ -146,6 +152,13 @@ function OrderManager() {
     } else {
       toast.error('Hủy đơn không thành công');
     }
+  };
+  const handleClickInfor = async (id: number) => {
+    setIsOpen(true);
+    setLoadingItem(true);
+    const data = await DetailsOrder(id);
+    setLst(data);
+    setLoadingItem(false);
   };
   const handleChangeValue = (lst: any) => {
     return value ? lst.filter((item: any) => value === filterMap[item.status]) : lst;
@@ -188,6 +201,9 @@ function OrderManager() {
             }
           </Box>
         </Box>
+      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className='dialog-order'>
+        <ItemInfo lst={lst} loading={loadingItem}/>
+      </Dialog>
       <ToastContainer autoClose={1000} position='bottom-right' />
     </div>
   );

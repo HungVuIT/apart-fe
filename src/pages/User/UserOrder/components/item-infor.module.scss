@@ -1,8 +1,27 @@
 .wrapper {
-  width: 90%;
-  min-width: 60vw;
+  width: 100%;
   min-height: 50vh;
   & .group {
     padding: 10px;
+    & .item {
+      display: flex;
+      width: 100%;
+      height: 80px;
+      padding: 10px;
+      border-top: 1px solid #dee2e6;
+      border-bottom: 1px solid #dee2e6;
+      & .img {
+        width: 60px;
+        height: 60px;
+      }
+      & .name, .price, .btns {
+        width: 35%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        padding: 10px;
+      }
+    }
   }
 }
