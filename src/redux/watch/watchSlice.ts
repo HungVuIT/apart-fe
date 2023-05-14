@@ -5,9 +5,6 @@ const watchSlice = createSlice({
   name: 'watch',
   initialState: {
     watchList: initWatchList,
-    topWatchList: initWatchList,
-    newWatchList: initWatchList,
-    saleWatchList: initWatchList,
     loading: initLoadingWatch,
     error: ''
   },

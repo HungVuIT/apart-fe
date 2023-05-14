@@ -112,9 +112,6 @@ export const initStateProduct: IStateProduct = {
 };
 export interface IStateWatch {
   watchList: IWatch[]
-  topWatchList: IWatch[]
-  newWatchList: IWatch[]
-  saleWatchList: IWatch[]
   loading: ILoadingWatch
   error: string
 }

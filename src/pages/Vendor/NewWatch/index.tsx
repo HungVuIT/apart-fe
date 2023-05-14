@@ -365,7 +365,6 @@ function NewWatch() {
                         }
                           <MenuItem value={''}>Không</MenuItem>
                       </Select>
-                      {errors.gender && <FormHelperText>{errors.gender?.message}</FormHelperText>}
                     </FormControl>
                     )}
                   />

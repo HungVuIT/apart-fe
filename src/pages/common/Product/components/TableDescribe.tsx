@@ -41,14 +41,16 @@ export default function TableDescribe() {
   const rows = [
     createData('Thương hiệu', 'Seriko'),
     createData('Xuất xứ', watch.madeBy || 'Chưa xác định'),
-    createData('Giới tính', 'Nam'),
-    createData('Mắt', watch.glassSurface || 'Chưa xác định'),
+    createData('Giới tính', watch.gender === 'male' ? 'Name' : (watch.gender === 'female' ? 'Nữ' : 'Không')),
+    createData('Bề mặt', watch.glassSurface || 'Chưa xác định'),
     createData('Đường kính mặt kính', watch.glassSize || 'Chưa xác định'),
     createData('Chất liệu dây', watch.materialCord || 'Chưa xác định'),
-    createData('Thời gian bảo hành', '12 tháng'),
-    createData('Màu', 'Trắng bạc')
+    createData('Hạn bảo hành', watch.warranty || 'Chưa xác định'),
+    createData('Phụ kiện đi kèm', watch.include || 'Chưa xác định'),
+    createData('Tình trạng', watch.status || 'Chưa xác định'),
+    createData('Là đồng hồ cũ', watch.isOld ? 'Phải' : 'Không phải'),
+    createData('Thời gian đã sử dụng', watch.used || 'Chưa xác định')
   ];
-
   return (
     <TableContainer component={Paper}>
       <Table aria-label="customized table">

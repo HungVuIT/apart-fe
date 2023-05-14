@@ -4,11 +4,8 @@ import Search from '../../../components/Search';
 import banner from '../../../assets/img/productList-banner.png';
 import classes from './productList.module.scss';
 import ItemList from './components/ItemList';
-import Dialog from '@mui/material/Dialog';
 import Tags from './components/Tags';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import MobileTags from './components/MobileTags';
 import { getBrandList, getCategoryList } from '../../../api/service/product-list-service';
 import { searchWatchByName } from '../../../redux/common/commonThunk';
 import { Category } from '../../../interface/common/interface';
@@ -28,9 +25,6 @@ function ProductList (): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [brands, setBrands] = useState([]);
-  const [categoryValue, setCategoryValue] = useState('');
-  const [brandValue, setBrandValue] = useState('');
-  const [priceValue, setPriceValue] = useState('');
   const [filterValue, setFilterValue] = useState<IFilterValue>({
     search,
     BID: null,
@@ -50,7 +44,7 @@ function ProductList (): JSX.Element {
     dispatch(searchWatchByName({
       search: search !== 'all' ? search : ''
     }));
-  }, []);
+  }, [search]);
   React.useEffect(() => {
     function handleResize() {
       if (window.innerWidth < 678) {
@@ -87,23 +81,9 @@ function ProductList (): JSX.Element {
           </div>
         </Container>
         <div className={classes['tags-and-lst']}>
-          {/* <Tags /> */}
           <ItemList lst={searchLst}/>
         </div>
       </div>
-      {/* <Dialog open={isOpen} onClose={handleCloseDialog} className={classes['dialog-product-lst']}>
-        <MobileTags
-          categories={categories}
-          brands={brands}
-          categoryValue={categoryValue}
-          setCategoryValue={setCategoryValue}
-          brandValue={brandValue}
-          setBrandValue={setBrandValue}
-          priceValue={priceValue}
-          setPriceValue={setPriceValue}
-          handleCloseDialog={handleCloseDialog}
-        />
-      </Dialog> */}
     </div>
   );
 }

@@ -16,19 +16,6 @@ export const getListOfWatch = createAsyncThunk(
   }
 );
 
-export const getListSaleOfWatch = createAsyncThunk(
-  'watch/get/list-saled',
-  async () => {
-    try {
-      const url = 'watchs/list?orderBy=price.desc';
-      const response = await axiosClient.get(url);
-      return response.data.data;
-    } catch (error) {
-      throw new Error(String(error));
-    }
-  }
-);
-
 // export const getCommentById = createAsyncThunk(
 //   'Comment/get/id',
 //   async (id: number) => {
@@ -55,16 +42,5 @@ export const extraReducersWatch = (
     .addCase(getListOfWatch.fulfilled, (state, action) => {
       state.loading.watch = true;
       state.watchList = action.payload;
-    })
-    .addCase(getListSaleOfWatch.pending, (state, action) => {
-      state.loading.sale = true;
-    })
-    .addCase(getListSaleOfWatch.rejected, (state, action) => {
-      state.loading.sale = false;
-      state.error = action.error as string;
-    })
-    .addCase(getListSaleOfWatch.fulfilled, (state, action) => {
-      state.loading.sale = true;
-      state.saleWatchList = action.payload;
     });
 };

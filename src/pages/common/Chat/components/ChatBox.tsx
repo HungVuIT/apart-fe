@@ -1,22 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './chat-box.module.scss';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
-import io from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 interface IProps {
   setIsOpen: any
 }
 function ChatBox({ setIsOpen }: IProps) {
   const [message, setMessage] = useState('');
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [receiverId, setReceiverId] = useState(3);
+  const [connected, setConnected] = useState(false);
+  const [messages, setMessages] = useState<any[]>([]);
+  useEffect(() => {
+    const newSocket = io('https://dhwatch.onrender.com/chat-gate-way', { query: { userId: 1 } });
+    setSocket(newSocket);
+  }, []);
+  useEffect(() => {
+    console.log(socket);
+    if (socket) {
+      socket.on('connect', () => {
+        console.log('Connected to WebSocket server!');
+        setConnected(true);
+      });
+      socket.on('server-send-data', (data: any) => {
+        console.log('Received data from server:', data);
+        setMessages((prev: any) => [...prev, data]);
+      });
+      socket.on('disconnect', () => {
+        console.log('Disconnected from WebSocket server.');
+        setConnected(false);
+      });
+      return () => {
+        socket.off('connect');
+        socket.off('server-send-data');
+        socket.off('disconnect');
+      };
+    }
+  });
+
+  const handleSendMessage = () => {
+    socket?.emit('client-send-data', { message, receiverId: 1, senderId: 1 });
+    setMessage('');
+  };
   console.log(message);
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
-      setMessage('');
+      handleSendMessage();
     }
-  };
-  const handleSendMessage = () => {
-    setMessage('');
   };
   return (
     <div className={classes.wrapper}>

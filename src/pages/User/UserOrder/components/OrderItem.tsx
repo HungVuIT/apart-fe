@@ -42,7 +42,7 @@ function OrderItem({ item }: IProps) {
     <div className='OI__wrapper'>
       <ul className="OI-body">
         <li className="OI-item OI-name">
-          <div className="OI-name-text">{item.id}</div>
+          <div className="OI-name-text">{item.code || item.id}</div>
         </li>
         <li className="OI-item OI-total">
           <div className="OI-amount">{formatMoney.format(item.total)}</div>

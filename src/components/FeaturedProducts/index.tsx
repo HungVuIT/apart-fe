@@ -6,13 +6,26 @@ import Item from '../Item';
 import { IWatch } from '../../interface/watch/watchType';
 import defaultLogo from '../../assets/img/logo-watch.png';
 import Loading from '../../pages/common/loading';
+import { getListProductInHome } from '../../api/service/home-service';
 interface IProps {
   title: string
-  watchList: IWatch[]
+  type?: any
 }
-function FeaturedProducts ({ title, watchList }: IProps): JSX.Element {
+function FeaturedProducts ({ title, type }: IProps): JSX.Element {
   const [ele, setEle] = useState(4);
   const [width, setWidth] = useState(window.innerWidth);
+  const [list, setList] = useState<IWatch[]>([]);
+  useEffect(() => {
+    let params = '';
+    if (type === 'TOP') {
+      params = '?orderBy=saled.asc';
+    } else if (type === 'NEW') {
+      params = '?orderBy=createdAt.desc';
+    } else if (type === 'saled') {
+      params = '';
+    }
+    getListProductInHome(params, setList);
+  }, []);
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth < 600) {
@@ -29,9 +42,9 @@ function FeaturedProducts ({ title, watchList }: IProps): JSX.Element {
     return () => window.removeEventListener('resize', handleResize);
   });
   const watchListRender = useMemo(() => {
-    const lst = watchList?.length > 0 ? watchList.filter((watch, index) => index < ele) : [];
+    const lst = list?.length > 0 ? list.filter((watch, index) => index < ele) : [];
     return lst;
-  }, [ele, watchList]);
+  }, [ele, list]);
   return (
     <Container >
       {watchListRender.length > 0

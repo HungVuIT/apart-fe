@@ -46,14 +46,14 @@ export const extraReducersCommon = (
 ) => {
   builder
     .addCase(searchWatchByName.pending, (state, action) => {
-      state.loading = true;
+      state.loadingSearch = true;
     })
     .addCase(searchWatchByName.rejected, (state, action) => {
       state.error = action.error as string;
-      state.loading = false;
+      state.loadingSearch = false;
     })
     .addCase(searchWatchByName.fulfilled, (state, action) => {
-      state.loading = false;
+      state.loadingSearch = false;
       state.searchLst = action.payload;
     })
     .addCase(getListOfShop.pending, (state, action) => {

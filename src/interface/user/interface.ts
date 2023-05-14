@@ -71,6 +71,7 @@ export interface IOrder {
   UID: number
   Note: any
   isActive: boolean
+  code: string
 }
 export const initOrderList: IOrder = {
   id: 0,
@@ -81,7 +82,8 @@ export const initOrderList: IOrder = {
   paymentMethod: '',
   UID: 0,
   Note: null,
-  isActive: true
+  isActive: true,
+  code: ''
 };
 export interface IStateUser {
   profile: IUserInfo

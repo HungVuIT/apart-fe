@@ -7,17 +7,12 @@ import Category from '../../../components/Category';
 import { menCategory, womenCategory, coCategory, dientuCategory, treemCategory, capdoiCategory } from './image';
 import FeaturedProducts from '../../../components/FeaturedProducts';
 import { MyGlobalContext } from '../../../store/context/MyglobalContext';
-import { getListProduct } from '../../../api/service/home-service';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { getListOfWatch, getListSaleOfWatch } from '../../../redux/watch/watchThunk';
 import Carousel from 'react-material-ui-carousel';
 import { setSearch } from '../../../redux/common/commonSlice';
 function Home() {
   const dispatch = useAppDispatch();
-  const { saleWatchList } = useAppSelector(state => state.watch);
   React.useEffect(() => {
-    dispatch(getListSaleOfWatch());
-    dispatch(getListOfWatch());
     dispatch(setSearch(''));
   }, []);
   return (
@@ -40,9 +35,9 @@ function Home() {
             <Search />
           </div>
         </Container>
-        <FeaturedProducts title='Top bán chạy' watchList={saleWatchList}/>
-        <FeaturedProducts title='Khuyến mãi shock' watchList={saleWatchList}/>
-        <FeaturedProducts title='Sản phẩm mới' watchList={saleWatchList}/>
+        <FeaturedProducts title='Top bán chạy' type={'TOP'}/>
+        <FeaturedProducts title='Khuyến mãi shock' type={'SALE'}/>
+        <FeaturedProducts title='Sản phẩm mới' type={'NEW'}/>
       </>
     </>
   );

@@ -14,16 +14,6 @@ function Search ({ isReload }: ISearch): JSX.Element {
   const dispatch = useAppDispatch();
   const [value, setValue] = useState((search !== 'all' && !!search) ? search : '');
   const navigate = useNavigate();
-  const { keyword } = useParams();
-  useEffect(() => {
-    setValue(keyword || '');
-    dispatch(setSearch(keyword || ''));
-    keyword !== 'all'
-      ? dispatch(searchWatchByName({
-        search: keyword
-      }))
-      : dispatch(searchWatchByName({ search: '' }));
-  }, []);
   const handleClick = () => {
     const key = value || 'all';
     value !== 'all' && dispatch(setSearch(value));

@@ -4,6 +4,7 @@ export interface IStateCommon {
   search: string
   searchLst: IWatch[]
   loading: boolean
+  loadingSearch: boolean
   error: string
 }
 export const initShopList: IShop[] = [];

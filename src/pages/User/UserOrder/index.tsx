@@ -66,9 +66,9 @@ function UserOrder() {
                     ? (
                       <TabPanel value={value} index={value} >
                         <ul className="item-header">
-                          <li className="item-title" style={{ width: '10%' }}>Đơn hàng</li>
-                          <li className="item-title" style={{ width: '25%' }}>Tổng đơn hàng</li>
-                          <li className="item-title" style={{ width: '25%' }}>Trạng thái</li>
+                          <li className="item-title" style={{ width: '20%' }}>Đơn hàng</li>
+                          <li className="item-title" style={{ width: '20%' }}>Tổng đơn hàng</li>
+                          <li className="item-title" style={{ width: '20%' }}>Trạng thái</li>
                           <li className="item-title" style={{ width: '20%' }}>Thanh toán</li>
                           <li className="item-title" style={{ width: '20%' }}>Thao tác</li>
                         </ul>

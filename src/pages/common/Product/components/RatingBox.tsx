@@ -1,18 +1,15 @@
 import { Accordion, AccordionDetails, AccordionSummary, Button, Rating, TextField, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Container from '../../../../components/Container';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { ToastContainer, toast } from 'react-toastify';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { IComment, IRating } from '../../../../interface/watch/watchType';
 import { getRatingById } from '../../../../redux/product/productThunk';
-import moment from 'moment';
 import { ratingOnWatch } from '../../../../api/service/product-service';
 import ItemRating from './ItemRating';
 import RichText from '../../../../components/RichText';
+import { MyGlobalContext } from '../../../../store/context/MyglobalContext';
+import { getAccessToken } from '../../../../untils/localStorage';
 
 interface IProps {
   id: number | undefined
@@ -21,24 +18,33 @@ function RatingBox({ id }: IProps): JSX.Element {
   const [value, setValue] = React.useState<string>('');
   const [score, setScore] = React.useState<number>(0);
   const dispatch = useAppDispatch();
+  const { setIsOpenLogin, setIsLogin } = useContext(MyGlobalContext);
   const { rating, watch } = useAppSelector(state => state.productNow);
   useEffect(() => {
     id && dispatch(getRatingById(id));
   }, []);
+  const handleLogin = () => {
+    setIsOpenLogin(true);
+    setIsLogin(true);
+  };
   const handleClick = async () => {
-    const data: any = {
-      content: value,
-      score,
-      targetID: watch.id
-    };
-    const res = await ratingOnWatch(data);
-    if (res.success) {
-      setValue('');
-      setScore(0);
-      id && dispatch(getRatingById(id));
-      toast('Bạn vừa đánh giá thành công');
+    if (getAccessToken()) {
+      const data: any = {
+        content: value,
+        score,
+        targetID: watch.id
+      };
+      const res = await ratingOnWatch(data);
+      if (res.success) {
+        setValue('');
+        setScore(0);
+        id && dispatch(getRatingById(id));
+        toast('Bạn vừa đánh giá thành công');
+      } else {
+        toast.error('Đánh giá không thành công');
+      }
     } else {
-      toast.error('Đánh giá không thành công');
+      handleLogin();
     }
   };
   const handleOnChange = (_value: any) => {
@@ -88,6 +94,7 @@ function RatingBox({ id }: IProps): JSX.Element {
             </Typography>
           </AccordionDetails>
         </Accordion>
+        <ToastContainer autoClose={1000} position='bottom-right' />
       </div>
     </Container>
   );

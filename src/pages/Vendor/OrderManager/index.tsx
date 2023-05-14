@@ -86,7 +86,7 @@ function OrderManager() {
       headerName: 'Mã sản phẩm',
       width: caculatorWidth(15),
       renderCell: (params) => (
-        <div className={classes.orderCode}>{params.row.id}</div>
+        <div className={classes.orderCode}>{params.row.code || params.row.id}</div>
       )
     },
     {

@@ -6,6 +6,7 @@ const commonSlice = createSlice({
   initialState: {
     shopList: initShopList,
     loading: false,
+    loadingSearch: false,
     searchLst: [],
     search: '',
     error: ''

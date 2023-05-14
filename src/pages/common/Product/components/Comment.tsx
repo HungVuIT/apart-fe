@@ -1,5 +1,5 @@
 import { Accordion, AccordionDetails, AccordionSummary, Button, Rating, TextField, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Container from '../../../../components/Container';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
@@ -9,6 +9,8 @@ import { getCommentById } from '../../../../redux/product/productThunk';
 import { commentOnWatch, IDataComment } from '../../../../api/service/product-service';
 import ItemComment from './ItemComment';
 import RichText from '../../../../components/RichText';
+import { MyGlobalContext } from '../../../../store/context/MyglobalContext';
+import { getAccessToken } from '../../../../untils/localStorage';
 
 interface IProps {
   id: number | undefined
@@ -17,22 +19,31 @@ function Comment({ id }: IProps): JSX.Element {
   const [value, setValue] = React.useState<string>('');
   const dispatch = useAppDispatch();
   const { comment, watch } = useAppSelector(state => state.productNow);
+  const { setIsOpenLogin, setIsLogin } = useContext(MyGlobalContext);
 
   useEffect(() => {
     id && dispatch(getCommentById(id));
   }, []);
+  const handleLogin = () => {
+    setIsOpenLogin(true);
+    setIsLogin(true);
+  };
   const handleClick = async () => {
-    const data: IDataComment = {
-      content: value,
-      watchId: watch.id
-    };
-    const res = await commentOnWatch(data);
-    console.log(res);
-    if (res.success) {
-      setValue('');
-      id && dispatch(getCommentById(id));
+    if (getAccessToken()) {
+      const data: IDataComment = {
+        content: value,
+        watchId: watch.id
+      };
+      const res = await commentOnWatch(data);
+      console.log(res);
+      if (res.success) {
+        setValue('');
+        id && dispatch(getCommentById(id));
+      } else {
+        toast.error('Bình luận không thành công');
+      }
     } else {
-      toast.error('Bình luận không thành công');
+      handleLogin();
     }
   };
   const handleOnChange = (_value: any) => {
