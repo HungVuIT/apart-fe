@@ -5,7 +5,6 @@ import { getBrandList, getCategoryList } from '../../../../../api/service/produc
 import Dialog from '@mui/material/Dialog';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import ItemList from '../../../../common/ProductList/components/ItemList';
-import MobileTags from '../../../../common/ProductList/components/MobileTags';
 import Tags from '../../../../common/ProductList/components/Tags';
 import { IWatch } from '../../../../../interface/watch/watchType';
 import { getListWatchShop } from '../../../../../api/service/shop-service';

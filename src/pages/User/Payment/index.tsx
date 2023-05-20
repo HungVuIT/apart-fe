@@ -18,7 +18,6 @@ const steps = ['Thông tin', 'Vận chuyển', 'Thanh toán'];
 export default function Payment () {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
-  const [loading, setLoading] = React.useState(false);
   const [paymentDetails, setPaymentDetails] = React.useState(initPaymentDetail);
   const { payment } = useAppSelector(state => state.user);
   const navigate = useNavigate();

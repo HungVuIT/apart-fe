@@ -10,20 +10,12 @@ import Button from '@mui/material/Button';
 import { toast, ToastContainer } from 'react-toastify';
 import { getShipFee } from '../../../../api/service/user-service';
 import { ICheckOut } from '../../../../interface/payment/interface';
-import { useAppDispatch } from '../../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { setShipPrice } from '../../../../redux/user/userSlice';
 
 function ShipBox({ handleBack, handleNext, setPaymentDetails, paymentDetails }: IPropsPayment) {
-  const [value, setValue] = React.useState('1');
+  const [value, setValue] = React.useState('');
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    const params: ICheckOut = {
-      ...paymentDetails.infor,
-      deliveryOption: value,
-      paymentMethod: 'online'
-    };
-    const data = getShipFee(params, dispatch);
-  }, []);
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const params: ICheckOut = {
       ...paymentDetails.infor,

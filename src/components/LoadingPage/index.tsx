@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import { setAccessToken, setRefreshToken } from '../../untils/localStorage';
+import Loading from '../Loading';
 function LoadingPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function LoadingPage() {
     }
   }, [accessToken, refreshToken]);
   return (
-    <div>LoadingPage</div>
+    <Loading />
   );
 }
 

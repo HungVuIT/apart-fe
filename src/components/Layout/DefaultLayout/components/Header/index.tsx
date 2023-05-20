@@ -24,23 +24,28 @@ import { getListOfShop } from '../../../../../redux/common/commonThunk';
 import { ROLE } from '../../../../../interface/user/enum';
 import { getProfileShop } from '../../../../../redux/vendor/vendorThunk';
 const items = ['Trang chủ', 'Danh mục', 'Thương hiệu', 'Tin tức'];
-
-function Header() {
+interface IProps {
+  setLoadingPage: any
+}
+function Header({ setLoadingPage }: IProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { isOpenLogin, setIsOpenLogin, isLogin, setIsLogin, loading, setLoading } = React.useContext(MyGlobalContext);
   const locationUrl = useLocation();
   const token = getAccessToken();
   const navigate = useNavigate();
-  const { setNowUrl } = React.useContext(MyGlobalContext);
   const { profile } = useAppSelector(state => state.user);
   const dispatch = useAppDispatch();
   React.useEffect(() => {
     if (getAccessToken()) {
-      dispatch(getProfile());
-      dispatch(getCart());
       dispatch(getFavoriteList());
     }
-  }, [getAccessToken(), dispatch]);
+  }, []);
+  React.useEffect(() => {
+    if (getAccessToken()) {
+      getAllOfMe();
+    }
+  }, []);
+
   React.useEffect(() => {
     dispatch(getListOfShop());
   }, []);
@@ -49,6 +54,15 @@ function Header() {
       dispatch(getProfileShop());
     }
   }, [profile.role]);
+  const getAllOfMe = async () => {
+    setLoadingPage(true);
+    console.log(profile);
+    if (!profile || !profile.email) {
+      await dispatch(getProfile());
+    }
+    await dispatch(getCart());
+    setLoadingPage(false);
+  };
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
