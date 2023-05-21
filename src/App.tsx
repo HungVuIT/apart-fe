@@ -6,18 +6,23 @@ import { useAppDispatch, useAppSelector } from './hooks/hooks';
 import { getProfile } from './redux/user/userThunk';
 import { getProfileShop } from './redux/vendor/vendorThunk';
 import Loading from './components/Loading';
+import { getAccessToken } from './untils/localStorage';
 function App() {
   const dispatch = useAppDispatch();
   const { shop } = useAppSelector(state => state.vendor);
   const { profile } = useAppSelector(state => state.user);
   const [loading, setLoading] = useState(!(profile.username));
   useEffect(() => {
-    getInfor();
+    if (getAccessToken()) {
+      getInfor();
+    } else {
+      setLoading(false);
+    }
   }, []);
   const getInfor = async () => {
     setLoading(true);
-    if (!shop.email) {
-      if (!profile.username) {
+    if (!shop?.email) {
+      if (!profile?.username) {
         await dispatch(getProfile());
       }
       await dispatch(getProfileShop());
