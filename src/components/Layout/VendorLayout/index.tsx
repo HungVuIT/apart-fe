@@ -105,9 +105,9 @@ export default function VendorLayout({ children }: IPropsChildren) {
   const [open, setOpen] = React.useState(false);
   const [menuRender, setMenuRender] = React.useState([...menuVendor]);
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const { shop } = useAppSelector(state => state.vendor);
-  const location = useLocation();
   const { profile } = useAppSelector(state => state.user);
   const [loading, setLoading] = useState(!(profile.username));
   useEffect(() => {
@@ -149,10 +149,10 @@ export default function VendorLayout({ children }: IPropsChildren) {
     <>
       {loading && <Loading />}
       <Box sx={{
-        display: loading ? 'none' : 'flex'
+        display: (loading ? 'none' : 'flex')
       }}>
       <CssBaseline />
-      <Drawer variant="permanent" open={open} >
+      <Drawer variant="permanent" open={open}>
         <DrawerHeader
           sx={{
             backgroundColor: '#212529',

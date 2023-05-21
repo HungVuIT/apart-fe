@@ -39,12 +39,13 @@ body {
     width: 60%;
   }
 }
-.css-1hsz34s-MuiDrawer-docked .MuiDrawer-paper, .css-2dum1v-MuiDrawer-docked,
-.css-2dum1v-MuiDrawer-docked .MuiDrawer-paper {
-  background-color: #202123;
-  color: #f8f9fa;
+.MuiPaper-root  {
+  background-color: #202123 !important;
+  color: #f8f9fa !important;
 }
-.css-1iqnbrp-MuiButtonBase-root-MuiListItemButton-root:hover,
-.css-uxa1ks-MuiListItem-root:hover {
-  background-color: #2a2b32;
+.MuiListItem-root:hover {
+  background-color: #2a2b32 !important;
+}
+.none {
+  display: none;
 }
