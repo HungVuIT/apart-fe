@@ -9,7 +9,6 @@ import itempng from '../../../../assets/img/item.png';
 import item2png from '../../../../assets/img/logo.png';
 import item3png from '../../../../assets/img/dientu-category.png';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import axiosClient from '../../../../api/axiosClient';
 import { getCart, getFavoriteList } from '../../../../redux/user/userThunk';
 import { MyGlobalContext } from '../../../../store/context/MyglobalContext';
 import { getAccessToken } from '../../../../untils/localStorage';

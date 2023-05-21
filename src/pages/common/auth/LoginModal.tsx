@@ -69,6 +69,11 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
     if (isForgotPassword) {
       const email = _data.username;
       const data = await resetPassword(email);
+      if (data.success) {
+        showToastMessage(<Toast title='Yêu cầu đặt lại mật khẩu thành công!' message={'Hãy kiểm tra email'} />, typeToast.SUCCESS);
+      } else {
+        showToastMessage(<Toast title='Yêu cầu đặt lại mật khẩu thất bại!' message={data.message} />, typeToast.ERROR);
+      }
     } else {
       if (isSignIn) {
         const params: IDataLogin = {

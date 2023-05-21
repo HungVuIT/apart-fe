@@ -273,7 +273,7 @@ function RegisterShop() {
             )}
           />
           <div className={classes.btns}>
-            <Button className={classes.btn + ' ' + classes.cancel} variant="contained">HỦY</Button>
+            <Button className={classes.btn + ' ' + classes.cancel} variant="contained" onClick={() => navigate('/')}>HỦY</Button>
             <Button type='submit' className={classes.btn + ' ' + classes.save} variant="contained">ĐĂNG KÝ</Button>
           </div>
       </form>

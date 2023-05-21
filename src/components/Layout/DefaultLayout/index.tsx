@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IPropsChildren } from '../../../interface/globalType';
 import { getAccessToken } from '../../../untils/localStorage';
 import Footer from './components/Footer';
@@ -10,6 +10,11 @@ import { useAppSelector } from '../../../hooks/hooks';
 function DefaultLayout({ children }: IPropsChildren) {
   const { profile } = useAppSelector(state => state.user);
   const [loading, setLoading] = useState(!(profile.username));
+  useEffect(() => {
+    if (!getAccessToken()) {
+      setLoading(false);
+    }
+  }, [getAccessToken()]);
   return (
     <>
         {loading && <Loading />}
