@@ -26,6 +26,10 @@ import { IMenuVendorItem } from './type';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { getListProductOfShop, getProfileShop } from '../../../redux/vendor/vendorThunk';
 import './customMui.scss';
+import { useEffect, useState } from 'react';
+import { getAccessToken } from '../../../untils/localStorage';
+import { getProfile } from '../../../redux/user/userThunk';
+import Loading from '../../Loading';
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -98,25 +102,36 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function VendorLayout({ children }: IPropsChildren) {
-  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [menuRender, setMenuRender] = React.useState([...menuVendor]);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { shop } = useAppSelector(state => state.vendor);
   const location = useLocation();
+  const { profile } = useAppSelector(state => state.user);
+  const [loading, setLoading] = useState(!(profile.username));
+  useEffect(() => {
+    getInfor();
+  }, []);
   React.useEffect(() => {
     const newMenu = menuVendor.map(item => item.link === location.pathname ? ({ ...item, active: true }) : item);
     setMenuRender(newMenu);
-  }, []);
-  React.useEffect(() => {
-    dispatch(getProfileShop());
   }, []);
   React.useEffect(() => {
     if (shop.id) {
       dispatch(getListProductOfShop(shop.id));
     }
   }, [shop]);
+  const getInfor = async () => {
+    setLoading(true);
+    if (!shop.email) {
+      if (!profile.username) {
+        await dispatch(getProfile());
+      }
+      await dispatch(getProfileShop());
+    }
+    setLoading(false);
+  };
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -131,7 +146,11 @@ export default function VendorLayout({ children }: IPropsChildren) {
     navigate(_item.link);
   };
   return (
-    <Box sx={{ display: 'flex' }}>
+    <>
+      {loading && <Loading />}
+      <Box sx={{
+        display: loading ? 'none' : 'flex'
+      }}>
       <CssBaseline />
       <Drawer variant="permanent" open={open} >
         <DrawerHeader
@@ -210,5 +229,6 @@ export default function VendorLayout({ children }: IPropsChildren) {
         {children}
       </Box>
     </Box>
+    </>
   );
 }

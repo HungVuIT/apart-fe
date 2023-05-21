@@ -5,7 +5,7 @@ interface ILoading {
   profile: boolean
 }
 export interface IStateVendor {
-  shop: IShop
+  shop: IShop | null
   error: string
   lstProduct: any[]
   loading: ILoading
