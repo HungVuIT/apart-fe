@@ -148,9 +148,12 @@ export default function VendorLayout({ children }: IPropsChildren) {
   return (
     <>
       {loading && <Loading />}
-      <Box sx={{
-        display: (loading ? 'none' : 'flex')
-      }}>
+      <Box
+        className='vendor'
+        sx={{
+          display: (loading ? 'none' : 'flex')
+        }}
+      >
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
         <DrawerHeader

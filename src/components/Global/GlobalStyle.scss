@@ -39,12 +39,14 @@ body {
     width: 60%;
   }
 }
-.MuiPaper-root  {
-  background-color: #202123 !important;
-  color: #f8f9fa !important;
-}
-.MuiListItem-root:hover {
-  background-color: #2a2b32 !important;
+.vendor {
+  .MuiPaper-root  {
+    background-color: #202123 !important;
+    color: #f8f9fa !important;
+  }
+  .MuiListItem-root:hover {
+    background-color: #2a2b32 !important;
+  }
 }
 .none {
   display: none;
