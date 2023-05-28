@@ -59,7 +59,7 @@ function ProductList (): JSX.Element {
           isMobile && <ReorderIcon className={classes['filter-icon'] + ' ' + ((!isOpen) ? classes.iconActive : classes.iconUnactive)} onClick={() => setIsOpen(prev => !prev)}/>
       }
       <div className={classes.box__tag + ' ' + ((isOpen || !isMobile) ? classes.active : classes.unactive) }>
-        <Tags filterValue={filterValue} setFilterValue={setFilterValue} handleCloseDialog={handleCloseDialog} check={isOpen && isMobile}/>
+        <Tags filterValue={filterValue} setFilterValue={setFilterValue} handleCloseDialog={handleCloseDialog} check={isOpen && isMobile} setPage={setPage}/>
       </div>
       <div className={classes.box__right}>
         <Container className={classes.banner__wrapper}>

@@ -40,8 +40,9 @@ interface IProps {
   check?: any
   SID?: any
   setList?: any
+  setPage?: any
 }
-function Tags({ filterValue, setFilterValue, handleCloseDialog, check, SID, setList }: IProps) {
+function Tags({ filterValue, setFilterValue, handleCloseDialog, check, SID, setList, setPage }: IProps) {
   const { search, loadingSearch, categoryAndBrand } = useAppSelector(state => state.common);
   const [categoryValue, setCategoryValue] = useState(filterValue.CID || '');
   const [brandValue, setBrandValue] = useState(filterValue.BID || '');
@@ -97,6 +98,7 @@ function Tags({ filterValue, setFilterValue, handleCloseDialog, check, SID, setL
         ...(priceValue && { price: priceValue }),
         ...(provinceValue && { province: provinceValue })
       }));
+    !!setPage && setPage(1);
   };
   const handleClickCanCel = () => {
     setBrandValue('');
