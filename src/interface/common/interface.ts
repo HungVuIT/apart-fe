@@ -1,11 +1,22 @@
+import { Socket } from 'socket.io-client';
 import { IWatch } from './../watch/watchType';
 export interface IStateCommon {
   shopList: IShop[]
   search: string
   searchLst: IWatch[]
-  loading: boolean
   loadingSearch: boolean
   error: string
+  socket: Socket | any
+  inforSocket: IInforSocket
+  categoryAndBrand: ICategoryAndBrand
+}
+export interface ICategoryAndBrand {
+  categories: Category[]
+  brands: IBrand[]
+}
+export interface IInforSocket {
+  receiverId: number
+  open: boolean
 }
 export const initShopList: IShop[] = [];
 export interface IShop {

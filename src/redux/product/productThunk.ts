@@ -63,36 +63,25 @@ export const extraReducersProduct = (
       state.error = action.error as string;
     })
     .addCase(getWatchById.fulfilled, (state, action) => {
-      state.loading = true;
+      state.loading = false;
       state.watch = action.payload;
     })
     .addCase(getShopById.rejected, (state, action) => {
       state.error = action.error as string;
     })
     .addCase(getShopById.fulfilled, (state, action) => {
-      state.loading = true;
       state.shop = action.payload;
     })
-    .addCase(getCommentById.pending, (state, action) => {
-      state.loading = true;
-    })
     .addCase(getCommentById.rejected, (state, action) => {
-      state.loading = false;
       state.error = action.error as string;
     })
     .addCase(getCommentById.fulfilled, (state, action) => {
-      state.loading = true;
       state.comment = action.payload;
     })
-    .addCase(getRatingById.pending, (state, action) => {
-      state.loading = true;
-    })
     .addCase(getRatingById.rejected, (state, action) => {
-      state.loading = false;
       state.error = action.error as string;
     })
     .addCase(getRatingById.fulfilled, (state, action) => {
-      state.loading = true;
       state.rating = action.payload;
     });
 };

@@ -57,8 +57,8 @@ function ProfileStore() {
   const [district, setDistrict] = useState<IDistrict[]>([]);
   const [ward, setWard] = useState<IWard[]>([]);
   const [loadingPage, setLoadingPage] = useState(false);
-  const [image, setImage] = useState<string>(shop.logo);
-  const [banner, setBanner] = useState<string>(shop.banner || '');
+  const [image, setImage] = useState<string>(shop?.logo || defaultAvt);
+  const [banner, setBanner] = useState<string>(shop?.banner || '');
   const [file, setFile] = useState<any>();
   const [fileBanner, setFileBanner] = useState<any>();
   const inputFile = React.useRef<HTMLInputElement>(null);

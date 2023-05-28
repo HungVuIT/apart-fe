@@ -395,6 +395,9 @@
     }
     & .comment-item {
       padding: 20px;
+      & img {
+        max-width: 50%;
+      }
       & .item-star {
         margin-top: 10px;
         & span {

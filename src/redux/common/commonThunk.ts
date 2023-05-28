@@ -29,18 +29,30 @@ export const searchWatchByName = createAsyncThunk(
     }
   }
 );
-// export const fillterWatch = createAsyncThunk(
-//   'watch/search',
-//   async (params: any) => {
-//     try {
-//       const url = 'watchs/list';
-//       const response = await axiosClient.get(url, { ...params });
-//       return response.data.data;
-//     } catch (error) {
-//       throw new Error(String(error));
-//     }
-//   }
-// );
+export const getCategoryList = createAsyncThunk(
+  'common/get/CategoryList',
+  async () => {
+    try {
+      const url = 'categorys/list';
+      const response = await axiosClient.get(url);
+      return response.data.data;
+    } catch (err) {
+      throw new Error(String(err));
+    }
+  }
+);
+export const getBrandList = createAsyncThunk(
+  'common/get/BrandList',
+  async () => {
+    try {
+      const url = 'brands/list';
+      const response = await axiosClient.get(url);
+      return response.data.data;
+    } catch (err) {
+      throw new Error(String(err));
+    }
+  }
+);
 export const extraReducersCommon = (
   builder: ActionReducerMapBuilder<IStateCommon>
 ) => {
@@ -56,15 +68,22 @@ export const extraReducersCommon = (
       state.loadingSearch = false;
       state.searchLst = action.payload;
     })
-    .addCase(getListOfShop.pending, (state, action) => {
-      state.loading = true;
+    .addCase(getBrandList.rejected, (state, action) => {
+      state.error = action.error as string;
+    })
+    .addCase(getBrandList.fulfilled, (state, action) => {
+      state.categoryAndBrand.brands = action.payload;
+    })
+    .addCase(getCategoryList.rejected, (state, action) => {
+      state.error = action.error as string;
+    })
+    .addCase(getCategoryList.fulfilled, (state, action) => {
+      state.categoryAndBrand.categories = action.payload;
     })
     .addCase(getListOfShop.rejected, (state, action) => {
       state.error = action.error as string;
-      state.loading = false;
     })
     .addCase(getListOfShop.fulfilled, (state, action) => {
-      state.loading = false;
       state.shopList = action.payload;
     });
 };

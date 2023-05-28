@@ -23,8 +23,6 @@ function ProductList (): JSX.Element {
   const { searchLst, search } = useAppSelector(state => state.common);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
   const [isOpen, setIsOpen] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [brands, setBrands] = useState([]);
   const [filterValue, setFilterValue] = useState<IFilterValue>({
     search,
     BID: null,
@@ -35,16 +33,6 @@ function ProductList (): JSX.Element {
     ward: null
   });
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    getCategoryList(setCategories);
-    getBrandList(setBrands);
-  }, []);
-  console.log(search);
-  useEffect(() => {
-    dispatch(searchWatchByName({
-      search: search !== 'all' ? search : ''
-    }));
-  }, [search]);
   React.useEffect(() => {
     function handleResize() {
       if (window.innerWidth < 678) {

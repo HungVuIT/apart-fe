@@ -38,8 +38,18 @@ function Item ({ watch }: IProps): JSX.Element {
       handleLogin();
     }
   };
+  const handleCaculatorPercent = () => {
+    return (((watch.price - watch.sale_off.amount) / watch.price) * 100).toFixed(2);
+  };
   return (
     <div className="item__wrapper" onClick = {handleClick}>
+      {
+        watch.sale_off
+          ? <div className='item-discount'>
+              <span>{handleCaculatorPercent() + ' %'}</span>
+            </div>
+          : <></>
+      }
       <div className='item-img__wrapper'>
         <img src={watch.image[0] || defaultLogo} alt={watch.name} className={'item-img' + (watch.quantity <= 0 ? ' out-of-stock' : '')} />
         <div className='item-shop-name'>{getShop(watch.SID, shopList)?.name}</div>
@@ -51,11 +61,15 @@ function Item ({ watch }: IProps): JSX.Element {
       <div className='rating__wrapper'>
         <Rating className='item-rating' name="read-only" value={watch.rating?.score || 2} readOnly />
       </div>
-      <div className="item-price">{formatMoney.format(watch.price)}</div>
+      <div className={'item-price' + (watch.sale_off ? ' have-sale' : '')}>{formatMoney.format(watch.price)}</div>
+      {watch.sale_off && <div className="item-price">{formatMoney.format(watch.sale_off.amount)}</div>}
       <div className='product-btns'>
-        {watch.quantity > 0 && (<button className='icon-cart' onClick={handleAddToCart}>
+        {/* {watch.quantity > 0 && (<button className='icon-cart' onClick={handleAddToCart}>
           <FontAwesomeIcon icon={faCartPlus} />
-        </button>)}
+        </button>)} */}
+        {
+          watch.quantity > 0 && <span onClick={handleAddToCart}>Thêm vào giỏ hàng</span>
+        }
       </div>
     </div>
   );

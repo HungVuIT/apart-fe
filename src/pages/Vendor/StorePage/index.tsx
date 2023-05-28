@@ -9,14 +9,21 @@ import { getListWatchShop, getProfileShopById } from '../../../api/service/shop-
 import Button from '@mui/material/Button';
 import { IShop, initShop } from '../../../interface/common/interface';
 import { IWatch } from '../../../interface/watch/watchType';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { setOpenChat, setReceiverId } from '../../../redux/common/commonSlice';
 function StorePage() {
   const { shopId } = useParams();
   const [list, setList] = useState<IWatch[]>([]);
   const [shopProfile, setShopProfile] = useState<IShop>(initShop);
+  const dispatch = useAppDispatch();
   useEffect(() => {
     shopId && getProfileShopById(shopId, setShopProfile);
     getListWatchShop({ SID: shopId, title: '' }, setList);
   }, []);
+  const handleChat = () => {
+    dispatch(setReceiverId(shopProfile.UID));
+    dispatch(setOpenChat(true));
+  };
   const createAt = () => {
     const time = shopProfile.createdAt.split('-');
     return time[0];
@@ -39,7 +46,7 @@ function StorePage() {
           </div>
           <div className={classes['btn-box']}>
             <Button variant="contained" className={classes.btn} >Theo dõi</Button>
-            <Button variant="contained" className={classes.btn} >Chat</Button>
+            <Button variant="contained" className={classes.btn} onClick={handleChat}>Chat</Button>
           </div>
           <div className={classes['detail-box']}>
             <div className={classes.left}>

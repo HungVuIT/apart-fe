@@ -25,6 +25,10 @@
       width: 100%;
       text-align: center;
       font-size: 12px;
+      & .sale {
+        text-decoration: line-through;
+        font-size: 10px;
+      }
     }
     & .watch-quantity {
       width: 100%;

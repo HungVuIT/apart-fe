@@ -12,9 +12,12 @@ const rootReducer = {
   vendor: vendorReducer,
   productNow: productReducer
 };
-
 const store = configureStore({
-  reducer: rootReducer
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false
+    })
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

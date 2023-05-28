@@ -40,6 +40,7 @@ interface ICartRender {
   name: string
   price: number
   quantity: number
+  sale_off: any
 }
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -82,7 +83,10 @@ function Cart() {
       headerName: 'Đơn giá',
       width: caculatorWidth(17),
       renderCell: (params) => (
-        <div className={classes['watch-price']}>{formatMoney.format(params.row.price)}</div>
+        <div className={classes['watch-price']}>
+          <div className={classes.price + (params.row.sale_off ? (' ' + classes.sale) : '')}>{formatMoney.format(params.row.price)}</div>
+          {params.row.sale_off && <div className={classes.sale_off}>{formatMoney.format(params.row.sale_off.amount)}</div>}
+        </div>
       )
     },
     {
@@ -104,7 +108,7 @@ function Cart() {
       width: caculatorWidth(17),
       renderCell: (params) => (
         <div className={classes['watch-total']}>
-          {formatMoney.format(params.row.quantity * params.row.price)}
+          {formatMoney.format(params.row.quantity * (params.row.sale_off ? params.row.sale_off.amount : params.row.price))}
         </div>
       )
     },
@@ -144,34 +148,6 @@ function Cart() {
     }
   };
 
-  // các hàm xử lý
-  // const handleChangeQuantity = (id: number, type: TypeChangeQuantity) => {
-  //   const newCart = [...cart];
-  //   const itemIndex = newCart.findIndex((item) => item.id === id);
-  //   let newItem;
-  //   if (itemIndex !== -1 && itemIndex < newCart.length) {
-  //     newItem = type === TypeChangeQuantity.PLUS
-  //       ? newCart[itemIndex] = {
-  //         ...newCart[itemIndex],
-  //         quantity: newCart[itemIndex].quantity + 1
-  //       }
-  //       : newCart[itemIndex].quantity > 1
-  //         ? newCart[itemIndex] = {
-  //           ...newCart[itemIndex],
-  //           quantity: newCart[itemIndex].quantity - 1
-  //         }
-  //         : null;
-  //   }
-  //   if (newItem) {
-  //     const quantity = newItem.quantity;
-  //     dispatch(changeQuantity({ id, quantity }));
-  //     changeQuantityApi({ cartId: id, quantity });
-  //   } else {
-  //     removeItemFromCart(id);
-  //     dispatch(removeItemCart(id));
-  //   }
-  // };
-
   const handleChangeQuantity = useCallback((id: number, type: TypeChangeQuantity) => {
     const newCart = [...cart];
     const itemIndex = newCart.findIndex((item) => item.id === id);
@@ -199,7 +175,7 @@ function Cart() {
     }
   }, [cart, dispatch, changeQuantityApi, removeItemFromCart]);
 
-  const caculatorTotalPayment = () => {
+  const caculatorCost = () => {
     let totalPrice = 0;
     cart.forEach(item => {
       totalPrice += item.quantity * item.watch.price;
@@ -207,9 +183,20 @@ function Cart() {
     return totalPrice;
   };
 
-  // const handleRemoveItemFromCart = (id: number) => {
-  //   removeItemFromCart(id);
-  // };
+  const caculatorDiscount = () => {
+    let totalDiscount = 0;
+    cart.forEach(item => {
+      if (item.watch.sale_off) {
+        totalDiscount += item.quantity * (item.watch.price - item.watch.sale_off.amount);
+      }
+    });
+    return totalDiscount;
+  };
+
+  const caculatorTotalPayment = () => {
+    return caculatorCost() - caculatorDiscount();
+  };
+
   const handleRemoveItemFromCart = useCallback((id: number) => {
     removeItemFromCart(id);
   }, [removeItemFromCart]);
@@ -218,13 +205,6 @@ function Cart() {
     navigate('/payment');
   };
 
-  // tính toán các item hiển thị giỏ hàng và sản phẩm được
-  // chọn thanh toán
-  // const cartPayment: ICart[] = useMemo(() => {
-  //   const lst: ICart[] = [];
-  //   cart.forEach(item => selectItem.includes(item.id) && lst.push(item));
-  //   return lst;
-  // }, [selectItem, cart]);
   const cartRender: ICartRender[] = useMemo(() => {
     const lst: ICartRender[] = [];
     cart.forEach(item => {
@@ -233,11 +213,13 @@ function Cart() {
         image: item.watch.image[0] || defaultLogo,
         name: item.watch.name,
         price: item.watch.price,
-        quantity: item.quantity
+        quantity: item.quantity,
+        sale_off: item.watch.sale_off
       });
     });
     return lst;
   }, [cart]);
+  console.log(cartRender);
   return (
     <>
       {loading.cart
@@ -261,12 +243,12 @@ function Cart() {
            <hr color="#ced4da" />
            <div className={classes['price-wrapper']}>
              <div className={classes.priceTitle}>Tạm tính:</div>
-             <div className={classes.price}>{formatMoney.format(caculatorTotalPayment())}</div>
+             <div className={classes.price}>{formatMoney.format(caculatorCost())}</div>
            </div>
            <hr color="#ced4da" />
            <div className={classes['price-wrapper']}>
              <div className={classes.priceTitle}>Giảm giá tiền hàng:</div>
-             <div className={classes.price}>0</div>
+             <div className={classes.price}>{formatMoney.format(caculatorDiscount())}</div>
            </div>
            <hr color="#ced4da" />
            <div className={classes['price-wrapper']}>

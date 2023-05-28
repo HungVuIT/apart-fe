@@ -8,9 +8,12 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Button from '@mui/material/Button';
 import { toast, ToastContainer } from 'react-toastify';
-import { ICheckOut } from '../../../../interface/payment/interface';
+import { ICheckOut, initPaymentDetail } from '../../../../interface/payment/interface';
 import { checkOut } from '../../../../api/service/user-service';
 import { useNavigate } from 'react-router-dom';
+import Toast from '../../../../components/Toast';
+import { showToastMessage } from '../../../../untils/showToast';
+import { typeToast } from '../../../../interface/globalType';
 function PaymentBox({ handleBack, setPaymentDetails, paymentDetails }: IPropsPayment) {
   const [value, setValue] = React.useState('');
   const navigate = useNavigate();
@@ -25,6 +28,9 @@ function PaymentBox({ handleBack, setPaymentDetails, paymentDetails }: IPropsPay
         : 'Giao hàng tiết kiệm';
     return res;
   };
+  const resetForm = () => {
+    setPaymentDetails(initPaymentDetail);
+  };
   const handleFinish = async () => {
     if (value) {
       setPaymentDetails(prev => ({
@@ -37,15 +43,18 @@ function PaymentBox({ handleBack, setPaymentDetails, paymentDetails }: IPropsPay
         paymentMethod: value
       };
       const data = await checkOut(params);
+      console.log(data);
       if (data.success && value === 'offline') {
         toast.success('Đơn hàng đã được tạo');
+        resetForm();
         navigate('/');
       } else if (data.success && value === 'online') {
         toast.success('Đang chuyển sang trang thanh toán online');
+        resetForm();
         window.location.href = data.data.href;
       } else {
-        const mes: string = data.data.message ? data.data.message : '';
-        toast.error(`Thanh toán lỗi: ${mes}`);
+        const mes: string = data.message ? data.message : '';
+        showToastMessage(<Toast title='Thanh toán lỗi' message={mes} />, typeToast.ERROR);
       }
     } else {
       toast('Vui lòng chọn một phương thức thanh toán');
@@ -78,7 +87,7 @@ function PaymentBox({ handleBack, setPaymentDetails, paymentDetails }: IPropsPay
       </div>
       <div className={classes['box-ship']}>
       <FormControl>
-        <FormLabel id="demo-controlled-radio-buttons-group">Phương thức vận chuyển</FormLabel>
+        <FormLabel id="demo-controlled-radio-buttons-group">Phương thức thanh toán</FormLabel>
         <RadioGroup
           aria-labelledby="demo-controlled-radio-buttons-group"
           name="controlled-radio-buttons-group"

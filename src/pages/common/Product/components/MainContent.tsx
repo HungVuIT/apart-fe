@@ -76,7 +76,7 @@ function MainContent({ id }: IProps) {
   };
   console.log(isActive);
   const getSaleOffPercent = () => {
-    return ((watch.sale_off.amount / watch.price) * 100).toFixed(2);
+    return (((watch.price - watch.sale_off.amount) / watch.price) * 100).toFixed(2);
   };
   const getEndDateSaleOff = () => {
     return dayjs(watch.sale_off.end).format('DD/MM/YYYY');
