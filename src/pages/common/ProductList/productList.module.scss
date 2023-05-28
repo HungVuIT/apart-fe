@@ -19,9 +19,15 @@
       padding: 10px;
     }
     & .tags-and-lst {
+      box-shadow: 0px 3px 1px -2px RGB(0 0 0/20%), 0px 2px 2px 0px RGB(0 0 0/14%), 0px 1px 5px 0px RGB(0 0 0/12%);
       background-color: #fff;
       margin: 0 5% 0 2%;
       margin-bottom: 20px;
+      & .page {
+        padding-bottom: 20px;
+        display: flex;
+        justify-content: center;
+      }
     }
   }
   

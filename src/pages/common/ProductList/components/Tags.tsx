@@ -20,7 +20,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import { getListWatchShop } from '../../../../api/service/shop-service';
 import { showToastMessage } from '../../../../untils/showToast';
 import Toast from '../../../../components/Toast';
+import queryString from 'query-string';
 import { typeToast } from '../../../../interface/globalType';
+import { setSearch } from '../../../../redux/common/commonSlice';
 interface IPriceMap {
   [key: string]: string
 }
@@ -46,6 +48,8 @@ function Tags({ filterValue, setFilterValue, handleCloseDialog, check, SID, setL
   const [priceValue, setPriceValue] = useState(filterValue.price || '');
   const [province, setProvince] = useState<IProvince[]>([]);
   const [provinceValue, setProvinceValue] = useState(filterValue.province || '');
+  const parsed = queryString.parse(window.location.search);
+  const keyword = parsed.keyword;
   const dispatch = useAppDispatch();
   useEffect(() => {
     fetchProvince(setProvince);
@@ -62,9 +66,18 @@ function Tags({ filterValue, setFilterValue, handleCloseDialog, check, SID, setL
       ...(provinceValue && { province: provinceValue })
     });
     if (!loadingSearch) {
-      handleFilter();
+      if (keyword && search !== keyword && keyword !== 'all') {
+        console.log('keyword');
+        keyword !== 'all' && dispatch(setSearch(keyword));
+        keyword !== 'all' && dispatch(searchWatchByName({
+          search: keyword
+        }));
+      } else {
+        console.log('fileter');
+        handleFilter();
+      }
     }
-  }, [brandValue, categoryValue, priceValue, provinceValue]);
+  }, [brandValue, categoryValue, priceValue, provinceValue, keyword]);
   const handleFilter = () => {
     SID
       ? getListWatchShop(

@@ -56,7 +56,6 @@ function Header({ setLoadingPage }: IProps) {
   }, [profile.role]);
   const getAllOfMe = async () => {
     setLoadingPage(true);
-    console.log(profile);
     if (!profile || !profile.email) {
       await dispatch(getProfile());
     }

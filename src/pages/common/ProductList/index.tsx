@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Container from '../../../components/Container';
 import Search from '../../../components/Search';
 import banner from '../../../assets/img/productList-banner.png';
@@ -6,9 +6,7 @@ import classes from './productList.module.scss';
 import ItemList from './components/ItemList';
 import Tags from './components/Tags';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { getBrandList, getCategoryList } from '../../../api/service/product-list-service';
-import { searchWatchByName } from '../../../redux/common/commonThunk';
-import { Category } from '../../../interface/common/interface';
+import Pagination from '@mui/material/Pagination';
 import ReorderIcon from '@mui/icons-material/Reorder';
 export interface IFilterValue {
   search: string
@@ -20,9 +18,10 @@ export interface IFilterValue {
   ward: any
 }
 function ProductList (): JSX.Element {
-  const { searchLst, search } = useAppSelector(state => state.common);
+  const { searchLst, search, loadingSearch } = useAppSelector(state => state.common);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
   const [isOpen, setIsOpen] = useState(false);
+  const [page, setPage] = useState(1);
   const [filterValue, setFilterValue] = useState<IFilterValue>({
     search,
     BID: null,
@@ -48,7 +47,12 @@ function ProductList (): JSX.Element {
   const handleCloseDialog = () => {
     setIsOpen(false);
   };
-  console.log(filterValue);
+  const handlePageChange = (event: any, page: any) => {
+    setPage(page);
+  };
+  const searchRender = useMemo(() => {
+    return searchLst.filter((item, index) => (index >= (page - 1) * 10 && index < page * 10));
+  }, [page, searchLst]);
   return (
     <div className={classes['product-list__wrapper']}>
       {
@@ -69,7 +73,15 @@ function ProductList (): JSX.Element {
           </div>
         </Container>
         <div className={classes['tags-and-lst']}>
-          <ItemList lst={searchLst}/>
+          <ItemList lst={searchRender}/>
+          <div className={classes.page}>
+            {(searchLst.length > 0 && !loadingSearch) && <Pagination
+              count={Math.ceil((searchLst.length) / 10)}
+              color="primary"
+              page={page}
+              onChange={handlePageChange}
+            />}
+          </div>
         </div>
       </div>
     </div>

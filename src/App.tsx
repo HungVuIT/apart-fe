@@ -18,14 +18,12 @@ function App() {
   const [loading, setLoading] = useState(!(profile.username));
   useEffect(() => {
     if (profile.username) {
-      console.log('newSocket', profile.id);
       const newSocket = io('https://dhwatch.onrender.com/chat-gate-way', { query: { userId: profile.id } });
       dispatch(setSocket(newSocket));
     }
   }, [profile.username]);
   useEffect(() => {
     if (socket && getAccessToken()) {
-      console.log('connect', socket);
       socket.on('connect', () => {
         console.log('Connected to WebSocket server!');
       });

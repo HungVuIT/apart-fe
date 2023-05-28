@@ -24,7 +24,7 @@ const mainRouter = [
     component: Home
   },
   {
-    path: '/search/:keyword',
+    path: '/search',
     component: ProductList
   },
   {
