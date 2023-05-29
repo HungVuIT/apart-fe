@@ -162,7 +162,10 @@ export default function VendorLayout({ children }: IPropsChildren) {
             color: '#f8f9fa'
           }}
         >
-          {open && <h1 className={classes.shopName} style={{ cursor: 'pointer' }} onClick={() => navigate('/')}><i>{shop.name}</i></h1>}
+          {open && <h1 className={classes.shopName} style={{ cursor: 'pointer' }} onClick={() => {
+            navigate('/');
+            window.scrollTo(0, 0);
+          }}><i>{shop.name}</i></h1>}
           {open
             ? <>
             <IconButton

@@ -14,9 +14,12 @@ import { useNavigate } from 'react-router-dom';
 import Toast from '../../../../components/Toast';
 import { showToastMessage } from '../../../../untils/showToast';
 import { typeToast } from '../../../../interface/globalType';
+import { useAppDispatch } from '../../../../hooks/hooks';
+import { getCart } from '../../../../redux/user/userThunk';
 function PaymentBox({ handleBack, setPaymentDetails, paymentDetails }: IPropsPayment) {
   const [value, setValue] = React.useState('');
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
@@ -48,6 +51,8 @@ function PaymentBox({ handleBack, setPaymentDetails, paymentDetails }: IPropsPay
         toast.success('Đơn hàng đã được tạo');
         resetForm();
         navigate('/');
+        dispatch(getCart());
+        window.scrollTo(0, 0);
       } else if (data.success && value === 'online') {
         toast.success('Đang chuyển sang trang thanh toán online');
         resetForm();

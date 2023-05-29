@@ -41,8 +41,22 @@
   margin-left: 10px;
   @include responsive_max1200 {
     font-size: 13px;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  @include responsive_max768 {
     margin-right: 0;
     margin-left: 0;
+  }
+}
+.nav-btn-item {
+  display: flex !important;
+  padding-left: 60px;
+  @include responsive_max768 {
+    padding-left: 20px;
+  }
+  @include responsive_max600 {
+    display: none !important;
   }
 }
 .nav-btn-item .menu-item:hover {

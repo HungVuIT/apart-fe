@@ -23,14 +23,13 @@ import AccountMenu from '../AccountMenu';
 import { getListOfShop } from '../../../../../redux/common/commonThunk';
 import { ROLE } from '../../../../../interface/user/enum';
 import { getProfileShop } from '../../../../../redux/vendor/vendorThunk';
-const items = ['Trang chủ', 'Danh mục', 'Thương hiệu', 'Tin tức'];
+const items = ['Trang chủ', 'Liên Hệ', 'Tin tức'];
 interface IProps {
   setLoadingPage: any
 }
 function Header({ setLoadingPage }: IProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { isOpenLogin, setIsOpenLogin, isLogin, setIsLogin, loading, setLoading } = React.useContext(MyGlobalContext);
-  const locationUrl = useLocation();
   const token = getAccessToken();
   const navigate = useNavigate();
   const { profile } = useAppSelector(state => state.user);
@@ -77,7 +76,14 @@ function Header({ setLoadingPage }: IProps) {
     !loading && setIsOpenLogin(false);
   };
   const handleClickItem = (item: any) => {
-    item === 'Tin tức' && navigate('/news');
+    if (item === 'Trang chủ') {
+      navigate('/');
+    } else if (item === 'Tin tức') {
+      navigate('/news');
+    } else {
+      navigate('/contact');
+    }
+    window.scrollTo(0, 0);
   };
   return (
     <div className='header__layout'>
@@ -96,7 +102,7 @@ function Header({ setLoadingPage }: IProps) {
             >
               ChronoCorner
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} className='nav-btn-item'>
+            <Box sx={{ flexGrow: 1 }} className='nav-btn-item'>
               {items.map((item) => (
                 <Button
                   key={item}
@@ -146,8 +152,8 @@ function Header({ setLoadingPage }: IProps) {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleClose}>Đăng nhập</MenuItem>
-                  <MenuItem onClick={handleClose}>Đăng ký</MenuItem>
+                  <MenuItem onClick={() => handleClickLogin(true)}>Đăng nhập</MenuItem>
+                  <MenuItem onClick={() => handleClickLogin(false)}>Đăng ký</MenuItem>
                 </Menu>
               </div>
             </>

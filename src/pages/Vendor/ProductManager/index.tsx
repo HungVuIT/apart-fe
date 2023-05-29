@@ -175,7 +175,10 @@ function ProductManager() {
       <div className={classes.title}>Quản lý sản phẩm</div>
       <div className={classes.box}>
         <SearchProduct setSearchValue={setSearchValue} label={'Tìm sản phẩm'}/>
-        <Button className={classes.btn} onClick={() => navigate('/shop/watch/new')}>
+        <Button className={classes.btn} onClick={() => {
+          navigate('/shop/watch/new');
+          window.scrollTo(0, 0);
+        }}>
           <AddIcon className={classes.icon}/>
           Thêm sản phẩm
         </Button>

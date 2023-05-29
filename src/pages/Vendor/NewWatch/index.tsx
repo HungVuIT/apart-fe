@@ -119,6 +119,7 @@ function NewWatch() {
     if (res.success) {
       toast.success('Thêm sản phẩm thành công');
       navigate('/shop/manager/watch');
+      window.scrollTo(0, 0);
     } else {
       toast.error('Thêm sản phẩm không thành công');
     }
@@ -707,7 +708,10 @@ function NewWatch() {
         </>
       </Container>
       <div className={classes.groupBtn}>
-        <Button variant="outlined" className={classes.btn} onClick={() => navigate('/shop/manager/watch')}>Hủy</Button>
+        <Button variant="outlined" className={classes.btn} onClick={() => {
+          navigate('/shop/manager/watch');
+          window.scrollTo(0, 0);
+        }}>Hủy</Button>
         <Button type='submit' variant="contained" className={classes.btn + ' ' + classes.save}>Thêm sản phẩm</Button>
       </div>
       <ToastContainer autoClose={1000} position='bottom-right' />

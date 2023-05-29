@@ -165,6 +165,7 @@ function EditWatch() {
       if (res.success) {
         toast.success('Thêm sản phẩm thành công');
         navigate('/shop/manager/watch');
+        window.scrollTo(0, 0);
       } else {
         toast.error('Thêm sản phẩm không thành công');
       }

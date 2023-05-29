@@ -5,11 +5,18 @@ import { INews } from '../../../interface/common/interface';
 import { getListNews } from '../../../api/service/home-service';
 import Carousel from 'react-material-ui-carousel';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../loading';
 function NewsPage() {
   const [newsList, setNewsList] = useState<INews[]>([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-    getListNews(setNewsList);
+    getNews();
   }, []);
+  const getNews = async () => {
+    setLoading(true);
+    getListNews(setNewsList);
+    setLoading(false);
+  };
   const navigate = useNavigate();
   return (
     <div className={classes.wrapper}>
@@ -27,17 +34,21 @@ function NewsPage() {
       <Container >
         <>
           <h1 className={classes.title}>Tin tức</h1>
-          <div className={classes['news-list']}>
-            {
-              newsList.length > 0
-                ? newsList.map(news => (
-                  <div key={news.id} className={classes.news} onClick={() => navigate(`${news.id}`)}>
-                    <span>{news.title}</span>
-                  </div>
-                ))
-                : <div className={classes.noData}></div>
-            }
-          </div>
+          {
+            loading
+              ? <Loading _type={'ball'} />
+              : <div className={classes['news-list']}>
+                  {
+                    newsList.length > 0
+                      ? newsList.map(news => (
+                        <div key={news.id} className={classes.news} onClick={() => navigate(`${news.id}`)}>
+                          <span>{news.title}</span>
+                        </div>
+                      ))
+                      : <div className={classes.noData}></div>
+                  }
+                </div>
+          }
         </>
       </Container>
     </div>

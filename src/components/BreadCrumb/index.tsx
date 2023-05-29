@@ -15,6 +15,7 @@ export default function BreadCrumbComponent({ id }: IProps) {
   const navigate = useNavigate();
   function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     navigate('/');
+    window.scrollTo(0, 0);
   }
   const breadcrumbs = [
     <Link underline="hover"

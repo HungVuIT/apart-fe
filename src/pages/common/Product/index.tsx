@@ -19,7 +19,7 @@ function Product(): JSX.Element {
   const { watch, loading } = useAppSelector(state => state.productNow);
   useEffect(() => {
     dispatch(getWatchById(Number(productId)));
-  }, []);
+  }, [productId]);
   useEffect(() => {
     watch.SID && dispatch(getShopById(watch.SID));
   }, [watch.id]);

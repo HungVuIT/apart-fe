@@ -23,6 +23,7 @@ export default function Payment () {
   const navigate = useNavigate();
   React.useEffect(() => {
     payment.items.length <= 0 && navigate('/user/cart');
+    window.scrollTo(0, 0);
   }, []);
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

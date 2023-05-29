@@ -4,24 +4,37 @@ import Container from '../../../components/Container';
 import { INews } from '../../../interface/common/interface';
 import classes from './news-item.module.scss';
 import { getNewsById } from '../../../api/service/home-service';
+import Loading from '../loading';
 function NewsItem() {
   const { newsId } = useParams();
+  const [loading, setLoading] = useState(false);
   const [news, setNews] = useState<(INews | null)>(null);
   useEffect(() => {
-    newsId && getNewsById(newsId, setNews);
+    getNews();
   }, [newsId]);
+  const getNews = async () => {
+    setLoading(true);
+    if (newsId) {
+      await getNewsById(newsId, setNews);
+    }
+    setLoading(false);
+  };
   const myHtmlElement = document.createElement('div');
   myHtmlElement.innerHTML = news ? news.content : '';
   console.log(news);
   return (
     <div className={classes.wrapper}>
-      <Container >
-        <div className={classes.box}>
-          <h1 className={classes.title}>{news?.title}</h1>
-          <div className={classes.news} dangerouslySetInnerHTML={{ __html: myHtmlElement.outerHTML }}>
-          </div>
-        </div>
-      </Container>
+      {
+        loading
+          ? <Loading _type={'ball'} />
+          : <Container >
+            <div className={classes.box}>
+              <h1 className={classes.title}>{news?.title}</h1>
+              <div className={classes.news} dangerouslySetInnerHTML={{ __html: myHtmlElement.outerHTML }}>
+              </div>
+            </div>
+          </Container>
+      }
     </div>
   );
 }

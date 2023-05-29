@@ -203,6 +203,7 @@ function Cart() {
   const handlePayment = () => {
     dispatch(setPayment(cart));
     navigate('/payment');
+    window.scrollTo(0, 0);
   };
 
   const cartRender: ICartRender[] = useMemo(() => {

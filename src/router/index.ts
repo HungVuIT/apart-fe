@@ -17,6 +17,7 @@ import StorePage from '../pages/Vendor/StorePage';
 import NewsPage from '../pages/common/News';
 import NewsItem from '../pages/common/NewsItem';
 import EditWatch from '../pages/Vendor/EditWatch';
+import Contact from '../pages/common/Contact';
 
 const mainRouter = [
   {
@@ -26,6 +27,10 @@ const mainRouter = [
   {
     path: '/search',
     component: ProductList
+  },
+  {
+    path: '/contact',
+    component: Contact
   },
   {
     path: '/product/:productId',

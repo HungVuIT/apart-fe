@@ -76,6 +76,7 @@ function RegisterShop() {
     if (data.success) {
       toast('Đăng ký thành công');
       navigate('/shop/manager/profile');
+      window.scrollTo(0, 0);
     } else {
       toast('Đăng ký thất bại');
     }
@@ -83,7 +84,10 @@ function RegisterShop() {
   return (
     <div className={loading ? classes.loading : ''}>
       <header className={classes.header}>
-        <img src={logo} alt='logo' className={classes.logo} onClick={() => navigate('/')}/>
+        <img src={logo} alt='logo' className={classes.logo} onClick={() => {
+          navigate('/');
+          window.scrollTo(0, 0);
+        }}/>
         <h1 className={classes.title}>Đăng ký trở thành người bán</h1>
       </header>
       <h2 className={classes.settingsTitle}>Cài đặt thông tin cửa hàng</h2>
@@ -273,7 +277,10 @@ function RegisterShop() {
             )}
           />
           <div className={classes.btns}>
-            <Button className={classes.btn + ' ' + classes.cancel} variant="contained" onClick={() => navigate('/')}>HỦY</Button>
+            <Button className={classes.btn + ' ' + classes.cancel} variant="contained" onClick={() => {
+              navigate('/');
+              window.scrollTo(0, 0);
+            }}>HỦY</Button>
             <Button type='submit' className={classes.btn + ' ' + classes.save} variant="contained">ĐĂNG KÝ</Button>
           </div>
       </form>

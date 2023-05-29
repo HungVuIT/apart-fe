@@ -265,7 +265,10 @@ function InforBox({ handleNext, setPaymentDetails, paymentDetails }: IPropsPayme
             )}
           />
           <div className={classes.btns}>
-            <Button className={classes.btn + ' ' + classes.cancel} variant="contained" onClick={() => navigate('/user/cart')}>Quay lại giỏ hàng</Button>
+            <Button className={classes.btn + ' ' + classes.cancel} variant="contained" onClick={() => {
+              navigate('/user/cart');
+              window.scrollTo(0, 0);
+            }}>Quay lại giỏ hàng</Button>
             <Button type='submit' className={classes.btn + ' ' + classes.save} variant="contained">Tiếp tục</Button>
           </div>
       </form>

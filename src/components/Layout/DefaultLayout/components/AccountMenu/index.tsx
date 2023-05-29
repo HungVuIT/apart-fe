@@ -11,6 +11,8 @@ import Logout from '@mui/icons-material/Logout';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
+import FeedIcon from '@mui/icons-material/Feed';
+import ContactPageIcon from '@mui/icons-material/ContactPage';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
@@ -48,18 +50,31 @@ function AccountMenu() {
         break;
       case MenuItemName.PROFILE:
         navigate('/user/profile');
+        window.scrollTo(0, 0);
         break;
       case MenuItemName.MANAGER:
         navigate('/shop/manager/watch');
+        window.scrollTo(0, 0);
         break;
       case MenuItemName.FAVEORITE_LIST:
         navigate('/user/favorite-list');
+        window.scrollTo(0, 0);
         break;
       case MenuItemName.ORDER:
         navigate('/user/order');
+        window.scrollTo(0, 0);
         break;
       case MenuItemName.CREATE:
         navigate('/shop/register');
+        window.scrollTo(0, 0);
+        break;
+      case MenuItemName.NEWS:
+        navigate('/news');
+        window.scrollTo(0, 0);
+        break;
+      case MenuItemName.CONTACT:
+        navigate('/contact');
+        window.scrollTo(0, 0);
         break;
       case MenuItemName.SHOP:
         shop.id && navigate(`/shop/${shop.id}`);
@@ -150,6 +165,14 @@ function AccountMenu() {
         </MenuItem>
         <MenuItem onClick={() => handleClickMenu(MenuItemName.ORDER)} className={classes.menuItem}>
           <ViewListIcon className={classes.icon}/> {MenuItemName.ORDER}
+        </MenuItem>
+        <MenuItem onClick={() => handleClickMenu(MenuItemName.NEWS)} className={classes.menuItem + ' ' + classes.itemTemp}>
+          <FeedIcon className={classes.icon}/>
+          {MenuItemName.NEWS}
+        </MenuItem>
+        <MenuItem onClick={() => handleClickMenu(MenuItemName.CONTACT)} className={classes.menuItem + ' ' + classes.itemTemp}>
+          <ContactPageIcon className={classes.icon}/>
+          {MenuItemName.CONTACT}
         </MenuItem>
         <MenuItem onClick={() => handleClickMenu(MenuItemName.NOTIFICATION)} className={classes.menuItem}>
           <CircleNotificationsIcon className={classes.icon}/>
