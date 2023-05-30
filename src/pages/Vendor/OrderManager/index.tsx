@@ -206,7 +206,7 @@ function OrderManager() {
               <Tab label="Đơn hủy" {...a11yProps(5)} />
             </Tabs>
           </Box>
-          <Box sx={{ height: 400, minHeight: 400, width: '100%' }} >
+          <Box sx={{ height: '85vh', minHeight: '85vh', width: '100%' }} >
             {productRender.length > 0
               ? <DataGrid
               className={classes.list}

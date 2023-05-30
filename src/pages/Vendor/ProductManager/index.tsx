@@ -186,7 +186,7 @@ function ProductManager() {
               <Tab label="Hết hàng" {...a11yProps(2)} />
             </Tabs>
           </Box>
-          <Box sx={{ height: '75vh', minHeight: '75vh', width: '100%' }} >
+          <Box sx={{ height: '85vh', minHeight: '85vh', width: '100%' }} >
             {
               (loading.product || !shop.id)
                 ? <Loading _type={'ball'} />
