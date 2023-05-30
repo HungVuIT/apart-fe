@@ -3,7 +3,6 @@ import classes from './res-shop.module.scss';
 import logo from '../../../assets/img/logo-shop.png';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
-import './customMui.scss';
 import { fetchDistrict, fetchProvince, fetchWard } from './fetch';
 import { IDistrict, IProvince, IRegisterShop, IWard } from './type';
 import MenuItem from '@mui/material/MenuItem';
@@ -11,7 +10,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
-
 import Button from '@mui/material/Button';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
