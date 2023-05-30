@@ -57,7 +57,7 @@ body {
   .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
     font-size: 14px;
   }
-  .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-columnHeaderTitleContainer {
+  .MuiDataGrid-columnHeaderTitleContainer {
     justify-content: center;
   }
   .MuiDataGrid-root .MuiDataGrid-cell:focus {
@@ -66,17 +66,18 @@ body {
   .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-columnHeader:focus {
     outline: none !important;
   }
-  .css-1jbbcbn-MuiDataGrid-columnHeaderTitle {
+  .MuiDataGrid-columnHeaderTitle {
     font-size: 14px;
     font-weight: 600;
   }
   .MuiDataGrid-row,
-  .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell--textLeft,
-  .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell--textCenter {
+  .MuiDataGrid-cell--textLeft,
+  .MuiDataGrid-cell--textCenter,
+  .MuiDataGrid-cell {
     min-height: 90px !important;
     max-height: 90px !important;
   }
-  .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell:focus-within {
+  .MuiDataGrid-cell:focus-within {
     outline: none !important;
   }
   .css-17jjc08-MuiDataGrid-footerContainer {
