@@ -1,4 +1,5 @@
 import { IShop } from '../common/interface';
+import { IUserInfo } from '../user/interface';
 
 interface ILoading {
   product: boolean
@@ -21,4 +22,5 @@ export interface IOrderShop {
   paymentMethod: string
   Note: any
   isActive: boolean
+  user: IUserInfo
 }

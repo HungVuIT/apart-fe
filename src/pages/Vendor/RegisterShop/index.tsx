@@ -93,7 +93,7 @@ function RegisterShop() {
       <h2 className={classes.settingsTitle}>Cài đặt thông tin cửa hàng</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={classes.form + ' shop'}
+        className={classes.form + ' res-shop'}
       >
         <Controller name='email' control={control}
           render={({

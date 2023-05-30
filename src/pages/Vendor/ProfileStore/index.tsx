@@ -10,7 +10,6 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
-import './customMui.scss';
 import { IDistrict, IProvince, IWard } from '../RegisterShop/type';
 import { fetchProvince, fetchDistrict, fetchWard } from '../RegisterShop/fetch';
 import { useAppSelector, useAppDispatch } from '../../../hooks/hooks';

@@ -51,3 +51,87 @@ body {
 .none {
   display: none;
 }
+.pm-mui {
+  .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root,
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input,
+  .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+    font-size: 14px;
+  }
+  .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-columnHeaderTitleContainer {
+    justify-content: center;
+  }
+  .MuiDataGrid-root .MuiDataGrid-cell:focus {
+    outline: none !important;
+  }
+  .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-columnHeader:focus {
+    outline: none !important;
+  }
+  .css-1jbbcbn-MuiDataGrid-columnHeaderTitle {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-row,
+  .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell--textLeft,
+  .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell--textCenter {
+    min-height: 90px !important;
+    max-height: 90px !important;
+  }
+  .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell:focus-within {
+    outline: none !important;
+  }
+  .css-17jjc08-MuiDataGrid-footerContainer {
+    min-height: 0 !important;
+  }
+}
+.new-watch {
+  .css-dpjnhs-MuiInputBase-root-MuiOutlinedInput-root,
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    font-size: 14px !important;
+  }
+  .css-1wc848c-MuiFormHelperText-root.Mui-error {
+    font-size: 12px;
+  }
+  & .group {
+    .css-dpjnhs-MuiInputBase-root-MuiOutlinedInput-root,
+    .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+      font-size: 12px !important;
+    }
+  }
+}
+.profile-store {
+  & .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root,
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input,
+  .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root,
+  .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused,
+  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select,
+  .css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input,
+  .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root {
+    font-size: 14px;
+  }
+  & .css-1wc848c-MuiFormHelperText-root.Mui-error,
+  .css-1wc848c-MuiFormHelperText-root {
+    font-size: 12px;
+    color: #d32f2f;
+  }
+}
+.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+  font-size: 12px !important;
+}
+.res-shop{
+  & .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root,
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input,
+  .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root,
+  .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused,
+  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select,
+  .css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input {
+    font-size: 14px;
+  }
+  & .css-1wc848c-MuiFormHelperText-root.Mui-error,
+  .css-1wc848c-MuiFormHelperText-root {
+    font-size: 12px;
+    color: #d32f2f;
+  }
+}
+.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+  font-size: 12px !important;
+}

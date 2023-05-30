@@ -12,13 +12,32 @@
     & .orderCode,
     .order-price,
     .orderStatus,
-    .orderShip {
+    .orderShip{
       width: 100%;
       height: 90px;
       display: flex;
-      font-size: 14px;
+      font-size: 12px;
       justify-content: center;
       align-items: center;
+    }
+    .order-user {
+      display: block;
+      width: 100%;
+      & h1 {
+        width: 100%;
+        display: flex;
+        font-size: 14px;
+        justify-content: center;
+        align-items: center;
+        font-weight: 400;
+      }
+      & address {
+        width: 100%;
+        height: 30px;
+        font-size: 12px;
+        white-space: normal;
+        text-align: center;
+      }
     }
     & .orderShip {
       white-space: normal;

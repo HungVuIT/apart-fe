@@ -10,16 +10,11 @@ import {
 } from '@mui/x-data-grid';
 import defaultLogo from '../../../assets/img/logo-watch.png';
 import { formatMoney } from '../../../untils/formartMoney';
-import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import axiosClient from '../../../api/axiosClient';
-import './customMui.scss';
-import { debounce } from 'lodash';
 import SearchProduct from './components/SearchProduct';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { useAppSelector } from '../../../hooks/hooks';
 import Loading from '../../common/loading';
 import { delProductByShop } from '../../../api/service/product-service';
 import { ToastContainer, toast } from 'react-toastify';

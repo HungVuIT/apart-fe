@@ -9,7 +9,6 @@ import {
 } from '@mui/x-data-grid';
 import { formatMoney } from '../../../untils/formartMoney';
 import Button from '@mui/material/Button';
-import './customMui.scss';
 import { useNavigate } from 'react-router-dom';
 import SearchProduct from '../ProductManager/components/SearchProduct';
 import { getOrderListShop } from '../../../api/service/shop-service';
@@ -19,6 +18,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { DetailsOrder } from '../../../api/service/user-service';
 import Dialog from '@mui/material/Dialog';
 import ItemInfo from '../../User/UserOrder/components/ItemInfo';
+import { IUserInfo } from '../../../interface/user/interface';
 
 function a11yProps(index: number) {
   return {
@@ -92,16 +92,28 @@ function OrderManager() {
     {
       field: 'price',
       headerName: 'Tổng tiền',
-      width: caculatorWidth(20),
+      width: caculatorWidth(15),
       renderCell: (params) => (
         <div className={classes['order-price']}>{formatMoney.format(params.row.total)}</div>
+      )
+    },
+    {
+      field: 'user',
+      headerName: 'Thông tin người dùng',
+      width: caculatorWidth(30),
+      renderCell: (params) => (
+        <div className={classes['order-user']}>
+          <h1>{params.row.user.firstName + ' ' + params.row.user.lastName}</h1>
+          <h1>{params.row.user.phoneNumber}</h1>
+          <address>{getAddress(params.row.user)}</address>
+        </div>
       )
     },
     {
       field: 'status',
       headerName: 'Trạng thái',
       type: 'actions',
-      width: caculatorWidth(20),
+      width: caculatorWidth(10),
       renderCell: (params) => (
         <div className={classes.orderStatus}>{statusMap[params.row.status]}</div>
       )
@@ -109,7 +121,7 @@ function OrderManager() {
     {
       field: 'address',
       headerName: 'Thanh toán',
-      width: caculatorWidth(25),
+      width: caculatorWidth(15),
       renderCell: (params) => (
         <div className={classes.orderShip}>
           {params.row.paymentMethod === 'offline' ? 'Thanh toán khi nhận hàng' : 'Đã thanh toán'}
@@ -120,7 +132,7 @@ function OrderManager() {
       field: 'actions',
       headerName: 'Thao tác',
       type: 'actions',
-      width: caculatorWidth(20),
+      width: caculatorWidth(15),
       renderCell: (params) => (
         <div className={classes.groupBtn}>
           <Button className={classes.info} variant='text' onClick={async () => await handleClickInfor(params.row.id)}>Thông tin chi tết</Button>
@@ -134,6 +146,13 @@ function OrderManager() {
   ];
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+  };
+  const getAddress = (user: IUserInfo) => {
+    const address = user.address ? (user.address + ', ') : '';
+    const ward = user.ward ? (user.ward + ', ') : '';
+    const district = user.district ? (user.district + ', ') : '';
+    const province = user.province || '';
+    return address + ward + district + province;
   };
   const handleClickConfirm = async (_id: number, _status: string) => {
     const res = await confirmOrder(_id, statusList[filterMap[_status]]);
@@ -163,13 +182,13 @@ function OrderManager() {
   const handleChangeValue = (lst: any) => {
     return value ? lst.filter((item: any) => value === filterMap[item.status]) : lst;
   };
-  console.log(orderList);
   const productRender = useMemo(() => {
     const searchRender = orderList?.length > 0 ? orderList.filter((item: IOrderShop) => item.id ? item.id.toString().toLowerCase().includes(searchValue.toLowerCase()) : '') : [];
     console.log(value);
     const valueRender = handleChangeValue(searchRender);
     return valueRender;
   }, [searchValue, value, orderList]);
+  console.log(productRender);
   return (
     <div className={classes.wrapper + ' pm-mui'}>
       <div className={classes.title}>Quản lý đơn hàng</div>
