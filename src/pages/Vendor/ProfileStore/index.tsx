@@ -139,14 +139,19 @@ function ProfileStore() {
     }
   };
   const handleSubmitEmaiPaypal = async () => {
-    if (mailPaypal) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const check = regex.test(mailPaypal);
+    if (mailPaypal && check) {
       const body = {
         email: mailPaypal
       };
       await addLinkPaypal(body);
+      toast('Thêm email thành công');
+      setOpenDialog(false);
+      setMailPaypal('');
+    } else {
+      toast('Vui lòng nhập email chính xác');
     }
-    setOpenDialog(false);
-    setMailPaypal('');
   };
   return (
     <>
@@ -368,7 +373,6 @@ function ProfileStore() {
                       <TextField
                         id="outlined-basic"
                         variant="outlined"
-                        type='email'
                         placeholder='Nhập email Paypal'
                         value={mailPaypal}
                         className={classes.text}
