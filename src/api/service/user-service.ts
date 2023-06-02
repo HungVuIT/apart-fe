@@ -15,7 +15,6 @@ export const getUserInfo = async () => {
 export const editUserInfor = async (params: IEditProfile) => {
   try {
     const url = 'users/me';
-    console.log('params', params);
     const response = await axiosClient.patch(url, params, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -56,7 +55,6 @@ export const DetailsOrder = async (id: number) => {
   try {
     const url = `order/order-detail/${id}`;
     const response = await axiosClient.get(url);
-    console.log(response.data);
     return response.data.data;
   } catch (err) {
     return err;
@@ -67,7 +65,6 @@ export const getOrderList = async (setOrderList: any, setLoading: any) => {
     const url = 'order/user';
     setLoading(true);
     const response = await axiosClient.get(url);
-    console.log(response.data);
     if (response) {
       setOrderList(response.data.data);
       setLoading(false);

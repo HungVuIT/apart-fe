@@ -35,7 +35,6 @@ function Comment({ id }: IProps): JSX.Element {
         watchId: watch.id
       };
       const res = await commentOnWatch(data);
-      console.log(res);
       if (res.success) {
         setValue('');
         id && dispatch(getCommentById(id));

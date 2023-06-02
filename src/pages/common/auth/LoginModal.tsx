@@ -65,7 +65,6 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
     setIsShow(isShow => !isShow);
   };
   const onSubmit: SubmitHandler<ILoginFormValue> = async (_data: ILoginFormValue) => {
-    console.log('onsubmit');
     if (isForgotPassword) {
       const email = _data.username;
       const data = await resetPassword(email);

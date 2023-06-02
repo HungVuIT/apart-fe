@@ -40,7 +40,6 @@ function MainContent({ id }: IProps) {
   };
   const checkItemInFavorite = () => {
     const item = favoriteList.find((item: IFavorite) => item.watch.id === id);
-    console.log(item);
     item ? setIsActive(true) : setIsActive(false);
     return item;
   };
@@ -74,7 +73,6 @@ function MainContent({ id }: IProps) {
       handleLogin();
     }
   };
-  console.log(isActive);
   const getSaleOffPercent = () => {
     return (((watch.price - watch.sale_off.amount) / watch.price) * 100).toFixed(2);
   };

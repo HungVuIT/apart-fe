@@ -23,7 +23,6 @@ function FeaturedProducts ({ title, type }: IProps): JSX.Element {
     } else if (type === 'SALE') {
       params = '?saleOff=desc';
     }
-    console.log(type, params);
     getListProductInHome(params, setList);
   }, []);
   useEffect(() => {

@@ -46,7 +46,6 @@ function PaymentBox({ handleBack, setPaymentDetails, paymentDetails }: IPropsPay
         paymentMethod: value
       };
       const data = await checkOut(params);
-      console.log(data);
       if (data.success && value === 'offline') {
         toast.success('Đơn hàng đã được tạo');
         resetForm();

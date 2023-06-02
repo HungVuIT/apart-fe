@@ -21,7 +21,6 @@ function NewsItem() {
   };
   const myHtmlElement = document.createElement('div');
   myHtmlElement.innerHTML = news ? news.content : '';
-  console.log(news);
   return (
     <div className={classes.wrapper}>
       {

@@ -17,7 +17,6 @@ function ItemFavorite({ item }: any) {
   const dispatch = useAppDispatch();
   const handleRemoveItem = async () => {
     const data = item.id ? await removeItemFavorite(item.id) : null;
-    console.log(data);
     if (data && data.success && item.id) {
       dispatch(removeFavoriteItem(item.id));
     } else {

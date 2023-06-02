@@ -53,7 +53,7 @@ function AccountMenu() {
         window.scrollTo(0, 0);
         break;
       case MenuItemName.MANAGER:
-        navigate('/shop/manager/watch');
+        navigate('/shop/dashboard');
         window.scrollTo(0, 0);
         break;
       case MenuItemName.FAVEORITE_LIST:

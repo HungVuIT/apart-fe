@@ -40,7 +40,6 @@ function SaleOff({ id, handleClose, checkSaleOff, saleOffId }: IProps) {
     } else {
       res = await setSaleOfForProduct(data);
     }
-    console.log(res.success);
     if (res.success) {
       toast.success('Thêm khuyến mãi thành công');
       dispatch(getListProductOfShop(shop.id));

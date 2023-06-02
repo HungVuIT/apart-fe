@@ -1,0 +1,25 @@
+.wrapper {
+  padding: 5px;
+  display: flex;
+  & .watch {
+    width: 50vw;
+    height: 100%;
+  }
+  & .infor {
+    width: calc(100% - 50vw);
+    padding: 5px;
+    & .item {
+      display: flex;
+      padding-left: 20px;
+      & .title {
+        width: 40%;
+        font-size: 20px;
+        font-weight: 500;
+      }
+      & .content {
+        font-size: 20px;
+        width: 60%;
+      }
+    }
+  }
+}

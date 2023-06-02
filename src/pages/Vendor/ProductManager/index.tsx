@@ -124,7 +124,6 @@ function ProductManager() {
   ];
   const handleDelProduct = async (id: number) => {
     const res = await delProductByShop(id);
-    console.log(res);
     if (res.success) {
       toast.success('Đã xóa sản phẩm');
     } else {

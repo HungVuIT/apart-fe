@@ -68,13 +68,11 @@ function Tags({ filterValue, setFilterValue, handleCloseDialog, check, SID, setL
     });
     if (!loadingSearch) {
       if (keyword && search !== keyword && keyword !== 'all') {
-        console.log('keyword');
         keyword !== 'all' && dispatch(setSearch(keyword));
         keyword !== 'all' && dispatch(searchWatchByName({
           search: keyword
         }));
       } else {
-        console.log('fileter');
         handleFilter();
       }
     }

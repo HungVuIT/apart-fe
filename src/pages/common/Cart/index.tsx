@@ -220,7 +220,6 @@ function Cart() {
     });
     return lst;
   }, [cart]);
-  console.log(cartRender);
   return (
     <>
       {loading.cart

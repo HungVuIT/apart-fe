@@ -107,13 +107,13 @@ function NewWatch() {
     const newLstFile = lstFile.filter(file => !!file);
     const params = new FormData();
     Object.entries(_data).forEach(([key, value]) => {
-      console.log(key, value);
       params.append(key, value);
     });
     newLstFile.forEach(file => {
       params.append('image', file);
     });
     dataCategories.forEach(data => params.append('CID', data));
+    params.append('isOld', (isOld).toString());
     const res = await addNewProduct(params);
     if (res.success) {
       toast.success('Thêm sản phẩm thành công');

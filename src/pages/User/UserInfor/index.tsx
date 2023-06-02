@@ -111,14 +111,12 @@ function UserInfor() {
     const lastName = _fullname?.pop() || null;
     const firstName = _fullname?.join(' ') || null;
     const avatar = file;
-    console.log(avatar);
     const params: IEditProfile = {
       ...value,
       avatar,
       lastName,
       firstName
     };
-    console.log(params);
     setLoadingPage(true);
     const data = await editUserInfor(params);
     setLoadingPage(false);

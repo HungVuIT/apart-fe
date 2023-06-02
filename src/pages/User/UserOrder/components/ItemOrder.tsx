@@ -15,7 +15,6 @@ function ItemOrder({ value }: IProps) {
   useEffect(() => {
     value.WID && getProductById(value.WID, setProduct);
   }, [value.WID]);
-  console.log('product', product);
   return (
     <>
       {

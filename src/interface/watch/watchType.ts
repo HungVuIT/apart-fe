@@ -7,7 +7,7 @@ export interface IWatch {
 
   name: string
 
-  BID?: number
+  BID?: any
   CID: number[]
   SID: number
 

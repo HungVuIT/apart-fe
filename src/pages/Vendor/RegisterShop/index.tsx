@@ -74,7 +74,7 @@ function RegisterShop() {
     if (data.success) {
       toast('Đăng ký thành công');
       navigate('/shop/manager/profile');
-      window.scrollTo(0, 0);
+      window.location.reload();
     } else {
       toast('Đăng ký thất bại');
     }

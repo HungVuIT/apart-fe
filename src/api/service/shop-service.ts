@@ -13,6 +13,15 @@ export const createShop = async (params: IRegisterShop) => {
     return err;
   }
 };
+export const getDashboard = async () => {
+  try {
+    const url = 'shops/dashbroad';
+    const response = await axiosClient.get(url);
+    return response.data.data;
+  } catch (err) {
+    return err;
+  }
+};
 export const editShop = async (params: IProfileStore) => {
   try {
     const url = 'shops/my-shop';
@@ -71,7 +80,6 @@ export const setSaleOfForProduct = async (body: any) => {
   try {
     const url = 'saleOff';
     const response = await axiosClient.post(url, { ...body });
-    console.log(response);
     return response.data;
   } catch (err) {
     return err;
@@ -81,6 +89,15 @@ export const updateSaleOfForProduct = async (body: any) => {
   try {
     const url = 'saleOff';
     const response = await axiosClient.patch(url, { ...body });
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+export const addLinkPaypal = async (body: any) => {
+  try {
+    const url = 'shops/add-payment-method';
+    const response = await axiosClient.post(url, { ...body });
     return response.data;
   } catch (err) {
     return err;

@@ -31,7 +31,6 @@ const userSlice = createSlice({
     changeQuantity: (state, action) => {
       const index = state.cart.findIndex((item) => item.id === action.payload.id);
       state.cart[index].quantity = action.payload.quantity;
-      console.log(action);
     },
     setPayment: (state, action) => {
       state.payment.items = action.payload;

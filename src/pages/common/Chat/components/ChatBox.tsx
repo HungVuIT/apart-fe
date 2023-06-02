@@ -44,8 +44,6 @@ function ChatBox() {
       handleSendMessage();
     }
   };
-  console.log(messageList);
-  console.log({ receiverId: inforSocket.receiverId, senderId: profile.id });
   return (
     <div className={classes.wrapper}>
       <div className={classes.header}>

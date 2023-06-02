@@ -16,11 +16,12 @@ import { useAppSelector, useAppDispatch } from '../../../hooks/hooks';
 import Loading from '../../common/loading';
 import defaultAvt from '../../../assets/img/default-avt.png';
 import { setDefaultValue } from './setDefaultValue';
-import { editShop } from '../../../api/service/shop-service';
+import { addLinkPaypal, editShop } from '../../../api/service/shop-service';
 import { ToastContainer, toast } from 'react-toastify';
 import { IShop } from '../../../interface/common/interface';
 import AddIcon from '@mui/icons-material/Add';
-
+import Dialog, { DialogProps } from '@mui/material/Dialog';
+import ClearIcon from '@mui/icons-material/Clear';
 export interface IProfileStore {
   email: string
   name: string
@@ -50,8 +51,6 @@ function ProfileStore() {
     resolver: yupResolver(schema)
   });
   const { shop, loading } = useAppSelector((state) => state.vendor);
-  const dispatch = useAppDispatch();
-  const [valueP, setValueP] = useState('');
   const [province, setProvince] = useState<IProvince[]>([]);
   const [district, setDistrict] = useState<IDistrict[]>([]);
   const [ward, setWard] = useState<IWard[]>([]);
@@ -62,6 +61,9 @@ function ProfileStore() {
   const [fileBanner, setFileBanner] = useState<any>();
   const inputFile = React.useRef<HTMLInputElement>(null);
   const inputBanner = React.useRef<HTMLInputElement>(null);
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const [mailPaypal, setMailPaypal] = useState('');
 
   useEffect(() => {
     setValue('email', shop.email);
@@ -120,7 +122,6 @@ function ProfileStore() {
     const id = district.findIndex(item => item.district_name === name);
     return district[id].district_id;
   };
-  console.log(banner);
   const onSubmit: SubmitHandler<IProfileStore> = async (_data: IProfileStore) => {
     const params: IProfileStore = {
       ..._data,
@@ -129,7 +130,6 @@ function ProfileStore() {
     };
     setLoadingPage(true);
     const data = await editShop(params);
-    console.log(data);
     setLoadingPage(false);
     if (data.success) {
       toast.success('Chỉnh sửa hồ sơ thành công');
@@ -137,6 +137,16 @@ function ProfileStore() {
       const mes: string = data.data.message ? data.data.message : '';
       toast.error(`Chỉnh sửa hồ sơ thất bại: ${mes}`);
     }
+  };
+  const handleSubmitEmaiPaypal = async () => {
+    if (mailPaypal) {
+      const body = {
+        email: mailPaypal
+      };
+      await addLinkPaypal(body);
+    }
+    setOpenDialog(false);
+    setMailPaypal('');
   };
   return (
     <>
@@ -336,7 +346,7 @@ function ProfileStore() {
                 <h1 className={classes.title}>Banner</h1>
                 <div className={classes.banner}>
                   <div className={classes['item-img']} onClick={handleButtonClickBanner}>
-                    {(banner || shop.banner) && <img src={shop.banner || banner} alt='Avatar' className={classes['img-avt']}/>}
+                    {(banner || shop?.banner) && <img src={shop?.banner || banner} alt='Avatar' className={classes['img-avt']}/>}
                     <input
                       type="file"
                       accept="image/*"
@@ -347,6 +357,28 @@ function ProfileStore() {
                     {!(banner || shop.banner) && <AddIcon className={classes['img-icon']}/>}
                   </div>
                 </div>
+              </div>
+              <div className={classes.payment}>
+                <Button variant="contained" className={classes.add} onClick={() => setOpenDialog(true)}>Thêm email Paypal</Button>
+                <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+                    <div className={classes.dialog}>
+                      <div className={classes.icon}>
+                        <ClearIcon className={classes.clear} onClick={() => setOpenDialog(false)}/>
+                      </div>
+                      <TextField
+                        id="outlined-basic"
+                        variant="outlined"
+                        type='email'
+                        placeholder='Nhập email Paypal'
+                        value={mailPaypal}
+                        className={classes.text}
+                        onChange={(e) => setMailPaypal(e.target.value)}
+                      />
+                      <div className={classes.btn}>
+                        <Button variant="contained" className={classes.btnPaypal} onClick={handleSubmitEmaiPaypal}>Thêm</Button>
+                      </div>
+                    </div>
+                </Dialog>
               </div>
             </div>
           </div>

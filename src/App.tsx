@@ -10,6 +10,7 @@ import { getAccessToken } from './untils/localStorage';
 import { io } from 'socket.io-client';
 import { setSocket } from './redux/common/commonSlice';
 import { getBrandList, getCategoryList } from './redux/common/commonThunk';
+import { ROLE } from './interface/user/enum';
 function App() {
   const dispatch = useAppDispatch();
   const { shop } = useAppSelector(state => state.vendor);
@@ -49,10 +50,10 @@ function App() {
   }, []);
   const getInfor = async () => {
     setLoading(true);
-    if (!shop?.email) {
-      if (!profile?.username) {
-        await dispatch(getProfile());
-      }
+    if (!profile?.username) {
+      await dispatch(getProfile());
+    }
+    if (!shop?.email && profile.role === ROLE.VENDOR) {
       await dispatch(getProfileShop());
     }
     setLoading(false);

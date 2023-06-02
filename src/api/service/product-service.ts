@@ -25,7 +25,6 @@ export const ratingOnWatch = async (params: any) => {
 export const addNewProduct = async (params: FormData) => {
   try {
     const url = 'watchs/new';
-    console.log(params);
     const response = await axiosClient.post(url, params, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -39,7 +38,6 @@ export const addNewProduct = async (params: FormData) => {
 export const editProduct = async (id: number, params: FormData) => {
   try {
     const url = `watchs/id/${id}`;
-    console.log(params);
     const response = await axiosClient.patch(url, params, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -54,7 +52,6 @@ export const getRecommendProduct = async (id: number, setLst: any) => {
   try {
     const url = `recommend/${id}`;
     const response = await axiosClient.get(url);
-    console.log(response);
     if (response) {
       setLst(response.data);
     }
@@ -77,7 +74,6 @@ export const getProductById = async (id: number, setProduct: any) => {
     const url = `watchs/id/${id}`;
     const response = await axiosClient.get(url);
     if (response?.data?.success) {
-      console.log(response.data.data);
       setProduct(response.data.data);
     }
     return response.data;

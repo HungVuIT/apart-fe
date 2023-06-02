@@ -18,6 +18,7 @@ import NewsPage from '../pages/common/News';
 import NewsItem from '../pages/common/NewsItem';
 import EditWatch from '../pages/Vendor/EditWatch';
 import Contact from '../pages/common/Contact';
+import Dashboard from '../pages/Vendor/Dashboard';
 
 const mainRouter = [
   {
@@ -80,6 +81,11 @@ const vendorRouter = [
   {
     path: '/shop/register',
     component: RegisterShop
+  },
+  {
+    path: '/shop/dashboard',
+    component: Dashboard,
+    Layout: true
   },
   {
     path: '/shop/manager/watch',

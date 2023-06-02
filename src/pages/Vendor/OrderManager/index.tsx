@@ -184,11 +184,9 @@ function OrderManager() {
   };
   const productRender = useMemo(() => {
     const searchRender = orderList?.length > 0 ? orderList.filter((item: IOrderShop) => item.id ? item.id.toString().toLowerCase().includes(searchValue.toLowerCase()) : '') : [];
-    console.log(value);
     const valueRender = handleChangeValue(searchRender);
     return valueRender;
   }, [searchValue, value, orderList]);
-  console.log(productRender);
   return (
     <div className={classes.wrapper + ' pm-mui'}>
       <div className={classes.title}>Quản lý đơn hàng</div>

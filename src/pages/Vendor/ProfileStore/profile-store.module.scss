@@ -96,6 +96,19 @@
             }
           }
         }
+        & .payment {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 20px;
+
+          & .add {
+            margin-top: 20px;
+            background-color: black;
+            color: white;
+            font-size: 14px;
+          }
+        }
       }
     }
     & .save {
@@ -115,4 +128,38 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.dialog {
+  width: 60vw;
+  & .icon {
+    height: 30px;
+    margin-left: 90%;
+    display: flex;
+    padding-right: 20px;
+    justify-content: flex-end;
+    align-items: center;
+    cursor: pointer;
+    & .clear {
+      font-size: 25px;
+    }
+  }
+  & .text {
+    width: 100%;
+    padding: 20px 20%;
+    & input {
+      font-size: 16px;
+    }
+  }
+  & .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    height: 40px;
+    & .btnPaypal {
+      background-color: #f03e3e;
+      color: #fff;
+      font-size: 16px;
+    }
+  }
 }

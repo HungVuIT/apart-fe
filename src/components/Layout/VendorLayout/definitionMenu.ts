@@ -3,7 +3,15 @@ import BallotIcon from '@mui/icons-material/Ballot';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import StoreIcon from '@mui/icons-material/Store';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 export const menuVendor: IMenuVendorItem[] = [
+  {
+    id: 0,
+    name: 'Thống kê',
+    link: '/shop/dashboard',
+    icon: DashboardIcon,
+    active: false
+  },
   {
     id: 1,
     name: 'Quản lý sản phẩm',
