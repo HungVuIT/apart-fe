@@ -72,7 +72,7 @@ function App() {
   };
   const getListUser = async () => {
     if (profile.username) {
-      const res = await getListUserChat(profile.id);
+      // const res = await getListUserChat(profile.id);
     }
   };
   return (

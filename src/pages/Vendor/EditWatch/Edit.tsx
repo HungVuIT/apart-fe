@@ -151,6 +151,7 @@ function Edit({ product }: IProps) {
       file !== true && params.append('image', file);
     });
     dataCategories.forEach(data => params.append('CID', data));
+    params.append('isOld', (Boolean(isOld)).toString());
     if (watchId) {
       const res = await editProduct(+watchId, params);
       if (res.success) {

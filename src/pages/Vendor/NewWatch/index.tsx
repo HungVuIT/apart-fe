@@ -113,7 +113,7 @@ function NewWatch() {
       params.append('image', file);
     });
     dataCategories.forEach(data => params.append('CID', data));
-    params.append('isOld', (isOld).toString());
+    // params.append('isOld', (Boolean(isOld)).toString());
     const res = await addNewProduct(params);
     if (res.success) {
       toast.success('Thêm sản phẩm thành công');

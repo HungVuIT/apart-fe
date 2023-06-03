@@ -6,7 +6,7 @@ function CardProfile({ infor }: any) {
       <aside className={classes['profile-card']}>
         <header>
           {/* Hình của bạn */}
-          <a href={infor.fb}>
+          <a href={infor.fb} target="_blank" rel="noreferrer">
             <img src={infor.img} alt={infor.name} />
           </a>
 
