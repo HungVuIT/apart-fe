@@ -73,7 +73,6 @@ function App() {
   const getListUser = async () => {
     if (profile.username) {
       const res = await getListUserChat(profile.id);
-      console.log(res);
     }
   };
   return (
