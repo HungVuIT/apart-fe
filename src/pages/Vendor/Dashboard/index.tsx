@@ -11,7 +11,7 @@ function Dashboard() {
   const [dashboard, setDashboard] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [chartData, setChartData] = useState({
-    labels: ['Số loại sản phẩm', 'Đã bán'],
+    labels: ['Số loại sản phẩm', 'Đã bán', 'Số đơn hàng'],
     datasets: [
       {
         label: 'Đồng hồ',
@@ -39,7 +39,7 @@ function Dashboard() {
         datasets: [
           {
             label: 'Đồng hồ',
-            data: [res.watchCount._count, res.soldCount._sum.quantity],
+            data: [res.watchCount._count, res.soldCount._sum.quantity, res.orderCount],
             backgroundColor: [
               'rgba(75,192,192,1)',
               '#50AF95',
@@ -69,7 +69,7 @@ function Dashboard() {
                         plugins: {
                           title: {
                             display: true,
-                            text: 'Thống kê số lượng đồng hồ'
+                            text: 'Bảng thống kê'
                           },
                           legend: {
                             display: false
@@ -82,10 +82,6 @@ function Dashboard() {
                   <div className={classes.item}>
                       <h1 className={classes.title}>Số đồng hồ trong kho:</h1>
                       <div className={classes.content}>{dashboard.watchCount._sum.quantity}</div>
-                    </div>
-                    <div className={classes.item}>
-                      <h1 className={classes.title}>Số đơn hàng:</h1>
-                      <div className={classes.content}>{dashboard.orderCount}</div>
                     </div>
                     <div className={classes.item}>
                       <h1 className={classes.title}>Doanh thu:</h1>
