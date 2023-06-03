@@ -14,7 +14,8 @@ const initialState: IStateCommon = {
   search: '',
   inforSocket: {
     receiverId: 0,
-    open: false
+    open: false,
+    listUser: []
   },
   categoryAndBrand: {
     categories: [],
@@ -37,10 +38,13 @@ const commonSlice = createSlice({
     },
     setOpenChat: (state, action) => {
       state.inforSocket.open = action.payload;
+    },
+    setListUser: (state, action) => {
+      state.inforSocket.listUser = action.payload;
     }
   },
   extraReducers: extraReducersCommon
 });
 const { reducer: commonReducer } = commonSlice;
-export const { setSearch, setSocket, setReceiverId, setOpenChat } = commonSlice.actions;
+export const { setSearch, setSocket, setReceiverId, setOpenChat, setListUser } = commonSlice.actions;
 export default commonReducer;

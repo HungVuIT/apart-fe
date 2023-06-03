@@ -78,7 +78,7 @@ function AccountMenu() {
         break;
       case MenuItemName.SHOP:
         shop.id && navigate(`/shop/${shop.id}`);
-        shop.id && window.location.reload();
+        window.location.reload();
         break;
     }
   };

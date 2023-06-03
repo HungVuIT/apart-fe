@@ -27,7 +27,7 @@ function ItemGroup({ SID, title }: IProps) {
         {
           list.length > 0
             ? list.map((item, index) => index < 4 && <Item key={item.id} watch={item}/>)
-            : <div>none</div>
+            : <div>Không có sản phẩm</div>
         }
       </div>
     </div>

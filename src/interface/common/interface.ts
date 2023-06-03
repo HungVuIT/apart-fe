@@ -17,6 +17,7 @@ export interface ICategoryAndBrand {
 export interface IInforSocket {
   receiverId: number
   open: boolean
+  listUser: any[]
 }
 export const initShopList: IShop[] = [];
 export interface IShop {

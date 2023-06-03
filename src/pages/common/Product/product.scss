@@ -279,23 +279,23 @@
 }
 
 .describe__wrapper {
-  &  .css-ahj2mt-MuiTypography-root {
+  &  .MuiTypography-root {
     font-size: 20px;
     font-weight: 700;
   }
-  & .css-i4bv87-MuiSvgIcon-root {
+  & .MuiSvgIcon-root {
     font-size: 30px;
     font-weight: 700;
   }
   & .table-info {
     padding: 0 10%;
-    & .css-1wvnaxz-MuiTableCell-root.MuiTableCell-head,
-    .css-1nslmh4-MuiTableCell-root.MuiTableCell-head {
+    & .MuiTableCell-head,
+    .MuiTableCell-head {
       font-size: 18px;
       text-align: center;
     }
-    & .css-132a6sb-MuiTableCell-root.MuiTableCell-body,
-    .css-1bhpkcd-MuiTableCell-root.MuiTableCell-body {
+    & .MuiTableCell-body,
+    .MuiTableCell-body {
       text-align: center;
     }
   }

@@ -6,6 +6,8 @@ import SendIcon from '@mui/icons-material/Send';
 import { io, Socket } from 'socket.io-client';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { setOpenChat } from '../../../../redux/common/commonSlice';
+import { getUserInfoById } from '../../../../api/service/user-service';
+import { IUserInfo } from '../../../../interface/user/interface';
 
 function ChatBox() {
   const { socket, inforSocket } = useAppSelector(state => state.common);
@@ -14,7 +16,7 @@ function ChatBox() {
   const [messageList, setMessageList] = useState<any[]>([]);
   const [message, setMessage] = useState('');
   const divRef = useRef<HTMLDivElement>(null);
-  const [receiverInfor, setReceiverInfor] = useState(null);
+  const [receiverInfor, setReceiverInfor] = useState<IUserInfo | null>(null);
   useEffect(() => {
     if (socket) {
       socket.on('server-send-data', (data: any) => {
@@ -29,6 +31,13 @@ function ChatBox() {
       };
     }
   });
+  useEffect(() => {
+    getInforReceiver();
+  }, [inforSocket.receiverId]);
+  const getInforReceiver = async () => {
+    const res = await getUserInfoById(inforSocket.receiverId);
+    setReceiverInfor(res);
+  };
   const handleSendMessage = () => {
     if (message) {
       setMessageList((prev: any) => [...prev, { message, receiverId: inforSocket.receiverId, senderId: profile.id }]);
@@ -55,8 +64,14 @@ function ChatBox() {
       <div className={classes.body}>
         <div className={classes['chat-name']}>
           <div className={classes.item + ' ' + classes.active}>
-            <img src="https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg" alt="" className={classes.img}/>
-            <h1 className={classes.name}>Name</h1>
+            {
+              receiverInfor
+                ? <>
+                  <img src={receiverInfor.avatar} alt="" className={classes.img}/>
+                  <h1 className={classes.name}>{receiverInfor?.lastName || ' '}</h1>
+                </>
+                : <></>
+            }
           </div>
         </div>
         <div className={classes['chat-box']}>

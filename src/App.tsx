@@ -11,6 +11,7 @@ import { io } from 'socket.io-client';
 import { setSocket } from './redux/common/commonSlice';
 import { getBrandList, getCategoryList } from './redux/common/commonThunk';
 import { ROLE } from './interface/user/enum';
+import { getListUserChat } from './api/service/user-service';
 function App() {
   const dispatch = useAppDispatch();
   const { shop } = useAppSelector(state => state.vendor);
@@ -48,6 +49,11 @@ function App() {
     getCategoryAndBrand();
     setLoading(false);
   }, []);
+  useEffect(() => {
+    if (getAccessToken() && profile?.username) {
+      getListUser();
+    }
+  }, [profile?.username]);
   const getInfor = async () => {
     setLoading(true);
     if (!profile?.username) {
@@ -63,6 +69,12 @@ function App() {
     await dispatch(getBrandList());
     await dispatch(getCategoryList());
     setLoading(false);
+  };
+  const getListUser = async () => {
+    if (profile.username) {
+      const res = await getListUserChat(profile.id);
+      console.log(res);
+    }
   };
   return (
         <Router>

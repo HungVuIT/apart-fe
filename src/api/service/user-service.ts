@@ -102,3 +102,22 @@ export const removeItemFavorite = async (itemId: number) => {
     return err;
   }
 };
+
+export const getListUserChat = async (id: number) => {
+  try {
+    const url = `chat/${id}/messages`;
+    const response = await axiosClient.get(url);
+    return response.data.data;
+  } catch (err) {
+    return err;
+  }
+};
+export const getUserInfoById = async (id: number) => {
+  try {
+    const url = `users/id/${id}`;
+    const response = await axiosClient.get(url);
+    return response.data.data;
+  } catch (err) {
+    return err;
+  }
+};

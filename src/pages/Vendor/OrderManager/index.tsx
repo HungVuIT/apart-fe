@@ -92,9 +92,12 @@ function OrderManager() {
     {
       field: 'price',
       headerName: 'Tổng tiền',
-      width: caculatorWidth(15),
+      width: caculatorWidth(10),
       renderCell: (params) => (
-        <div className={classes['order-price']}>{formatMoney.format(params.row.total)}</div>
+        <div className={classes['order-price']}>
+          <div className={classes.price}>{formatMoney.format(params.row.total)}</div>
+          <div className={classes.ship}>{`(Ship: ${formatMoney.format(params.row.Delivery_detail.shipFee)})`}</div>
+        </div>
       )
     },
     {
@@ -105,7 +108,7 @@ function OrderManager() {
         <div className={classes['order-user']}>
           <h1>{params.row.user.firstName + ' ' + params.row.user.lastName}</h1>
           <h1>{params.row.user.phoneNumber}</h1>
-          <address>{getAddress(params.row.user)}</address>
+          <address>{getAddress(params.row.Delivery_detail)}</address>
         </div>
       )
     },
@@ -116,6 +119,15 @@ function OrderManager() {
       width: caculatorWidth(10),
       renderCell: (params) => (
         <div className={classes.orderStatus}>{statusMap[params.row.status]}</div>
+      )
+    },
+    {
+      field: 'ship',
+      headerName: 'Giao hàng',
+      type: 'actions',
+      width: caculatorWidth(10),
+      renderCell: (params) => (
+        <div className={classes.orderStatus}>{getInfoShip(params.row.Delivery_detail.deliveryOption)}</div>
       )
     },
     {
@@ -144,6 +156,15 @@ function OrderManager() {
       )
     }
   ];
+  const getInfoShip = (type: any) => {
+    if (type === 'express') {
+      return 'Giao hàng nhanh';
+    } else if (type === 'standard') {
+      return 'Giao hàng tiêu chuẩn';
+    } else {
+      return 'Giao hàng tiết kiệm';
+    }
+  };
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
