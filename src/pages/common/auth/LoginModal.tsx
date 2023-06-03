@@ -121,9 +121,9 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
       {
         !isForgotPassword && <>
           <div className={classes['social-container']}>
-          {/* <a className='social' >
+          <a className='social' href={`${REACT_APP_API_URL}auth/facebook`}>
             <FontAwesomeIcon icon={faFacebookF} />
-          </a> */}
+          </a>
           <a href={`${REACT_APP_API_URL}auth/google`} className='social'>
             <FontAwesomeIcon icon={faGooglePlusG} />
           </a>
