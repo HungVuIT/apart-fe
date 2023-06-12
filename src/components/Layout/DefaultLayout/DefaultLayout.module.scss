@@ -1,6 +1,9 @@
 @import '../../../components/Global/foundation/variable';
 .layout__wrapper {
   position: relative;
+  .layout__content {
+    min-height: 60vh;
+  }
 }
 .none {
   display: none;
