@@ -11,7 +11,7 @@ function ItemInfo({ lst, loading }: IProps) {
     <div className={classes.wrapper}>
       {
         loading
-          ? <Loading _type={'ball'} />
+          ? <Loading _type={'ball'} className={classes.loading}/>
           : <div className={classes.group}>
             {lst.map(value => (
               <ItemOrder key={value.id} value={value} />

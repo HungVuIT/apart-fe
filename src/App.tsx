@@ -17,13 +17,13 @@ function App() {
   const { shop } = useAppSelector(state => state.vendor);
   const { profile } = useAppSelector(state => state.user);
   const { socket } = useAppSelector(state => state.common);
-  const [loading, setLoading] = useState(!(profile.username));
+  const [loading, setLoading] = useState(!(profile?.username));
   useEffect(() => {
-    if (profile.username) {
+    if (profile?.username) {
       const newSocket = io('https://dhwatch.onrender.com/chat-gate-way', { query: { userId: profile.id } });
       dispatch(setSocket(newSocket));
     }
-  }, [profile.username]);
+  }, [profile?.username]);
   useEffect(() => {
     if (socket && getAccessToken()) {
       socket.on('connect', () => {
@@ -59,7 +59,7 @@ function App() {
     if (!profile?.username) {
       await dispatch(getProfile());
     }
-    if (!shop?.email && profile.role === ROLE.VENDOR) {
+    if (!shop?.email && profile?.role === ROLE.VENDOR) {
       await dispatch(getProfileShop());
     }
     setLoading(false);
@@ -71,7 +71,7 @@ function App() {
     setLoading(false);
   };
   const getListUser = async () => {
-    if (profile.username) {
+    if (profile?.username) {
       // const res = await getListUserChat(profile.id);
     }
   };
