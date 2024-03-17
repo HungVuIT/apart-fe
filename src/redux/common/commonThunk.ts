@@ -19,7 +19,7 @@ export const searchWatchByName = createAsyncThunk(
   'watch/search',
   async (params: any) => {
     try {
-      const url = 'watchs/list';
+      const url = 'products/list';
       const response = await axiosClient.get(url, {
         params
       });

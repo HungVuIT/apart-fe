@@ -19,7 +19,7 @@ export const getRatingById = createAsyncThunk(
   'Rating/get/id',
   async (id: number) => {
     try {
-      const url = `rating/watch/${id}`;
+      const url = `rating/product/${id}`;
       const response = await axiosClient.get(url);
       return response.data.data;
     } catch (error) {
@@ -43,7 +43,7 @@ export const getWatchById = createAsyncThunk(
   'watch/get/product',
   async (id: number) => {
     try {
-      const url = `watchs/id/${id}`;
+      const url = `products/id/${id}`;
       const response = await axiosClient.get(url);
       return response.data.data;
     } catch (error) {

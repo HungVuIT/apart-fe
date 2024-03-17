@@ -46,6 +46,11 @@ export interface IEditProfile {
   address: string
 }
 export interface ICart {
+  image: any;
+  name: string;
+  price: number;
+  sale_off: any;
+  product: any;
   id: number
   createdAt: string
   updatedAt: string

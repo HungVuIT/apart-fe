@@ -2,7 +2,7 @@ import axiosClient from '../axiosClient';
 
 export const getListProduct = async () => {
   try {
-    const url = 'watchs/list';
+    const url = 'products/list';
     const response = await axiosClient.get(url);
     return response.data;
   } catch (err) {
@@ -11,10 +11,22 @@ export const getListProduct = async () => {
 };
 export const getListProductInHome = async (params: string, setList: any) => {
   try {
-    const url = params ? `watchs/list${params}` : 'watchs/list';
+    const url = params ? `products/list${params}` : 'products/list';
     const response = await axiosClient.get(url);
     if (response?.data?.data) {
       setList(response.data.data);
+    }
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+export const getListProductItem = async (params: string, setList: any) => {
+  try {
+    const url = params ? `products/list${params}` : 'products/list';
+    const response = await axiosClient.get(url);
+    if (response?.data?.data) {
+      setList(response.data.data.filter((item: { isHome: any; })=>!item.isHome));
     }
     return response.data;
   } catch (err) {

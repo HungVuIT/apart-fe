@@ -22,6 +22,8 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { setAccessToken } from '../../../untils/localStorage';
 import { REACT_APP_API_URL } from '../../../interface/enum';
+import GoogleIcon from '@mui/icons-material/Google';
+import FacebookSharpIcon from '@mui/icons-material/FacebookSharp';
 interface IProps {
   isLogin: boolean
   onClose: () => void
@@ -118,22 +120,7 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
     >
       <CloseIcon className={classes.closeBtn} onClick={onClose} />
       <h1 className={classes.title}>{isForgotPassword ? 'Quên mật khẩu' : (isSignIn ? 'Đăng nhập' : 'Đăng Ký')}</h1>
-      {
-        !isForgotPassword && <>
-          <div className={classes['social-container']}>
-          <a className='social' href={`${REACT_APP_API_URL}auth/facebook`}>
-            <FontAwesomeIcon icon={faFacebookF} />
-          </a>
-          <a href={`${REACT_APP_API_URL}auth/google`} className='social'>
-            <FontAwesomeIcon icon={faGooglePlusG} />
-          </a>
-          {/* <a href={`${REACT_APP_API_URL}auth/facebook`} className='social'>
-            <FontAwesomeIcon icon={faLinkedinIn} />
-          </a> */}
-        </div>
-        <span>hoặc tài khoản của bạn</span>
-        </>
-      }
+      
       {!isSignIn && (
         <Controller name='fullname' control={control}
           render={({
@@ -196,6 +183,25 @@ const LoginModal = ({ isLogin, onClose, loading, setLoading }: IProps) => {
         </div>
       )}
       <button className={classes.loginBtn} type='submit'>{isForgotPassword ? 'Gửi' : (isSignIn ? 'Đăng nhập' : 'Đăng Ký')}</button>
+      
+      {
+        
+        !isForgotPassword && <>
+            <span>hoặc đăng nhập với</span>
+          <div className={classes['social-container']}>
+          <a className='social' href={`${REACT_APP_API_URL}auth/facebook`}>
+          <FacebookSharpIcon sx={{ fontSize: 70 }} />
+          </a>
+          <a href={`${REACT_APP_API_URL}auth/google`} className='social'>
+            <GoogleIcon sx={{ fontSize: 70 }} />
+          </a>
+          {/* <a href={`${REACT_APP_API_URL}auth/facebook`} className='social'>
+            <FontAwesomeIcon icon={faLinkedinIn} />
+          </a> */}
+        </div>
+    
+        </>
+      }
       {
         !isForgotPassword && <p className={classes.question}>
         {isSignIn ? 'Chưa' : 'Đã'} có tài khoản :

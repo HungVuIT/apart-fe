@@ -5,7 +5,7 @@ import { ICart } from '../../../interface/user/interface';
 import classes from './cart.module.scss';
 import Checkbox from '@mui/material/Checkbox';
 import defaultAvt from '../../../assets/img/avtshop.png';
-import defaultLogo from '../../../assets/img/logo-watch.png';
+import defaultLogo from '../../../assets/img/logo-product.png';
 import Loading from '../loading';
 import Container from '../../../components/Container';
 import { formatMoney } from '../../../untils/formartMoney';
@@ -72,7 +72,7 @@ function Cart() {
       headerName: 'Sản phẩm',
       width: caculatorWidth(22),
       renderCell: (params) => (
-        <div className={classes['watch-name']}>
+        <div className={classes['product-name']}>
           <img src={params.row.image || defaultLogo} alt={params.row.name} className={classes.productAvt}/>
           <div className={classes.productName}>{params.row.name}</div>
         </div>
@@ -83,7 +83,7 @@ function Cart() {
       headerName: 'Đơn giá',
       width: caculatorWidth(17),
       renderCell: (params) => (
-        <div className={classes['watch-price']}>
+        <div className={classes['product-price']}>
           <div className={classes.price + (params.row.sale_off ? (' ' + classes.sale) : '')}>{formatMoney.format(params.row.price)}</div>
           {params.row.sale_off && <div className={classes.sale_off}>{formatMoney.format(params.row.sale_off.amount)}</div>}
         </div>
@@ -95,7 +95,7 @@ function Cart() {
       type: 'actions',
       width: caculatorWidth(24),
       renderCell: (params) => (
-        <div className={classes['watch-quantity']}>
+        <div className={classes['product-quantity']}>
           <Button className={classes.btn} onClick={() => handleChangeQuantity(params.row.id, TypeChangeQuantity.MINUS)}><RemoveIcon /></Button>
           <span className={classes.watchQuantity}>{params.row.quantity}</span>
           <Button className={classes.btn} onClick={() => handleChangeQuantity(params.row.id, TypeChangeQuantity.PLUS)}><AddIcon /></Button>
@@ -107,7 +107,7 @@ function Cart() {
       headerName: 'Tổng',
       width: caculatorWidth(17),
       renderCell: (params) => (
-        <div className={classes['watch-total']}>
+        <div className={classes['product-total']}>
           {formatMoney.format(params.row.quantity * (params.row.sale_off ? params.row.sale_off.amount : params.row.price))}
         </div>
       )
@@ -117,7 +117,7 @@ function Cart() {
       type: 'actions',
       width: caculatorWidth(5),
       renderCell: (params) => (
-        <div className={classes['watch-total']}>
+        <div className={classes['product-total']}>
           <DeleteForeverIcon className={classes.totalIcon} onClick={() => handleRemoveItemFromCart(params.row.id)}/>
         </div>
       )
@@ -178,7 +178,7 @@ function Cart() {
   const caculatorCost = () => {
     let totalPrice = 0;
     cart.forEach(item => {
-      totalPrice += item.quantity * item.watch.price;
+      totalPrice += item.quantity * item.product.price;
     });
     return totalPrice;
   };
@@ -186,8 +186,8 @@ function Cart() {
   const caculatorDiscount = () => {
     let totalDiscount = 0;
     cart.forEach(item => {
-      if (item.watch.sale_off) {
-        totalDiscount += item.quantity * (item.watch.price - item.watch.sale_off.amount);
+      if (item.product.sale_off) {
+        totalDiscount += item.quantity * (item.product.price - item.product.sale_off.amount);
       }
     });
     return totalDiscount;
@@ -208,14 +208,16 @@ function Cart() {
 
   const cartRender: ICartRender[] = useMemo(() => {
     const lst: ICartRender[] = [];
+    console.log(cart);
+    
     cart.forEach(item => {
       lst.push({
         id: item.id,
-        image: item.watch.image[0] || defaultLogo,
-        name: item.watch.name,
-        price: item.watch.price,
+        image: item.product.image[0] || defaultLogo,
+        name: item.product.name,
+        price: item.product.price,
         quantity: item.quantity,
-        sale_off: item.watch.sale_off
+        sale_off: 0
       });
     });
     return lst;

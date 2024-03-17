@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Container from "../../../components/Container";
-import classes from "./new-product.module.scss";
+import classes from "./new-watch.module.scss";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -30,8 +30,9 @@ interface IDataNewProduct {
   content: string;
   estimatedPrice: number;
   price: number;
-  BID: number;
+  BID?: number;
   isHome: boolean;
+  quantity: number;
 }
 const schema = yup.object().shape({
   // name: yup.string().required('Vui lòng nhập tên sản phẩm'),
@@ -45,7 +46,6 @@ function NewProduct() {
     register,
     setValue,
     control,
-    product,
     handleSubmit,
     clearErrors,
     formState: { errors },
@@ -126,12 +126,12 @@ function NewProduct() {
     newLstFile.forEach((file) => {
       params.append("image", file);
     });
-    dataCategories.forEach((data) => params.append("CID", data));
-    // params.append('isHome', (Boolean(isHome)).toString());
+    if (!_data.BID) params.delete('BID')
+    params.append("isHome", Boolean(isHome).toString());
     const res = await addNewProduct(params);
     if (res.success) {
       toast.success("Thêm sản phẩm thành công");
-      navigate("/shop/manager/product");
+      navigate("/shop/manager/watch");
       window.scrollTo(0, 0);
     } else {
       toast.error("Thêm sản phẩm không thành công");
@@ -141,10 +141,10 @@ function NewProduct() {
   //   const item = categories.find(item => item.id === value);
   //   return item?.name;
   // };
-  const removeCategory = (_value: string) => {
-    const newData = dataCategories.filter((value) => value !== _value);
-    setDataCategories(newData);
-  };
+  // const removeCategory = (_value: string) => {
+  //   const newData = dataCategories.filter((value) => value !== _value);
+  //   setDataCategories(newData);
+  // };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -354,19 +354,21 @@ function NewProduct() {
               />
             </div>
           </div>
-          {/* <div className={classes.item}>
-            <div className={classes['item-title']}>*Số lượng</div>
-            <div className={classes['item-content']}>
-              <Controller name='quantity' control={control}
+          <div className={classes.item}>
+            <div className={classes["item-title"]}>*Số lượng</div>
+            <div className={classes["item-content"]}>
+              <Controller
+                name="quantity"
+                control={control}
                 render={({
                   field: { onChange, onBlur, value, name, ref },
                   fieldState: { invalid, isTouched, isDirty, error },
-                  formState
+                  formState,
                 }) => (
                   <TextField
-                    variant='outlined'
-                    {...register('quantity')}
-                    type='number'
+                    variant="outlined"
+                    {...register("quantity")}
+                    type="number"
                     onBlur={onBlur}
                     onChange={onChange}
                     error={!!errors.quantity}
@@ -376,7 +378,7 @@ function NewProduct() {
                 )}
               />
             </div>
-          </div> */}
+          </div>
           <div className={classes.item + " " + classes.description}>
             <div className={classes["item-title"]}>*Nội dung</div>
             <div className={classes["item-content"]}>

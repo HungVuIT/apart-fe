@@ -37,7 +37,7 @@ export const editShop = async (params: IProfileStore) => {
 };
 export const getListWatchShop = async (params: any, setList: any) => {
   try {
-    const url = 'watchs/list';
+    const url = 'products/list';
     const response = await axiosClient.get(url, {
       params
     });

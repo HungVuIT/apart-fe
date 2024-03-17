@@ -33,7 +33,7 @@ function Product(): JSX.Element {
         <MainContent id ={Number(productId)}/>
         <SubContent id ={Number(productId)}/>
         <DescribeDetail id ={Number(productId)}/>
-        <Describe id ={Number(productId)}/>
+        {/* <Describe id ={Number(productId)}/> */}
         <Comment id ={Number(productId)}/>
         <RatingBox id ={Number(productId)}/>
         <SameProduct id ={Number(productId)}/>

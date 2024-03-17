@@ -8,7 +8,7 @@ export interface IWatch {
   name: string
 
   BID?: any
-  CID: number[]
+  CID?: number
   SID: number
 
   sku?: string
@@ -37,7 +37,7 @@ export interface IWatch {
   rating: IRating
 
   status?: any
-  isOld?: any
+  isHome?: any
   include?: any
   used?: any
   prioritize?: any
@@ -64,7 +64,6 @@ export const initWatch: IWatch = {
   updatedAt: '',
   name: '',
   SID: 1,
-  CID: [],
   description: '',
   content: '',
   quantity: 300,

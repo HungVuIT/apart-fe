@@ -6,7 +6,7 @@ import Item from '../Item';
 import { IWatch } from '../../interface/watch/watchType';
 import defaultLogo from '../../assets/img/logo-watch.png';
 import Loading from '../../pages/common/loading';
-import { getListProductInHome } from '../../api/service/home-service';
+import { getListProductInHome, getListProductItem } from '../../api/service/home-service';
 interface IProps {
   title: string
   type?: any
@@ -16,14 +16,14 @@ function FeaturedProducts ({ title, type }: IProps): JSX.Element {
   const [list, setList] = useState<IWatch[]>([]);
   useEffect(() => {
     let params = '';
-    if (type === 'TOP') {
-      params = '?orderBy=saled.asc&skip=0&take=5';
+    if (type === 'BED') {
+      params = '?CID=1';
+    }  else if (type === 'TABLE') {
+      params = '?CID=2';
     } else if (type === 'NEW') {
-      params = '?orderBy=createdAt.desc&skip=0&take=5';
-    } else if (type === 'SALE') {
-      params = '?saleOff=desc';
+      params = '?orderBy=createdAt.desc&skip=0&take=10';
     }
-    getListProductInHome(params, setList);
+    getListProductItem(params, setList);
   }, []);
   useEffect(() => {
     function handleResize() {
@@ -52,7 +52,7 @@ function FeaturedProducts ({ title, type }: IProps): JSX.Element {
     }
   }, []);
   const watchListRender = useMemo(() => {
-    const lst = list?.length > 0 ? list.filter((watch, index) => index < ele) : [];
+    const lst = list?.length > 0 ? list.filter((watch, index) => index < ele && !watch.isHome) : [];
     return lst;
   }, [ele, list]);
   return (

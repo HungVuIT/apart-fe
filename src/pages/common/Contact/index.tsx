@@ -7,22 +7,13 @@ function Contact() {
   const infors = [
     {
       id: 1,
-      name: 'Lê Tiến Dũng',
+      name: 'Võ Phạm Long Huy',
       img: avt1,
-      fb: 'https://www.facebook.com/tiendung.130500/',
-      email: 'dung.le1305@hcmut.edu.vn',
+      // fb: 'https://www.facebook.com/tiendung.130500/',
+      email: 'longhuy@hcmut.edu.vn',
       specialized: 'FrontEnd Developer',
       description: 'Tôi là một Frontend developer chủ yếu làm việc với HTML, CSS, JavaScript, React và Angular.'
     },
-    {
-      id: 2,
-      name: 'Vũ Hoàng Hùng',
-      img: avt2,
-      fb: 'https://www.facebook.com/rox14122000',
-      email: 'hung.vuit@hcmut.edu.vn',
-      specialized: 'BackEnd Developer',
-      description: 'Tôi là một BackEnd developer chủ yếu làm việc với JavaScript, NodeJs, NestJs, PostgreSQL'
-    }
   ];
   return (
     <div className={classes.wrapper}>

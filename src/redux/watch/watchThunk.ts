@@ -7,7 +7,7 @@ export const getListOfWatch = createAsyncThunk(
   'watch/get/list',
   async () => {
     try {
-      const url = 'watchs/list';
+      const url = 'products/list';
       const response = await axiosClient.get(url);
       return response.data.data;
     } catch (error) {

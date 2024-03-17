@@ -19,6 +19,7 @@ import NewsItem from '../pages/common/NewsItem';
 import EditWatch from '../pages/Vendor/EditWatch';
 import Contact from '../pages/common/Contact';
 import Dashboard from '../pages/Vendor/Dashboard';
+import Apart from '../pages/common/ProductApart';
 
 const mainRouter = [
   {
@@ -36,6 +37,10 @@ const mainRouter = [
   {
     path: '/product/:productId',
     component: Product
+  },
+  {
+    path: '/apart/:productId',
+    component: Apart
   },
   {
     path: '/shop/:shopId',

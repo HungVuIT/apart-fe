@@ -1,0 +1,15 @@
+.wrapper {
+  margin-top: 100px;
+  min-height: 400px;
+  & .title {
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  & .news {
+    padding: 10px;
+    & img {
+      max-width: 90%;
+    }
+  }
+}

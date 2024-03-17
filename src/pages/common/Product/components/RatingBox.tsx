@@ -65,8 +65,8 @@ function RatingBox({ id }: IProps): JSX.Element {
             <Typography component={'span'} variant={'body2'}>
               <div className="comments">
                 <div className='comments-header'>
-                  <Rating name="half-rating-read" value={rating.score || 5} precision={0.5} readOnly className='rate-star' />
-                  <span className="rate-tite"><i>Dựa trên {rating.list.length} đánh giá</i></span>
+                  <Rating name="half-rating-read" value={rating?.score || 0} precision={0.5} readOnly className='rate-star' />
+                  <span className="rate-tite"><i>Dựa trên {rating?.list.length} đánh giá</i></span>
                 </div>
                 <div className={'form-comment active'}>
                   <div className="form-input">
@@ -83,7 +83,7 @@ function RatingBox({ id }: IProps): JSX.Element {
                   </div>
                   <Button variant="contained" className='rate-submit' onClick={handleClick}>Gửi</Button>
                 </div>
-                {rating.list.map((rate: any) => (
+                {rating?.list?.map((rate: any) => (
                   <React.Fragment key={rate.id}>
                     <hr/>
                     <ItemRating rate={rate} />

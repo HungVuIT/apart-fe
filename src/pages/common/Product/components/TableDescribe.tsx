@@ -39,7 +39,6 @@ export default function TableDescribe() {
   }
 
   const rows = [
-    createData('Thương hiệu', 'Seriko'),
     createData('Xuất xứ', watch.madeBy || 'Chưa xác định'),
     createData('Giới tính', watch.gender === 'male' ? 'Name' : (watch.gender === 'female' ? 'Nữ' : 'Không')),
     createData('Bề mặt', watch.glassSurface || 'Chưa xác định'),
@@ -48,7 +47,7 @@ export default function TableDescribe() {
     createData('Hạn bảo hành', watch.warranty || 'Chưa xác định'),
     createData('Phụ kiện đi kèm', watch.include || 'Chưa xác định'),
     createData('Tình trạng', watch.status || 'Chưa xác định'),
-    createData('Là đồng hồ cũ', watch.isOld ? 'Phải' : 'Không phải'),
+    createData('Là đồng hồ cũ', watch.isHome  ? 'Phải' : 'Không phải'),
     createData('Thời gian đã sử dụng', watch.used || 'Chưa xác định')
   ];
   return (

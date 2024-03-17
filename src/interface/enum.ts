@@ -10,4 +10,4 @@ export enum MenuItemName {
   NEWS = 'Tin Tức',
   CONTACT = 'Liên hệ'
 }
-export const REACT_APP_API_URL = 'https://dhwatch.onrender.com/api/';
+export const REACT_APP_API_URL = "https://f5x7hz81-8000.asse.devtunnels.ms/api/";
