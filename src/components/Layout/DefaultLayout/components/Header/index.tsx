@@ -100,7 +100,7 @@ function Header({ setLoadingPage }: IProps) {
                 cursor: 'pointer'
               }}
             >
-              ChronoCorner
+              Apart
             </Typography>
             <Box sx={{ flexGrow: 1 }} className='nav-btn-item'>
               {items.map((item) => (

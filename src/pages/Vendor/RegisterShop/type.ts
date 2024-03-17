@@ -1,7 +1,6 @@
 export interface IRegisterShop {
   email: string
   name: string
-  userName: string
   province: string
   district: string
   ward: string
