@@ -36,11 +36,13 @@ const userSlice = createSlice({
       state.payment.items = action.payload;
       let totalPrice = 0;
       action.payload.forEach((item: any) => {
-        if (item.watch.sale_off) {
-          totalPrice += item.quantity * item.watch.sale_off.amount;
-        } else {
-          totalPrice += item.quantity * item.watch.price;
-        }
+        // if (item.watch.sale_off) {
+        //   totalPrice += item.quantity * item.watch.sale_off.amount;
+        // } else {
+          console.log(item);
+          
+          totalPrice += item.quantity * item.product.price;
+        // }
       });
       state.payment.itemPrice = totalPrice;
     },
